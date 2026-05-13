@@ -7,7 +7,7 @@ import Link from "next/link";
 const SLIDES = [
   {
     id: 1,
-    image: "/images/hero/slide-1.svg",
+    image: "/images/hero/slide-1.png",
     title: "Distribuir é assumir desafios",
     subtitle:
       "Do varejo à indústria, você precisa de um parceiro comprometido com o seu resultado.",
@@ -15,28 +15,28 @@ const SLIDES = [
   },
   {
     id: 2,
-    image: "/images/hero/slide-2.svg",
+    image: "/images/hero/slide-2.png",
     title: "INDÚSTRIA: Seu objetivo é ser líder no seu segmento?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
     cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
   },
   {
     id: 3,
-    image: "/images/hero/slide-3.svg",
+    image: "/images/hero/slide-3.png",
     title: "VAREJO: Precisa um parceiro que respeita o seu espaço?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
     cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
   },
   {
     id: 4,
-    image: "/images/hero/slide-4.svg",
+    image: "/images/hero/slide-4.png",
     title: "FOOD SERVICE: Precisa das melhores marcas no tempo certo?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
     cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
   },
   {
     id: 5,
-    image: "/images/hero/slide-5.svg",
+    image: "/images/hero/slide-5.png",
     title: "Saiba como fazemos a diferença.",
     subtitle: "Processos, tecnologia e uma cultura de confiança e respeito.",
     cta: { label: "CONHEÇA A FABIANO ZAFFALON", href: "#empresa" },
