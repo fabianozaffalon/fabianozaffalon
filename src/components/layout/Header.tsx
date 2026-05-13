@@ -19,10 +19,10 @@ const NAV_LINKS = [
 ];
 
 export function Header() {
-  const [menuOpen,         setMenuOpen]         = useState(false);
-  const [dropdownOpen,     setDropdownOpen]     = useState(false);
-  const [mobileAtuacaoOpen,setMobileAtuacaoOpen]= useState(false);
-  const [scrolled,         setScrolled]         = useState(false); // ← novo
+  const [menuOpen,          setMenuOpen]          = useState(false);
+  const [dropdownOpen,      setDropdownOpen]      = useState(false);
+  const [mobileAtuacaoOpen, setMobileAtuacaoOpen] = useState(false);
+  const [scrolled,          setScrolled]          = useState(false);
 
   const dropdownRef      = useRef<HTMLDivElement>(null);
   const dropdownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -88,24 +88,28 @@ export function Header() {
       >
         <div
           className={
-            // Altura transiciona suavemente: 110px no topo → 80px ao scrollar
             "mx-auto flex max-w-[1280px] items-center justify-between px-6 transition-all duration-300 " +
             (scrolled ? "h-[72px] lg:h-[80px]" : "h-[90px] lg:h-[110px]")
           }
         >
-          {/* Logo — tamanho também reduz com o scroll */}
+          {/* ── Logo ────────────────────────────────────────────────────
+              Usando width/height reais do PNG para o Next.js calcular
+              o aspect-ratio correto. A largura visual é controlada pela
+              classe Tailwind; a altura se ajusta automaticamente via
+              style={{ height: "auto" }} — sem achatamento.
+          ─────────────────────────────────────────────────────────────── */}
           <Link href="/" className="flex shrink-0 items-center" onClick={close}>
             <Image
-              src="/images/logo.svg"
+              src="/images/logo.png"
               alt="Fabiano Zaffalon Distribuidora"
-              width={230}
-              height={80}
+              width={460}   // largura real do arquivo PNG em px
+              height={160}  // altura real do arquivo PNG em px
               priority
               className={
-                "h-auto transition-all duration-300 " +
+                "transition-all duration-300 " +
                 (scrolled ? "w-[150px] md:w-[180px]" : "w-[180px] md:w-[230px]")
               }
-              style={{ height: "auto", width: undefined }}
+              style={{ height: "auto" }} // mantém proporção — nunca achata
             />
           </Link>
 
