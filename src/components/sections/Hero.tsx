@@ -1,0 +1,247 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import Link from "next/link";
+
+const SLIDES = [
+  {
+    id: 1,
+    image: "/images/hero/slide-1.svg",
+    title: "Distribuir é assumir desafios",
+    subtitle:
+      "Do varejo à indústria, você precisa de um parceiro comprometido com o seu resultado.",
+    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+  },
+  {
+    id: 2,
+    image: "/images/hero/slide-2.svg",
+    title: "INDÚSTRIA: Seu objetivo é ser líder no seu segmento?",
+    subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
+    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+  },
+  {
+    id: 3,
+    image: "/images/hero/slide-3.svg",
+    title: "VAREJO: Precisa um parceiro que respeita o seu espaço?",
+    subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
+    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+  },
+  {
+    id: 4,
+    image: "/images/hero/slide-4.svg",
+    title: "FOOD SERVICE: Precisa das melhores marcas no tempo certo?",
+    subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
+    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+  },
+  {
+    id: 5,
+    image: "/images/hero/slide-5.svg",
+    title: "Saiba como fazemos a diferença.",
+    subtitle: "Processos, tecnologia e uma cultura de confiança e respeito.",
+    cta: { label: "CONHEÇA A FABIANO ZAFFALON", href: "#empresa" },
+  },
+];
+
+const AUTOPLAY_MS = 5000;
+
+// ─── WhatsApp flutuante ───────────────────────────────────────────────────────
+// Renderize <WhatsAppButton /> no page.tsx, FORA do <Hero />, para o
+// position:fixed funcionar corretamente em mobile.
+export function WhatsAppButton() {
+  return (
+    <>
+      <style>{`
+        @keyframes wa-pulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+          50%       { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
+        }
+        @keyframes wa-float {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-6px); }
+        }
+        .wa-btn { animation: wa-float 3s ease-in-out infinite; }
+        .wa-btn:hover { animation: none; transform: scale(1.08); transition: transform 0.2s ease; }
+        .wa-ring { animation: wa-pulse 2.4s ease-out infinite; border-radius: 9999px; }
+      `}</style>
+      <a
+        href="https://wa.me/5551999999999"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Fale conosco pelo WhatsApp"
+        className="fixed bottom-6 right-4 z-50 md:right-6"
+      >
+        <div className="wa-ring wa-btn relative flex h-14 w-14 items-center justify-center">
+          <Image
+            src="/images/ui/elipse-whats.svg"
+            alt=""
+            fill
+            className="object-contain"
+            aria-hidden="true"
+          />
+          <Image
+            src="/images/ui/whats.svg"
+            alt="WhatsApp"
+            width={30}
+            height={30}
+            className="relative z-10"
+            style={{ width: "auto", height: "auto" }}
+          />
+        </div>
+      </a>
+    </>
+  );
+}
+
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+export function Hero() {
+  const [current, setCurrent] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  const goTo = useCallback((index: number) => {
+    setCurrent((index + SLIDES.length) % SLIDES.length);
+  }, []);
+
+  const prev = () => goTo(current - 1);
+  const next = useCallback(() => goTo(current + 1), [current, goTo]);
+
+  useEffect(() => {
+    if (paused) return;
+    const t = setTimeout(next, AUTOPLAY_MS);
+    return () => clearTimeout(t);
+  }, [current, paused, next]);
+
+  return (
+    <section
+      id="hero"
+      className="relative w-full overflow-hidden"
+      // Mobile: altura fixa generosa para caber conteúdo
+      // Desktop: proporção exata do Figma 1440×672
+      style={{ height: "clamp(480px, 46.667vw, 672px)" }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      aria-label="Carrossel principal"
+    >
+      {/* ── Slides ── */}
+      {SLIDES.map((slide, i) => (
+        <div
+          key={slide.id}
+          aria-hidden={i !== current}
+          className={
+            "absolute inset-0 transition-opacity duration-700 " +
+            (i === current ? "opacity-100 z-10" : "opacity-0 z-0")
+          }
+        >
+          {/* Imagem de fundo */}
+          <Image
+            src={slide.image}
+            alt={slide.title}
+            fill
+            priority={i === 0}
+            className="object-cover object-center"
+            sizes="100vw"
+          />
+
+          {/* Overlay — mais escuro em mobile para legibilidade */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10 md:from-black/55 md:via-black/25 md:to-transparent" />
+
+          {/* Conteúdo */}
+          <div className="absolute inset-0 flex items-center">
+            <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
+              <div className="max-w-[90%] md:max-w-[520px]">
+                {/* Título — menor em mobile, cresce no desktop */}
+                <h1
+                  className="font-black text-white leading-tight"
+                  style={{ fontSize: "clamp(1.35rem, 4vw, 2.75rem)" }}
+                >
+                  {slide.title}
+                </h1>
+
+                {/* Subtítulo — oculto em telas muito pequenas para não poluir */}
+                <p
+                  className="mt-3 font-normal text-white/90 leading-relaxed hidden sm:block"
+                  style={{ fontSize: "clamp(0.8rem, 1.2vw, 1rem)" }}
+                >
+                  {slide.subtitle}
+                </p>
+
+                {/* CTA — full-width em mobile, auto em desktop */}
+                <Link
+                  href={slide.cta.href}
+                  className="mt-5 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] sm:w-auto sm:rounded-[8px] sm:px-7 sm:py-3"
+                >
+                  {slide.cta.label}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      {/* ── Setas — ocultas em mobile (swipe seria ideal, dots bastam) ── */}
+      <button
+        onClick={prev}
+        aria-label="Slide anterior"
+        className="absolute left-3 top-1/2 z-20 -translate-y-1/2 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40 md:left-5 md:h-12 md:w-12"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2.5}
+          stroke="currentColor"
+          className="h-5 w-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5 8.25 12l7.5-7.5"
+          />
+        </svg>
+      </button>
+
+      <button
+        onClick={next}
+        aria-label="Próximo slide"
+        className="absolute right-3 top-1/2 z-20 -translate-y-1/2 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40 md:right-5 md:h-12 md:w-12"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2.5}
+          stroke="currentColor"
+          className="h-5 w-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+          />
+        </svg>
+      </button>
+
+      {/* ── Dots — maiores em mobile para facilitar toque (44px de área) ── */}
+      <div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 flex items-center gap-3">
+        {SLIDES.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            aria-label={`Ir para slide ${i + 1}`}
+            // Área de toque generosa via padding invisível
+            className="flex items-center justify-center p-2 -m-2"
+          >
+            <span
+              className={
+                "block rounded-full transition-all duration-300 " +
+                (i === current
+                  ? "w-6 h-2.5 bg-white"
+                  : "w-2.5 h-2.5 bg-white/50 hover:bg-white/80")
+              }
+            />
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
