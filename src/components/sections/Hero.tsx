@@ -79,9 +79,11 @@ export function WhatsAppButton() {
             className="object-contain"
             aria-hidden="true"
           />
+
           <Image
             src="/images/ui/whats.svg"
-            alt="WhatsApp"
+            alt=""
+            aria-hidden="true"
             width={30}
             height={30}
             className="relative z-10"
@@ -121,15 +123,17 @@ export function Hero() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-label="Carrossel principal"
+      aria-roledescription="carousel"
     >
       {/* ── Slides ── */}
       {SLIDES.map((slide, i) => (
         <div
           key={slide.id}
-          aria-hidden={i !== current}
           className={
             "absolute inset-0 transition-opacity duration-700 " +
-            (i === current ? "opacity-100 z-10" : "opacity-0 z-0")
+            (i === current
+              ? "opacity-100 z-10 pointer-events-auto"
+              : "opacity-0 z-0 pointer-events-none")
           }
         >
           {/* Imagem de fundo */}
@@ -168,7 +172,7 @@ export function Hero() {
                 {/* CTA — full-width em mobile, auto em desktop */}
                 <Link
                   href={slide.cta.href}
-                  className="mt-5 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] sm:w-auto sm:rounded-[8px] sm:px-7 sm:py-3"
+                  className="mt-5 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto sm:rounded-[8px] sm:px-7 sm:py-3"
                 >
                   {slide.cta.label}
                 </Link>
@@ -228,6 +232,7 @@ export function Hero() {
             key={i}
             onClick={() => goTo(i)}
             aria-label={`Ir para slide ${i + 1}`}
+            aria-current={i === current}
             // Área de toque generosa via padding invisível
             className="flex items-center justify-center p-2 -m-2"
           >
