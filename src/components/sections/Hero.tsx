@@ -233,15 +233,14 @@ export function Hero() {
             onClick={() => goTo(i)}
             aria-label={`Ir para slide ${i + 1}`}
             aria-current={i === current}
-            // Área de toque generosa via padding invisível
-            className="flex items-center justify-center p-2 -m-2"
+            className="flex h-11 w-11 items-center justify-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <span
               className={
                 "block rounded-full transition-all duration-300 " +
                 (i === current
                   ? "w-6 h-2.5 bg-white"
-                  : "w-2.5 h-2.5 bg-white/50 hover:bg-white/80")
+                  : "w-2.5 h-2.5 bg-white/80 hover:bg-white")
               }
             />
           </button>

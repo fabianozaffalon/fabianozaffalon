@@ -262,7 +262,7 @@ export function About() {
                       key={region.id}
                       onClick={() => setActiveRegion(region)}
                       className={
-                        "w-full rounded-[8px] border-2 px-3 py-2.5 text-sm font-medium transition-colors duration-200 " +
+                        "flex min-h-[44px] w-full items-center justify-center rounded-[8px] border-2 px-3 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#006EB7] " +
                         (isActive
                           ? "border-[#006EB7] bg-[#006EB7] text-white"
                           : "border-[#BCBABA] bg-[#BCBABA] text-white hover:border-[#006EB7] hover:bg-[#006EB7]")
