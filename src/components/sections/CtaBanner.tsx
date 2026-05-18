@@ -5,55 +5,57 @@ export function CtaBanner() {
   return (
     <section id="cta" className="bg-[#EFEFEF] py-10 md:py-14">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-        <div className="rounded-[28px] bg-[#006EB7] px-8 py-8 md:rounded-[40px] md:px-12 md:py-10">
+        <div className="rounded-[28px] bg-[#006EB7] px-6 py-6 md:rounded-[40px] md:px-10 md:py-8">
 
-          {/* Conteúdo centralizado horizontalmente */}
-          <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-center md:gap-12">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-8">
 
-            {/* ── Coluna esquerda: label + imagem ── */}
-            <div className="flex flex-col gap-3 md:shrink-0">
-              <p className="text-lg font-bold text-white md:text-xl">
+            {/* ── Coluna esquerda: ~45% — label + foto proporção 4:3 ── */}
+            <div className="flex flex-col gap-2 md:w-[45%] md:shrink-0">
+              <p className="text-base font-bold text-white md:text-lg">
                 Destaque do mês
               </p>
-              <div className="overflow-hidden rounded-[14px]">
+              {/*
+                aspect-[4/3] garante proporção igual ao modelo (mais quadrada).
+                A largura segue o container; a altura é calculada automaticamente.
+              */}
+              <div className="relative w-full overflow-hidden rounded-[12px]" style={{ aspectRatio: "4/3" }}>
                 <Image
                   src="/images/cta/destaque.png"
                   alt="Destaque do mês"
-                  width={538}
-                  height={256}
-                  className="block object-cover"
-                  style={{ width: "100%", maxWidth: "538px", height: "auto" }}
-                  sizes="(max-width: 768px) 100vw, 538px"
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 45vw"
                 />
               </div>
             </div>
 
-            {/* ── Coluna direita: título + subtítulo + botões ── */}
-            <div className="flex flex-col gap-6 md:max-w-[420px]">
+            {/* ── Coluna direita: ~55% — título + subtítulo + botões ── */}
+            <div className="flex flex-1 flex-col gap-5">
 
-              <div className="flex flex-col gap-3">
+              {/* Título + subtítulo */}
+              <div className="flex flex-col gap-2">
                 <h2
                   className="font-black text-white"
-                  style={{ fontSize: "clamp(1.75rem, 3.2vw, 2.5rem)", lineHeight: 1.1 }}
+                  style={{ fontSize: "clamp(1.6rem, 2.8vw, 2.4rem)", lineHeight: 1.1 }}
                 >
                   Conte com a gente
                   <br />para conquistar
                   <br />o seu espaço.
                 </h2>
-                <p className="text-sm leading-relaxed text-white/85 md:text-base">
+                <p className="text-sm leading-snug text-white/85 md:text-base">
                   Temos sempre uma grande oportunidade para o seu negócio.
                   <br />
                   Chame o consultor da sua região e descubra.
                 </p>
               </div>
 
-              {/* Botões */}
+              {/* Botões — lado a lado, bordas bem arredondadas como no modelo */}
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
                   href="#contato"
                   className="
-                    flex h-[53px] flex-1 items-center justify-center
-                    rounded-[8px] bg-white
+                    flex h-[52px] flex-1 items-center justify-center
+                    rounded-[10px] bg-white
                     text-sm font-semibold text-[#006EB7]
                     transition-colors hover:bg-[#005a96] hover:text-white
                   "
@@ -63,8 +65,8 @@ export function CtaBanner() {
                 <Link
                   href="#contato"
                   className="
-                    flex h-[53px] flex-1 items-center justify-center
-                    rounded-[8px] border-2 border-white
+                    flex h-[52px] flex-1 items-center justify-center
+                    rounded-[10px] border-2 border-white
                     text-sm font-semibold text-white
                     transition-colors hover:bg-white hover:text-[#006EB7]
                   "
