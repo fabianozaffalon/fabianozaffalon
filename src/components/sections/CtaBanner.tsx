@@ -7,29 +7,30 @@ export function CtaBanner() {
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="rounded-[28px] bg-[#006EB7] px-8 py-8 md:rounded-[40px] md:px-12 md:py-10">
 
-          {/* Layout: imagem+label à esquerda | título+texto+botões à direita */}
-          <div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-12">
+          {/* Conteúdo centralizado horizontalmente */}
+          <div className="flex flex-col items-center gap-8 md:flex-row md:items-center md:justify-center md:gap-12">
 
-            {/* ── Coluna esquerda ── */}
-            <div className="flex flex-col gap-2 md:w-[320px] md:shrink-0">
-              <p className="text-sm font-semibold text-white">
+            {/* ── Coluna esquerda: label + imagem ── */}
+            <div className="flex flex-col gap-3 md:shrink-0">
+              <p className="text-lg font-bold text-white md:text-xl">
                 Destaque do mês
               </p>
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[14px]">
+              <div className="overflow-hidden rounded-[14px]">
                 <Image
                   src="/images/cta/destaque.png"
                   alt="Destaque do mês"
-                  fill
-                  className="object-cover object-center"
-                  sizes="(max-width: 768px) 100vw, 320px"
+                  width={538}
+                  height={256}
+                  className="block object-cover"
+                  style={{ width: "100%", maxWidth: "538px", height: "auto" }}
+                  sizes="(max-width: 768px) 100vw, 538px"
                 />
               </div>
             </div>
 
-            {/* ── Coluna direita ── */}
-            <div className="flex flex-1 flex-col gap-6">
+            {/* ── Coluna direita: título + subtítulo + botões ── */}
+            <div className="flex flex-col gap-6 md:max-w-[420px]">
 
-              {/* Título + subtítulo */}
               <div className="flex flex-col gap-3">
                 <h2
                   className="font-black text-white"
@@ -55,7 +56,6 @@ export function CtaBanner() {
                     rounded-[8px] bg-white
                     text-sm font-semibold text-[#006EB7]
                     transition-colors hover:bg-[#005a96] hover:text-white
-                    md:max-w-[240px]
                   "
                 >
                   Quero Comprar
@@ -67,7 +67,6 @@ export function CtaBanner() {
                     rounded-[8px] border-2 border-white
                     text-sm font-semibold text-white
                     transition-colors hover:bg-white hover:text-[#006EB7]
-                    md:max-w-[240px]
                   "
                 >
                   Quero Representação
