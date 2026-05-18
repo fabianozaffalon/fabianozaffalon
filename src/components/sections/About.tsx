@@ -255,23 +255,23 @@ export function About() {
                   No desktop volta ao comportamento normal (md:mx-0 md:px-0).
               */}
               <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                  {REGIONS.map((region) => {
-                    const isActive = region.id === activeRegion.id;
-                    return (
-                      <button
-                        key={region.id}
-                        onClick={() => setActiveRegion(region)}
-                        className={
-                          "w-full rounded-[8px] border-2 px-3 py-2.5 text-sm font-medium transition-colors duration-200 " +
-                          (isActive
-                            ? "border-[#006EB7] bg-[#006EB7] text-white"
-                            : "border-[#BCBABA] bg-[#BCBABA] text-white hover:border-[#006EB7] hover:bg-[#006EB7]")
-                        }
-                      >
-                        {region.label}
-                      </button>
-                    );
-                  })}
+                {REGIONS.map((region) => {
+                  const isActive = region.id === activeRegion.id;
+                  return (
+                    <button
+                      key={region.id}
+                      onClick={() => setActiveRegion(region)}
+                      className={
+                        "w-full rounded-[8px] border-2 px-3 py-2.5 text-sm font-medium transition-colors duration-200 " +
+                        (isActive
+                          ? "border-[#006EB7] bg-[#006EB7] text-white"
+                          : "border-[#BCBABA] bg-[#BCBABA] text-white hover:border-[#006EB7] hover:bg-[#006EB7]")
+                      }
+                    >
+                      {region.label}
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Descrição */}
@@ -285,10 +285,14 @@ export function About() {
                   Demais cidades agrupadas abaixo via optgroup.
               */}
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-semibold uppercase tracking-wider text-[#595959]">
+                <label
+                  htmlFor="cities-select"
+                  className="text-xs font-semibold uppercase tracking-wider text-[#595959]"
+                >
                   Verifique as cidades atendidas da {activeRegion.label}
                 </label>
                 <select
+                  id="cities-select"
                   key={activeRegion.id}
                   defaultValue={activeRegion.sede}
                   className="w-full rounded-[8px] border border-[#D1D1D1] bg-white px-4 py-2.5 text-sm text-[#595959] shadow-sm focus:border-[#006EB7] focus:outline-none focus:ring-1 focus:ring-[#006EB7] md:py-3"
