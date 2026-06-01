@@ -22,6 +22,15 @@ const UNIDADES = [
     email: "contatorp@fzltda.com.br",
     whatsappHref: "https://wa.me/5551983431014",
   },
+  {
+    id: "broker",
+    label: "Broker Nestlé",
+    endereco: "BR 471, km 158 – nº 900 – RS, Brasil",
+    telefone: "(51) 3731 3426",
+    whatsapp: "(51) 98343 1014",
+    email: "contatorp@fzltda.com.br",
+    whatsappHref: "https://wa.me/5551983431014",
+  },
 ];
 
 function Icon({ name }: { name: string }) {
@@ -41,7 +50,7 @@ const inputClass =
   "w-full rounded-[8px] border border-[#D1D1D1] bg-white px-4 py-3.5 text-sm text-[#1A1A1A] placeholder:text-[#ABABAB] outline-none focus:border-[#006EB7] transition-colors";
 
 export function Contact() {
-  const [unidade, setUnidade] = useState<"pelotas" | "rio-pardo">("pelotas");
+  const [unidade, setUnidade] = useState<"pelotas" | "rio-pardo" | "broker">("pelotas");
   const [form, setForm] = useState({
     nome: "",
     email: "",
@@ -154,7 +163,7 @@ export function Contact() {
               {UNIDADES.map((u) => (
                 <button
                   key={u.id}
-                  onClick={() => setUnidade(u.id as "pelotas" | "rio-pardo")}
+                  onClick={() => setUnidade(u.id as "pelotas" | "rio-pardo" | "broker")}
                   className={
                     "flex-1 py-3 text-sm font-medium transition-colors " +
                     (unidade === u.id
