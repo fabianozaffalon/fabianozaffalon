@@ -1,0 +1,34 @@
+import type { Metadata } from "next";
+import { EmpresaHero }    from "@/components/sections/empresa/EmpresaHero";
+import { EmpresaAbout }   from "@/components/sections/empresa/EmpresaAbout";
+import { EmpresaVideo }   from "@/components/sections/empresa/EmpresaVideo";
+import { EmpresaOndeEstamos } from "@/components/sections/empresa/EmpresaOndeEstamos";
+import { EmpresaMarcas }  from "@/components/sections/empresa/EmpresaMarcas";
+import { EmpresaCultura } from "@/components/sections/empresa/EmpresaCultura";
+import { EmpresaRede }    from "@/components/sections/empresa/EmpresaRede";
+import { EmpresaCases }   from "@/components/sections/empresa/EmpresaCases";
+import { CtaBanner }      from "@/components/sections/CtaBanner";
+import { Contact }        from "@/components/sections/Contact";
+
+export const metadata: Metadata = {
+  title: "A Empresa",
+  description:
+    "Conheça a história, estrutura e valores da Fabiano Zaffalon Distribuidora — quase 30 anos conectando grandes marcas ao mercado do Sul do Brasil.",
+};
+
+export default function EmpresaPage() {
+  return (
+    <>
+      <EmpresaHero />
+      <EmpresaAbout />
+      <EmpresaVideo />
+      <EmpresaOndeEstamos />
+      <EmpresaMarcas />
+      <EmpresaCultura />
+      <EmpresaRede />
+      <EmpresaCases />
+      <CtaBanner />
+      <Contact />
+    </>
+  );
+}
