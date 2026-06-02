@@ -11,7 +11,7 @@ const ATUACAO_LINKS = [
 ];
 
 const NAV_LINKS = [
-  { label: "A Empresa",    href: "#empresa",  dropdown: null         },
+  { label: "A Empresa",    href: "/empresa",  dropdown: null         },
   { label: "Broker Nestlé",href: "#broker",   dropdown: null         },
   { label: "Atuação",      href: "#solucoes", dropdown: ATUACAO_LINKS},
   { label: "FAQ",          href: "#faq",      dropdown: null         },
