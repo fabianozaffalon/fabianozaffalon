@@ -39,24 +39,23 @@ export function EmpresaCultura() {
           {CULTURA.map((item) => (
             <div
               key={item.titulo}
-              className="relative overflow-hidden rounded-[12px] border border-gray-100 bg-white p-6 shadow-sm"
+              className="relative overflow-hidden rounded-[12px] border-t-4 border-[#006EB7] bg-white p-6 shadow-sm"
             >
               {/* Grid pattern de fundo */}
-              {/* /public/images/ui/grid-pattern.png */}
-              <div className="absolute inset-0 opacity-[0.06]">
+              <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
                 <Image
                   src="/images/ui/grid-pattern.png"
                   alt=""
                   aria-hidden="true"
                   fill
                   className="object-cover"
-                  sizes="33vw"
+                  sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
 
               {/* Conteúdo */}
               <div className="relative z-10">
-                {/* Ícone + Título lado a lado */}
+                {/* Ícone + Título */}
                 <div className="mb-4 flex items-center gap-3">
                   <Image
                     src={item.icon}
@@ -70,8 +69,8 @@ export function EmpresaCultura() {
                   </h3>
                 </div>
 
-                {/* Divisor */}
-                <div className="mb-4 h-px w-full bg-gray-200" />
+                {/* Divisor sutil */}
+                <div className="mb-4 h-px w-full bg-gray-100" />
 
                 {/* Texto */}
                 <p className="text-sm leading-relaxed text-[#595959]">
