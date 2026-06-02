@@ -39,10 +39,10 @@ export function EmpresaCultura() {
           {CULTURA.map((item) => (
             <div
               key={item.titulo}
-              className="relative overflow-hidden rounded-[12px] border-t-4 border-[#006EB7] bg-white p-6 shadow-sm"
+              className="relative overflow-hidden rounded-[8px] border border-gray-200 bg-white p-6"
             >
-              {/* Grid pattern de fundo */}
-              <div className="absolute inset-0 opacity-[0.05] pointer-events-none">
+              {/* Grid pattern de fundo — muito sutil */}
+              <div className="absolute inset-0 opacity-[0.04] pointer-events-none">
                 <Image
                   src="/images/ui/grid-pattern.png"
                   alt=""
@@ -55,22 +55,22 @@ export function EmpresaCultura() {
 
               {/* Conteúdo */}
               <div className="relative z-10">
-                {/* Ícone + Título */}
+                {/* Ícone + Título na mesma linha */}
                 <div className="mb-4 flex items-center gap-3">
                   <Image
                     src={item.icon}
                     alt={item.titulo}
-                    width={48}
-                    height={48}
-                    className="h-12 w-12 shrink-0"
+                    width={52}
+                    height={52}
+                    className="h-[52px] w-[52px] shrink-0"
                   />
-                  <h3 className="text-lg font-bold text-[#006EB7]">
+                  <h3 className="text-xl font-bold text-[#006EB7]">
                     {item.titulo}
                   </h3>
                 </div>
 
-                {/* Divisor sutil */}
-                <div className="mb-4 h-px w-full bg-gray-100" />
+                {/* Linha divisória cinza — igual ao Figma */}
+                <div className="mb-4 h-px w-full bg-gray-200" />
 
                 {/* Texto */}
                 <p className="text-sm leading-relaxed text-[#595959]">
