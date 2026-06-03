@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ATUACAO_LINKS = [
-  { label: "Varejo",       href: "#varejo"       },
+  { label: "Varejo",       href: "/varejo"       },
   { label: "Food Service", href: "#food-service" },
   { label: "Indústria",    href: "#industria"    },
 ];
