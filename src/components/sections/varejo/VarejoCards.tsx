@@ -1,10 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
-function CardIcon({ src, label }: { src: string; label: string }) {
+function CardIcon({ src, label, forceWhite }: { src: string; label: string; forceWhite?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <Image src={src} alt="" aria-hidden="true" width={28} height={28} className="h-7 w-7 shrink-0" />
+      <Image
+        src={src}
+        alt=""
+        aria-hidden="true"
+        width={28}
+        height={28}
+        className="h-7 w-7 shrink-0"
+        style={forceWhite ? { filter: "brightness(0) invert(1)" } : undefined}
+      />
       <span className="text-xs font-medium leading-tight text-white">{label}</span>
     </div>
   );
@@ -19,7 +27,7 @@ export function VarejoLocal() {
           overflow-hidden + rounded-[20px] no container garante que
           a foto respeite os cantos arredondados do card
         */}
-        <div className="overflow-hidden rounded-[20px] bg-[#006EB7]">
+        <div className="rounded-[20px] bg-[#006EB7]">
           <div className="grid grid-cols-1 md:grid-cols-2">
 
             {/* Conteúdo — esquerda */}
@@ -41,10 +49,10 @@ export function VarejoLocal() {
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-                <CardIcon src="/images/icons/icon-rotas-azul.svg"    label="Rotas programadas" />
-                <CardIcon src="/images/icons/icon-qualidade.svg"     label="Controle rigoroso de qualidade" />
-                <CardIcon src="/images/icons/icon-equipe.svg"        label="Equipe preparada" />
-                <CardIcon src="/images/icons/icon-mix-azul.svg"      label="Apoio na definição de mix" />
+                <CardIcon src="/images/icons/icon-rotas.svg"     label="Rotas programadas"               forceWhite />
+                <CardIcon src="/images/icons/icon-qualidade.svg" label="Controle rigoroso de qualidade"  />
+                <CardIcon src="/images/icons/icon-equipe.svg"    label="Equipe preparada"                />
+                <CardIcon src="/images/icons/icon-mix.svg"       label="Apoio na definição de mix"       forceWhite />
               </div>
               <Link
                 href="#contato"
@@ -54,15 +62,17 @@ export function VarejoLocal() {
               </Link>
             </div>
 
-            {/* Foto — ocupa toda a coluna, cantos arredondados herdados do container */}
-            <div className="relative hidden md:block" style={{ minHeight: "460px" }}>
-              <Image
-                src="/images/varejo/varejo-local.jpg"
-                alt="Varejista local parceiro Fabiano Zaffalon"
-                fill
-                className="object-cover object-top"
-                sizes="50vw"
-              />
+            {/* Foto — 4 cantos arredondados, margem interna para respirar */}
+            <div className="relative hidden md:block p-4 pl-0" style={{ minHeight: "460px" }}>
+              <div className="relative h-full w-full overflow-hidden rounded-[16px]">
+                <Image
+                  src="/images/varejo/varejo-local.jpg"
+                  alt="Varejista local parceiro Fabiano Zaffalon"
+                  fill
+                  className="object-cover object-top"
+                  sizes="50vw"
+                />
+              </div>
             </div>
           </div>
         </div>
