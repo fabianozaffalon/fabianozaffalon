@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { VarejoHero }        from "@/components/sections/varejo/VarejoHero";
-import { VarejoApresentacao } from "@/components/sections/varejo/VarejoApresentacao";
+import { VarejoHero }         from "@/components/sections/varejo/VarejoHero";
+import { VarejoApresentacao }  from "@/components/sections/varejo/VarejoApresentacao";
 import { VarejoLocal, VarejoMedioGrande } from "@/components/sections/varejo/VarejoCards";
-import { VarejoBeneficios }  from "@/components/sections/varejo/VarejoBeneficios";
-import { VarejoPortfolio }   from "@/components/sections/varejo/VarejoPortfolio";
-import { VarejoCampanha }    from "@/components/sections/varejo/VarejoCampanha";
-import { CtaBannerSimples }  from "@/components/sections/CtaBannerSimples";
-import { Contact }           from "@/components/sections/Contact";
+import { VarejoBeneficios }   from "@/components/sections/varejo/VarejoBeneficios";
+import { VarejoPortfolio }    from "@/components/sections/varejo/VarejoPortfolio";
+import { VarejoCampanha }     from "@/components/sections/varejo/VarejoCampanha";
+import { CtaBannerSimples }   from "@/components/sections/CtaBannerSimples";
+import { Contact }            from "@/components/sections/Contact";
 
 export const metadata: Metadata = {
   title: "Varejo",
