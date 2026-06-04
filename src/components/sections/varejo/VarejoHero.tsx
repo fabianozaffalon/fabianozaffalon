@@ -17,7 +17,7 @@ export function VarejoHero() {
       />
 
       {/* Overlay gradiente — forte à esquerda, some à direita */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#006EB7]/90 via-[#006EB7]/55 to-transparent" />
+      <div className="absolute inset-y-0 left-0 w-[35%] bg-gradient-to-r from-[#006EB7]/90 via-[#006EB7]/60 to-transparent" />
 
       <div className="relative mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div
@@ -29,11 +29,16 @@ export function VarejoHero() {
             className="mb-5 flex items-center gap-2 text-xs font-medium text-white/80"
             aria-label="Breadcrumb"
           >
-            <Link href="/" className="underline underline-offset-2 hover:text-white transition-colors">
+            <Link
+              href="/"
+              className="underline underline-offset-2 hover:text-white transition-colors"
+            >
               HOME
             </Link>
             <span className="text-white/50">›</span>
-            <span className="hover:text-white transition-colors cursor-default">ATUAÇÃO</span>
+            <span className="hover:text-white transition-colors cursor-default">
+              ATUAÇÃO
+            </span>
             <span className="text-white/50">›</span>
             <span className="text-white font-semibold">VAREJO</span>
           </nav>

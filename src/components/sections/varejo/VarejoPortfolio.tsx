@@ -2,29 +2,28 @@ import Image from "next/image";
 
 export function VarejoPortfolio() {
   return (
-    <section className="bg-[#EFEFEF] py-14 md:py-20">
+    <section className="bg-[#E5E3EB] py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-14">
-
           {/* Texto — esquerda */}
           <div className="flex flex-col gap-4 order-1 md:order-none">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#F47920]">
+            <p className="text-xs font-bold uppercase tracking-widest text-[#0084E5]">
               Portfólio de Produtos
             </p>
             <h2
-              className="font-black leading-tight text-[#006EB7]"
+              className="font-black leading-tight text-[#00497F]"
               style={{ fontSize: "clamp(1.4rem, 2.8vw, 2.1rem)" }}
             >
               Um portfólio forte faz toda a diferença no desempenho do varejo.
             </h2>
             <p className="text-sm leading-relaxed text-[#595959]">
-              Por isso, trabalhamos com marcas reconhecidas nacionalmente, reunindo mais
-              de{" "}
-              <strong className="font-semibold">4 mil produtos</strong> capazes de atender
-              diferentes perfis de consumidores e categorias de negócio. Essa diversidade
-              permite ampliar oportunidades de venda, fortalecer a presença no mercado e
-              oferecer aos clientes finais a confiança que apenas marcas consolidadas
-              conseguem transmitir.
+              Por isso, trabalhamos com marcas reconhecidas nacionalmente,
+              reunindo mais de{" "}
+              <strong className="font-semibold">4 mil produtos</strong> capazes
+              de atender diferentes perfis de consumidores e categorias de
+              negócio. Essa diversidade permite ampliar oportunidades de venda,
+              fortalecer a presença no mercado e oferecer aos clientes finais a
+              confiança que apenas marcas consolidadas conseguem transmitir.
             </p>
           </div>
 
@@ -38,7 +37,6 @@ export function VarejoPortfolio() {
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
-
         </div>
       </div>
     </section>

@@ -13,7 +13,9 @@ function CardIcon({ src, label }: { src: string; label: string }) {
         className="h-7 w-7 shrink-0"
         style={{ filter: "brightness(0) invert(1)" }}
       />
-      <span className="text-xs font-medium leading-tight text-white">{label}</span>
+      <span className="text-xs font-medium leading-tight text-white">
+        {label}
+      </span>
     </div>
   );
 }
@@ -21,10 +23,12 @@ function CardIcon({ src, label }: { src: string; label: string }) {
 // ── Varejo Local ──────────────────────────────────────────────────────────────
 export function VarejoLocal() {
   return (
-    <section className="bg-[#EFEFEF] pb-6">
+    <section className="bg-[#FFFFFF] pt-0 pb-6">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-        <div className="relative overflow-hidden rounded-[20px]" style={{ minHeight: "clamp(340px, 36vw, 480px)" }}>
-
+        <div
+          className="relative overflow-hidden rounded-[20px]"
+          style={{ minHeight: "clamp(340px, 36vw, 480px)" }}
+        >
           {/* Imagem fullbleed — já tem fundo azul à esquerda */}
           <Image
             src="/images/varejo/varejo-local.jpg"
@@ -38,43 +42,56 @@ export function VarejoLocal() {
           <div className="absolute inset-0 flex items-center">
             <div className="w-full px-8 md:px-10">
               <div className="max-w-[480px] flex flex-col gap-4">
-                <h2 className="text-2xl font-black text-white md:text-3xl">
+                <h2 className="text-2xl font-bold text-white md:text-3xl">
                   Varejo local
                 </h2>
-                <div className="h-0.5 w-16 bg-[#5BA3D9]" />
+                <div className="h-1.5 w-16 bg-[#5BA3D9]" />
                 <h3
-                  className="font-bold text-[#5BA3D9]"
+                  className="font-bold text-[#003861]"
                   style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
                 >
                   Juntos para construir negócios mais fortes
                 </h3>
                 <p className="text-sm leading-relaxed text-white/80">
                   Entendemos a{" "}
-                  <strong className="font-semibold text-white">importância que o varejo local</strong>{" "}
-                  tem para as comunidades e para o desenvolvimento regional. Por isso,
-                  contamos com rotas programadas, controle rigoroso de qualidade e uma
-                  equipe preparada para auxiliar na construção de um mix adequado ao
-                  perfil de cada negócio. Tudo isso aliado ao acesso a grandes marcas
-                  do mercado por meio de negociações acessíveis, permitindo que pequenos
-                  varejistas ampliem suas oportunidades de venda e fortaleçam sua
-                  competitividade.
+                  <strong className="font-semibold text-white">
+                    importância que o varejo local
+                  </strong>{" "}
+                  tem para as comunidades e para o desenvolvimento regional. Por
+                  isso, contamos com rotas programadas, controle rigoroso de
+                  qualidade e uma equipe preparada para auxiliar na construção
+                  de um mix adequado ao perfil de cada negócio. Tudo isso aliado
+                  ao acesso a grandes marcas do mercado por meio de negociações
+                  acessíveis, permitindo que pequenos varejistas ampliem suas
+                  oportunidades de venda e fortaleçam sua competitividade.
                 </p>
                 <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                  <CardIcon src="/images/icons/icon-rotas.svg"     label="Rotas programadas" />
-                  <CardIcon src="/images/icons/icon-qualidade.svg" label="Controle rigoroso de qualidade" />
-                  <CardIcon src="/images/icons/icon-equipe.svg"    label="Equipe preparada" />
-                  <CardIcon src="/images/icons/icon-mix.svg"       label="Apoio na definição de mix" />
+                  <CardIcon
+                    src="/images/icons/icon-rotas.svg"
+                    label="Rotas programadas"
+                  />
+                  <CardIcon
+                    src="/images/icons/icon-qualidade.svg"
+                    label="Controle rigoroso de qualidade"
+                  />
+                  <CardIcon
+                    src="/images/icons/icon-equipe.svg"
+                    label="Equipe preparada"
+                  />
+                  <CardIcon
+                    src="/images/icons/icon-mix.svg"
+                    label="Apoio na definição de mix"
+                  />
                 </div>
                 <Link
                   href="#contato"
-                  className="self-start rounded-[8px] border-2 border-white px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]"
+                  className="self-start rounded-[8px] bg-[#00497F] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#00497F]"
                 >
                   CONVERSE COM UM CONSULTOR
                 </Link>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
@@ -84,10 +101,12 @@ export function VarejoLocal() {
 // ── Médio & Grande Varejo ─────────────────────────────────────────────────────
 export function VarejoMedioGrande() {
   return (
-    <section className="bg-[#EFEFEF] pb-14 md:pb-20">
+    <section className="bg-[#FFFFFF] pt-8 pb-6 md:pt-10">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-        <div className="relative overflow-hidden rounded-[20px]" style={{ minHeight: "clamp(340px, 36vw, 480px)" }}>
-
+        <div
+          className="relative overflow-hidden rounded-[20px]"
+          style={{ minHeight: "clamp(340px, 36vw, 480px)" }}
+        >
           {/* Imagem fullbleed — já tem fundo azul escuro à esquerda */}
           <Image
             src="/images/varejo/medio-grande.jpg"
@@ -101,10 +120,10 @@ export function VarejoMedioGrande() {
           <div className="absolute inset-0 flex items-center">
             <div className="w-full px-8 md:px-10">
               <div className="max-w-[480px] flex flex-col gap-4">
-                <h2 className="text-2xl font-black text-white md:text-3xl">
+                <h2 className="text-2xl font-bold text-white md:text-3xl">
                   Médio & Grande Varejo
                 </h2>
-                <div className="h-0.5 w-16 bg-[#5BA3D9]" />
+                <div className="h-1.5 w-16 bg-[#5BA3D9]" />
                 <h3
                   className="font-bold text-[#5BA3D9]"
                   style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
@@ -112,29 +131,41 @@ export function VarejoMedioGrande() {
                   Eficiência e performance para grandes operações
                 </h3>
                 <p className="text-sm leading-relaxed text-white/80">
-                  Para redes e operações de maior porte, disponibilizamos um atendimento
-                  especializado conduzido por profissionais dedicados ao relacionamento
-                  com grandes contas. Nossa equipe de Key Accounts atua de forma
-                  estratégica no planejamento de abastecimento, gestão de oportunidades
-                  e desenvolvimento comercial, garantindo eficiência operacional e
-                  soluções adequadas às necessidades de cada empreendimento.
+                  Para redes e operações de maior porte, disponibilizamos um
+                  atendimento especializado conduzido por profissionais
+                  dedicados ao relacionamento com grandes contas. Nossa equipe
+                  de Key Accounts atua de forma estratégica no planejamento de
+                  abastecimento, gestão de oportunidades e desenvolvimento
+                  comercial, garantindo eficiência operacional e soluções
+                  adequadas às necessidades de cada empreendimento.
                 </p>
                 <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                  <CardIcon src="/images/icons/icon-atendimento.svg"     label="Atendimento especializado" />
-                  <CardIcon src="/images/icons/icon-planejamento.svg"    label="Planejamento de abastecimento" />
-                  <CardIcon src="/images/icons/icon-gestao.svg"          label="Gestão de oportunidades" />
-                  <CardIcon src="/images/icons/icon-desenvolvimento.svg" label="Desenvolvimento comercial" />
+                  <CardIcon
+                    src="/images/icons/icon-atendimento.svg"
+                    label="Atendimento especializado"
+                  />
+                  <CardIcon
+                    src="/images/icons/icon-planejamento.svg"
+                    label="Planejamento de abastecimento"
+                  />
+                  <CardIcon
+                    src="/images/icons/icon-gestao.svg"
+                    label="Gestão de oportunidades"
+                  />
+                  <CardIcon
+                    src="/images/icons/icon-desenvolvimento.svg"
+                    label="Desenvolvimento comercial"
+                  />
                 </div>
                 <Link
                   href="#contato"
-                  className="self-start rounded-[8px] border-2 border-white px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#00497F]"
+                  className="self-start rounded-[8px] bg-[#0084E5] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0084E5]"
                 >
                   CONVERSE COM UM CONSULTOR
                 </Link>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
