@@ -1,19 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// ── Ícones inline compartilhados ──────────────────────────────────────────────
+// ── Ícone do card — exibe cor original do SVG (azul) ─────────────────────────
 function CardIcon({ src, label }: { src: string; label: string }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2.5">
       <Image
         src={src}
         alt=""
         aria-hidden="true"
         width={28}
         height={28}
-        className="h-7 w-7 shrink-0 brightness-0 invert"
+        className="h-7 w-7 shrink-0"
       />
-      <span className="text-xs font-medium text-white leading-tight">{label}</span>
+      <span className="text-xs font-medium leading-tight text-white">{label}</span>
     </div>
   );
 }
@@ -34,13 +34,15 @@ export function VarejoLocal() {
                 </h2>
                 <h3
                   className="font-bold text-white/90"
-                  style={{ fontSize: "clamp(1rem, 2vw, 1.25rem)" }}
+                  style={{ fontSize: "clamp(1rem, 1.8vw, 1.2rem)" }}
                 >
                   Juntos para construir negócios mais fortes
                 </h3>
                 <p className="text-sm leading-relaxed text-white/80">
                   Entendemos a{" "}
-                  <strong className="font-semibold text-white">importância que o varejo local</strong>{" "}
+                  <strong className="font-semibold text-white">
+                    importância que o varejo local
+                  </strong>{" "}
                   tem para as comunidades e para o desenvolvimento regional. Por isso,
                   contamos com rotas programadas, controle rigoroso de qualidade e uma
                   equipe preparada para auxiliar na construção de um mix adequado ao
@@ -51,15 +53,17 @@ export function VarejoLocal() {
                 </p>
               </div>
 
-              {/* Ícones — 2x2 grid */}
+              {/* Ícones — 2×2
+                  icon-rotas-azul e icon-mix-azul = versões azuis baixadas
+                  icon-qualidade e icon-equipe = ícones já azuis originalmente
+              */}
               <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-                <CardIcon src="/images/icons/icon-rotas.svg"    label="Rotas programadas" />
-                <CardIcon src="/images/icons/icon-qualidade.svg" label="Controle rigoroso de qualidade" />
-                <CardIcon src="/images/icons/icon-equipe.svg"   label="Equipe preparada" />
-                <CardIcon src="/images/icons/icon-mix.svg"      label="Apoio na definição de mix" />
+                <CardIcon src="/images/icons/icon-rotas-azul.svg"    label="Rotas programadas" />
+                <CardIcon src="/images/icons/icon-qualidade.svg"     label="Controle rigoroso de qualidade" />
+                <CardIcon src="/images/icons/icon-equipe.svg"        label="Equipe preparada" />
+                <CardIcon src="/images/icons/icon-mix-azul.svg"      label="Apoio na definição de mix" />
               </div>
 
-              {/* Botão */}
               <Link
                 href="#contato"
                 className="self-start rounded-[8px] border-2 border-white px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]"
@@ -68,13 +72,13 @@ export function VarejoLocal() {
               </Link>
             </div>
 
-            {/* Foto — direita */}
-            <div className="relative hidden md:block min-h-[420px]">
+            {/* Foto — object-top preserva rosto */}
+            <div className="relative hidden md:block" style={{ minHeight: "460px" }}>
               <Image
                 src="/images/varejo/varejo-local.jpg"
                 alt="Varejista local parceiro Fabiano Zaffalon"
                 fill
-                className="object-cover object-center rounded-r-[20px]"
+                className="object-cover object-top rounded-r-[20px]"
                 sizes="50vw"
               />
             </div>
@@ -99,33 +103,31 @@ export function VarejoMedioGrande() {
                 <h2 className="text-2xl font-black text-white md:text-3xl">
                   Médio & Grande Varejo
                 </h2>
-                {/* Linha divisória azul clara */}
                 <div className="h-0.5 w-16 bg-[#006EB7]" />
                 <h3
-                  className="font-bold text-[#006EB7]"
-                  style={{ fontSize: "clamp(1rem, 2vw, 1.25rem)" }}
+                  className="font-bold text-[#5BA3D9]"
+                  style={{ fontSize: "clamp(1rem, 1.8vw, 1.2rem)" }}
                 >
                   Eficiência e performance para grandes operações
                 </h3>
                 <p className="text-sm leading-relaxed text-white/80">
                   Para redes e operações de maior porte, disponibilizamos um atendimento
-                  especializado conduzido por profissionais dedicados ao relacionamento com
-                  grandes contas. Nossa equipe de Key Accounts atua de forma estratégica no
-                  planejamento de abastecimento, gestão de oportunidades e desenvolvimento
-                  comercial, garantindo eficiência operacional e soluções adequadas às
-                  necessidades de cada empreendimento.
+                  especializado conduzido por profissionais dedicados ao relacionamento
+                  com grandes contas. Nossa equipe de Key Accounts atua de forma
+                  estratégica no planejamento de abastecimento, gestão de oportunidades
+                  e desenvolvimento comercial, garantindo eficiência operacional e
+                  soluções adequadas às necessidades de cada empreendimento.
                 </p>
               </div>
 
-              {/* Ícones — 2x2 grid */}
+              {/* Ícones — todos azuis originalmente */}
               <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-                <CardIcon src="/images/icons/icon-atendimento.svg"   label="Atendimento especializado" />
-                <CardIcon src="/images/icons/icon-planejamento.svg"  label="Planejamento de abastecimento" />
-                <CardIcon src="/images/icons/icon-gestao.svg"        label="Gestão de oportunidades" />
+                <CardIcon src="/images/icons/icon-atendimento.svg"    label="Atendimento especializado" />
+                <CardIcon src="/images/icons/icon-planejamento.svg"   label="Planejamento de abastecimento" />
+                <CardIcon src="/images/icons/icon-gestao.svg"         label="Gestão de oportunidades" />
                 <CardIcon src="/images/icons/icon-desenvolvimento.svg" label="Desenvolvimento comercial" />
               </div>
 
-              {/* Botão */}
               <Link
                 href="#contato"
                 className="self-start rounded-[8px] border-2 border-white px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#00497F]"
@@ -134,13 +136,13 @@ export function VarejoMedioGrande() {
               </Link>
             </div>
 
-            {/* Foto — direita */}
-            <div className="relative hidden md:block min-h-[420px]">
+            {/* Foto — object-top preserva rosto */}
+            <div className="relative hidden md:block" style={{ minHeight: "460px" }}>
               <Image
                 src="/images/varejo/medio-grande.jpg"
-                alt="Executivo de key account Fabiano Zaffalon"
+                alt="Executivo Key Account Fabiano Zaffalon"
                 fill
-                className="object-cover object-center rounded-r-[20px]"
+                className="object-cover object-top rounded-r-[20px]"
                 sizes="50vw"
               />
             </div>

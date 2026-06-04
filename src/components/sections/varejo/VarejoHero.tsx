@@ -7,7 +7,6 @@ export function VarejoHero() {
       className="relative w-full overflow-hidden"
       style={{ minHeight: "clamp(280px, 32vw, 420px)" }}
     >
-      {/* Imagem de fundo */}
       <Image
         src="/images/varejo/hero-varejo.jpg"
         alt="Entrega Fabiano Zaffalon em supermercado"
@@ -17,34 +16,34 @@ export function VarejoHero() {
         sizes="100vw"
       />
 
-      {/* Overlay azul escuro */}
-      <div className="absolute inset-0 bg-[#006EB7]/80" />
+      {/* Overlay gradiente — forte à esquerda, some à direita */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#006EB7]/90 via-[#006EB7]/55 to-transparent" />
 
-      {/* Conteúdo */}
       <div className="relative mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div
           className="flex flex-col justify-center"
           style={{ minHeight: "clamp(280px, 32vw, 420px)" }}
         >
           {/* Breadcrumb */}
-          <nav className="mb-5 flex items-center gap-2 text-xs font-medium text-white/80" aria-label="Breadcrumb">
+          <nav
+            className="mb-5 flex items-center gap-2 text-xs font-medium text-white/80"
+            aria-label="Breadcrumb"
+          >
             <Link href="/" className="underline underline-offset-2 hover:text-white transition-colors">
               HOME
             </Link>
             <span className="text-white/50">›</span>
-            <Link href="#solucoes" className="hover:text-white transition-colors">
-              ATUAÇÃO
-            </Link>
+            <span className="hover:text-white transition-colors cursor-default">ATUAÇÃO</span>
             <span className="text-white/50">›</span>
             <span className="text-white font-semibold">VAREJO</span>
           </nav>
 
           {/* Título */}
           <h1
-            className="font-black leading-[1.1] text-white"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}
+            className="leading-[1.15] text-white max-w-[560px]"
+            style={{ fontSize: "clamp(1.75rem, 3.5vw, 3rem)" }}
           >
-            <span className="text-white">Varejista:</span>
+            <strong className="font-black">Varejista:</strong>
             <br />
             <span className="font-normal">conte com um parceiro</span>
             <br />
