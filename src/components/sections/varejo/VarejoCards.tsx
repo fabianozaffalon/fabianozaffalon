@@ -41,8 +41,9 @@ export function VarejoLocal() {
                 <h2 className="text-2xl font-black text-white md:text-3xl">
                   Varejo local
                 </h2>
+                <div className="h-0.5 w-16 bg-[#5BA3D9]" />
                 <h3
-                  className="font-bold text-white/90"
+                  className="font-bold text-[#5BA3D9]"
                   style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
                 >
                   Juntos para construir negócios mais fortes
