@@ -5,27 +5,27 @@ import Image from "next/image";
 import Link from "next/link";
 
 const ATUACAO_LINKS = [
-  { label: "Varejo",       href: "/varejo"       },
-  { label: "Food Service", href: "#food-service" },
-  { label: "Indústria",    href: "#industria"    },
+  { label: "Varejo", href: "/varejo" },
+  { label: "Food Service", href: "/foodservice" },
+  { label: "Indústria", href: "/industria" },
 ];
 
 const NAV_LINKS = [
-  { label: "A Empresa",    href: "/empresa",  dropdown: null         },
-  { label: "Broker Nestlé",href: "#broker",   dropdown: null         },
-  { label: "Atuação",      href: "#solucoes", dropdown: ATUACAO_LINKS},
-  { label: "FAQ",          href: "#faq",      dropdown: null         },
-  { label: "Notícias",     href: "#noticias", dropdown: null         },
-  { label: "Contato",      href: "#contato",  dropdown: null         },
+  { label: "A Empresa", href: "/empresa", dropdown: null },
+  { label: "Broker Nestlé", href: "#broker", dropdown: null },
+  { label: "Atuação", href: "#solucoes", dropdown: ATUACAO_LINKS },
+  { label: "FAQ", href: "#faq", dropdown: null },
+  { label: "Notícias", href: "#noticias", dropdown: null },
+  { label: "Contato", href: "#contato", dropdown: null },
 ];
 
 export function Header() {
-  const [menuOpen,          setMenuOpen]          = useState(false);
-  const [dropdownOpen,      setDropdownOpen]      = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileAtuacaoOpen, setMobileAtuacaoOpen] = useState(false);
-  const [scrolled,          setScrolled]          = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const dropdownRef      = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Shrink no scroll
@@ -38,7 +38,9 @@ export function Header() {
   // Lock body scroll quando menu mobile aberto
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   // Fecha menu ao redimensionar para desktop
@@ -56,7 +58,10 @@ export function Header() {
   // Fecha dropdown ao clicar fora
   useEffect(() => {
     const onClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setDropdownOpen(false);
       }
     };
@@ -110,7 +115,10 @@ export function Header() {
           </Link>
 
           {/* Nav desktop */}
-          <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Menu principal">
+          <nav
+            className="hidden items-center gap-5 lg:flex xl:gap-7"
+            aria-label="Menu principal"
+          >
             {NAV_LINKS.map((link) =>
               link.dropdown ? (
                 <div
@@ -127,22 +135,42 @@ export function Header() {
                     onClick={() => setDropdownOpen((v) => !v)}
                   >
                     {link.label}
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                      className={"h-4 w-4 transition-transform duration-200 " + (dropdownOpen ? "rotate-180 text-[#006EB7]" : "")}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className={
+                        "h-4 w-4 transition-transform duration-200 " +
+                        (dropdownOpen ? "rotate-180 text-[#006EB7]" : "")
+                      }
                     >
-                      <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                      <path
+                        fillRule="evenodd"
+                        d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                   </button>
 
                   {/* Dropdown */}
-                  <div className={"absolute left-0 top-full pt-3 transition-all duration-200 " + (dropdownOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-1 opacity-0")}>
+                  <div
+                    className={
+                      "absolute left-0 top-full pt-3 transition-all duration-200 " +
+                      (dropdownOpen
+                        ? "pointer-events-auto translate-y-0 opacity-100"
+                        : "pointer-events-none -translate-y-1 opacity-0")
+                    }
+                  >
                     <div className="w-44 overflow-hidden rounded-[10px] border border-gray-100 bg-white shadow-lg shadow-black/10">
                       {link.dropdown.map((sub, idx) => (
                         <Link
                           key={sub.label}
                           href={sub.href}
                           onClick={() => setDropdownOpen(false)}
-                          className={"block px-4 py-3 text-sm text-[#595959] transition-colors hover:bg-[#f0f7ff] hover:text-[#006EB7] " + (idx !== 0 ? "border-t border-gray-100" : "")}
+                          className={
+                            "block px-4 py-3 text-sm text-[#595959] transition-colors hover:bg-[#f0f7ff] hover:text-[#006EB7] " +
+                            (idx !== 0 ? "border-t border-gray-100" : "")
+                          }
                         >
                           {sub.label}
                         </Link>
@@ -168,8 +196,17 @@ export function Header() {
               href="#cliente"
               className="flex items-center gap-1.5 rounded-[8px] border-2 border-[#006EB7] bg-[#006EB7] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0">
-                <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="h-4 w-4 shrink-0"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                  clipRule="evenodd"
+                />
               </svg>
               Área do Cliente
             </Link>
@@ -182,23 +219,50 @@ export function Header() {
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={menuOpen}
           >
-            <span className={"block h-0.5 w-6 rounded-full transition-all duration-300 " + (menuOpen ? "translate-y-[7px] rotate-45 bg-white"   : "bg-[#595959]")} />
-            <span className={"block h-0.5 w-6 rounded-full transition-all duration-300 " + (menuOpen ? "opacity-0"                               : "bg-[#595959]")} />
-            <span className={"block h-0.5 w-6 rounded-full transition-all duration-300 " + (menuOpen ? "-translate-y-[7px] -rotate-45 bg-white"  : "bg-[#595959]")} />
+            <span
+              className={
+                "block h-0.5 w-6 rounded-full transition-all duration-300 " +
+                (menuOpen
+                  ? "translate-y-[7px] rotate-45 bg-white"
+                  : "bg-[#595959]")
+              }
+            />
+            <span
+              className={
+                "block h-0.5 w-6 rounded-full transition-all duration-300 " +
+                (menuOpen ? "opacity-0" : "bg-[#595959]")
+              }
+            />
+            <span
+              className={
+                "block h-0.5 w-6 rounded-full transition-all duration-300 " +
+                (menuOpen
+                  ? "-translate-y-[7px] -rotate-45 bg-white"
+                  : "bg-[#595959]")
+              }
+            />
           </button>
         </div>
       </header>
 
       {/* ── Overlay ── */}
       <div
-        className={"fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden " + (menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none")}
+        className={
+          "fixed inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden " +
+          (menuOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none")
+        }
         onClick={close}
         aria-hidden="true"
       />
 
       {/* ── Painel mobile ── */}
       <div
-        className={"fixed inset-y-0 right-0 z-50 flex w-[300px] flex-col bg-[#00497F] shadow-2xl transition-transform duration-300 ease-in-out lg:hidden " + (menuOpen ? "translate-x-0" : "translate-x-full")}
+        className={
+          "fixed inset-y-0 right-0 z-50 flex w-[300px] flex-col bg-[#00497F] shadow-2xl transition-transform duration-300 ease-in-out lg:hidden " +
+          (menuOpen ? "translate-x-0" : "translate-x-full")
+        }
         role="dialog"
         aria-modal="true"
         aria-label="Menu mobile"
@@ -229,16 +293,36 @@ export function Header() {
                     <span className="h-px w-4 shrink-0 bg-white/30" />
                     {link.label}
                   </span>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                    className={"h-4 w-4 transition-transform duration-200 " + (mobileAtuacaoOpen ? "rotate-180" : "")}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className={
+                      "h-4 w-4 transition-transform duration-200 " +
+                      (mobileAtuacaoOpen ? "rotate-180" : "")
+                    }
                   >
-                    <path fillRule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                    <path
+                      fillRule="evenodd"
+                      d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </button>
-                <div className={"overflow-hidden transition-all duration-200 " + (mobileAtuacaoOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0")}>
+                <div
+                  className={
+                    "overflow-hidden transition-all duration-200 " +
+                    (mobileAtuacaoOpen
+                      ? "max-h-48 opacity-100"
+                      : "max-h-0 opacity-0")
+                  }
+                >
                   <div className="ml-10 flex flex-col gap-0.5 pb-1">
                     {link.dropdown.map((sub) => (
-                      <Link key={sub.label} href={sub.href} onClick={close}
+                      <Link
+                        key={sub.label}
+                        href={sub.href}
+                        onClick={close}
                         className="rounded-[6px] px-3 py-2.5 text-sm font-normal text-white/60 transition-colors hover:bg-white/10 hover:text-white"
                       >
                         {sub.label}
@@ -271,15 +355,26 @@ export function Header() {
             onClick={close}
             className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#006EB7] bg-[#006EB7] px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0">
-              <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clipRule="evenodd" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="h-4 w-4 shrink-0"
+            >
+              <path
+                fillRule="evenodd"
+                d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z"
+                clipRule="evenodd"
+              />
             </svg>
             Área do Cliente
           </Link>
         </div>
 
         <div className="mt-auto border-t border-white/10 px-6 py-5">
-          <p className="text-center text-xs text-white/40">Fabiano Zaffalon Distribuidora</p>
+          <p className="text-center text-xs text-white/40">
+            Fabiano Zaffalon Distribuidora
+          </p>
         </div>
       </div>
     </>

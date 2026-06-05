@@ -23,7 +23,7 @@ function CardIcon({ src, label }: { src: string; label: string }) {
 // ── Varejo Local ──────────────────────────────────────────────────────────────
 export function VarejoLocal() {
   return (
-    <section className="bg-[#FFFFFF] pt-0 pb-6">
+    <section className="bg-[#FFFFFF] pt-6 pb-0 md:pt-12">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div
           className="relative overflow-hidden rounded-[20px]"
@@ -48,7 +48,7 @@ export function VarejoLocal() {
                 <div className="h-1.5 w-16 bg-[#5BA3D9]" />
                 <h3
                   className="font-bold text-[#003861]"
-                  style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
+                  style={{ fontSize: "clamp(1.08rem, 2vw, 1.25rem)" }}
                 >
                   Juntos para construir negócios mais fortes
                 </h3>
@@ -101,7 +101,7 @@ export function VarejoLocal() {
 // ── Médio & Grande Varejo ─────────────────────────────────────────────────────
 export function VarejoMedioGrande() {
   return (
-    <section className="bg-[#FFFFFF] pt-8 pb-6 md:pt-10">
+    <section className="bg-[#FFFFFF] pt-0 pb-6 md:pt-10">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div
           className="relative overflow-hidden rounded-[20px]"
@@ -126,7 +126,7 @@ export function VarejoMedioGrande() {
                 <div className="h-1.5 w-16 bg-[#5BA3D9]" />
                 <h3
                   className="font-bold text-[#5BA3D9]"
-                  style={{ fontSize: "clamp(1rem, 1.8vw, 1.15rem)" }}
+                  style={{ fontSize: "clamp(0.9rem, 1.85vw, 1.08rem)" }}
                 >
                   Eficiência e performance para grandes operações
                 </h3>

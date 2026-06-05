@@ -2,30 +2,30 @@ import Image from "next/image";
 
 const BENEFICIOS = [
   {
-    icon: "/images/icons/icon-calendario.svg",
-    label: "30 anos de compromisso com nossos parceiros",
-  },
-  { icon: "/images/icons/icon-negociacao.svg", label: "Negociação justa" },
-  {
-    icon: "/images/icons/icon-marcas.svg",
-    label: "Marcas líderes em cada segmento",
-  },
-  {
     icon: "/images/icons/icon-rotas-azul.svg",
     label: "Rotas de distribuição programadas",
   },
   {
-    icon: "/images/icons/icon-seguranca.svg",
-    label: "Segurança e confiabilidade nas entregas",
+    icon: "/images/icons/icon-abastecimento.svg",
+    label: "Abastecimento confiável",
   },
-  { icon: "/images/icons/icon-mix-azul.svg", label: "Apoio na seleção do mix" },
   {
-    icon: "/images/icons/icon-parceiro.svg",
-    label: "Parceiro de verdade: não vendemos para o cliente local",
+    icon: "/images/icons/icon-marcas.svg",
+    label: "Marcas líderes em seus segmento",
   },
+  {
+    icon: "/images/icons/icon-mix-diversificado.svg",
+    label: "Mix diversificado",
+  },
+  { icon: "/images/icons/icon-negociacao.svg", label: "Negociação justa" },
+  {
+    icon: "/images/icons/icon-atendimento-personalizado.svg",
+    label: "Atendimento personalizado",
+  },
+  { icon: "/images/icons/icon-suporte.svg", label: "Suporte comercial" },
 ];
 
-export function VarejoBeneficios() {
+export function FoodServiceBeneficios() {
   return (
     <section className="bg-white py-10 md:py-14">
       <div className="mx-auto w-full max-w-[1280px]">
@@ -36,32 +36,15 @@ export function VarejoBeneficios() {
           Benefícios
         </h2>
 
-        {/*
-          Mobile  : carrossel horizontal com snap — 2.5 itens visíveis
-          Desktop : todos em linha única, espaço distribuído uniformemente
-        */}
+        {/* Mobile: carrossel | Desktop: linha única */}
         <div
-          className={[
-            // Mobile — carrossel
-            "flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-5 pb-4",
-            // Desktop — linha única sem scroll
-            "md:grid md:overflow-visible md:pb-0 md:px-12",
-          ].join(" ")}
-          style={{
-            // Desktop: 7 colunas iguais
-            gridTemplateColumns: "repeat(7, 1fr)",
-          }}
+          className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory px-5 pb-4 md:grid md:overflow-visible md:pb-0 md:px-12"
+          style={{ gridTemplateColumns: "repeat(7, 1fr)" }}
         >
           {BENEFICIOS.map((item) => (
             <div
               key={item.label}
-              className={[
-                "flex flex-col items-center gap-3 text-center",
-                // Mobile: largura fixa para mostrar 2.5 itens
-                "shrink-0 snap-start w-[120px]",
-                // Desktop: ocupa coluna do grid
-                "md:w-auto",
-              ].join(" ")}
+              className="flex flex-col items-center gap-3 text-center shrink-0 snap-start w-[120px] md:w-auto"
             >
               <Image
                 src={item.icon}
@@ -77,7 +60,7 @@ export function VarejoBeneficios() {
           ))}
         </div>
 
-        {/* Indicador de swipe — só mobile */}
+        {/* Indicador swipe — só mobile */}
         <div className="mt-3 flex items-center justify-center gap-1.5 md:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"

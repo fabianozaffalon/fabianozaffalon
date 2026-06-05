@@ -4,11 +4,11 @@ export function VarejoApresentacao() {
   return (
     <section className="bg-[#EFEDED] pt-14 pb-8 md:pt-20 md:pb-10">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-14">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center md:gap-12">
           {/* Texto — esquerda */}
           <div className="flex flex-col gap-5 order-1 md:order-none">
             <h2
-              className="font-black leading-tight text-[#006EB7]"
+              className="font-bold leading-tight text-[#006EB7]"
               style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
             >
               Quando o varejo cresce,
@@ -48,8 +48,12 @@ export function VarejoApresentacao() {
           </div>
 
           {/* Foto + Stats — direita */}
-          <div className="relative overflow-hidden rounded-2xl order-2 md:order-none">
-            <div className="relative h-[320px] w-full md:h-[400px]">
+          <div className="order-2 md:order-none overflow-hidden rounded-2xl">
+            {/* Foto — proporção horizontal fiel ao Figma */}
+            <div
+              className="relative w-full"
+              style={{ aspectRatio: "2371/1158" }}
+            >
               <Image
                 src="/images/varejo/apresentacao-varejo.jpg"
                 alt="Colaboradora Fabiano Zaffalon no estoque"
@@ -59,19 +63,21 @@ export function VarejoApresentacao() {
               />
             </div>
 
-            {/* Barra azul com stats — centralizados, sem divisor */}
-            <div className="flex items-center justify-center gap-10 bg-[#006EB7] px-5 py-5">
+            {/* Barra azul com stats */}
+            <div className="flex items-center justify-center gap-10 bg-[#006EB7] px-6 py-4">
               <div className="flex items-center gap-3">
                 <Image
                   src="/images/icons/icon-entregas.svg"
                   alt=""
                   aria-hidden="true"
-                  width={36}
-                  height={36}
-                  className="h-14 w-14 shrink-0 brightness-0 invert"
+                  width={40}
+                  height={40}
+                  className="h-12 w-12 shrink-0 brightness-0 invert"
                 />
                 <div>
-                  <p className="text-xl font-bold text-white">+7 mil</p>
+                  <p className="text-lg font-black text-white leading-tight">
+                    +7 mil
+                  </p>
                   <p className="text-xs font-normal leading-tight text-white/80">
                     pontos de vendas
                     <br />
@@ -84,12 +90,14 @@ export function VarejoApresentacao() {
                   src="/images/icons/icon-desde.svg"
                   alt=""
                   aria-hidden="true"
-                  width={36}
-                  height={36}
-                  className="h-14 w-14 shrink-0 brightness-0 invert"
+                  width={40}
+                  height={40}
+                  className="h-12 w-12 shrink-0 brightness-0 invert"
                 />
                 <div>
-                  <p className="text-xl font-bold text-white">30 anos</p>
+                  <p className="text-lg font-black text-white leading-tight">
+                    30 anos
+                  </p>
                   <p className="text-xs font-normal leading-tight text-white/80">
                     de compromisso
                     <br />
