@@ -16,8 +16,6 @@ export function VarejoHero() {
         sizes="100vw"
       />
 
-      {/* Overlay gradiente — forte à esquerda, some à direita */}
-      <div className="absolute inset-y-0 left-0 w-[35%] bg-gradient-to-r from-[#006EB7]/90 via-[#006EB7]/60 to-transparent" />
 
       <div className="relative mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div

@@ -12,8 +12,6 @@ export function EmpresaRede() {
         sizes="100vw"
       />
 
-      {/* Overlay azul escuro — lado direito com texto */}
-      <div className="absolute inset-0 bg-gradient-to-l from-[#00497F]/95 via-[#00497F]/80 to-transparent" />
 
       {/* Conteúdo — alinhado à direita */}
       <div className="relative mx-auto w-full max-w-[1280px] px-5 md:px-12">

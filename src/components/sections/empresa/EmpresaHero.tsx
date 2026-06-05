@@ -17,8 +17,6 @@ export function EmpresaHero() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        {/* Overlay — mais forte à esquerda para o texto ser legível */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#EFEFEF]/95 via-[#EFEFEF]/70 to-transparent" />
       </div>
 
       {/* Conteúdo */}

@@ -34,28 +34,30 @@ export function IndustriaCards() {
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-8">
           {CARDS.map((card) => (
             <div
               key={card.id}
-              className="grid grid-cols-1 overflow-hidden rounded-[20px] border border-gray-100 bg-white shadow-sm md:grid-cols-[1fr_auto]"
+              className="relative flex items-center rounded-[20px] bg-[#E5E3EB]"
+              style={{ minHeight: "269px" }}
             >
-              {/* Conteúdo — esquerda */}
-              <div className="flex flex-col gap-4 p-8 md:p-10">
-                {/* Ícone circular azul */}
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#006EB7]">
-                  <Image
-                    src={card.icon}
-                    alt=""
-                    aria-hidden="true"
-                    width={36}
-                    height={36}
-                    className="h-9 w-9 brightness-0 invert"
-                  />
-                </div>
+              {/* Ícone circular — grande, sai do card à esquerda */}
+              <div className="absolute -left-8 flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-[#006EB7] shadow-lg md:-left-10 md:h-32 md:w-32">
+                <Image
+                  src={card.icon}
+                  alt=""
+                  aria-hidden="true"
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 brightness-0 invert"
+                />
+              </div>
+
+              {/* Texto — centro, margem ajustada para bola maior */}
+              <div className="flex flex-1 flex-col gap-3 py-8 pl-28 pr-6 md:pl-32 md:pr-8">
                 <h2
-                  className="font-black text-[#006EB7]"
-                  style={{ fontSize: "clamp(1.2rem, 2vw, 1.5rem)" }}
+                  className="font-bold text-[#006EB7]"
+                  style={{ fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)" }}
                 >
                   {card.titulo}
                 </h2>
@@ -64,14 +66,17 @@ export function IndustriaCards() {
                 </p>
               </div>
 
-              {/* Foto — direita */}
-              <div className="relative hidden md:block w-[340px] lg:w-[400px]">
+              {/* Foto — direita, proporção 544/222 fiel ao Figma */}
+              <div
+                className="relative hidden shrink-0 overflow-hidden rounded-r-[20px] md:block"
+                style={{ width: "44%", minHeight: "269px" }}
+              >
                 <Image
                   src={card.imagem}
                   alt={card.alt}
                   fill
                   className="object-cover object-center"
-                  sizes="400px"
+                  sizes="44vw"
                 />
               </div>
             </div>
