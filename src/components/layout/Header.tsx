@@ -14,7 +14,7 @@ const NAV_LINKS = [
   { label: "A Empresa", href: "/empresa", dropdown: null },
   { label: "Broker Nestlé", href: "#broker", dropdown: null },
   { label: "Atuação", href: "#solucoes", dropdown: ATUACAO_LINKS },
-  { label: "FAQ", href: "#faq", dropdown: null },
+  { label: "FAQ", href: "/faq", dropdown: null },
   { label: "Notícias", href: "#noticias", dropdown: null },
   { label: "Contato", href: "#contato", dropdown: null },
 ];
