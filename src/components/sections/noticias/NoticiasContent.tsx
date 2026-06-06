@@ -1,18 +1,96 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NOTICIAS, formatarData, type Noticia } from "@/data/noticias";
 
-const NOTICIAS_POR_PAGINA = 1;
+// ── Carrossel de fotos extras ─────────────────────────────────────────────────
+function CarrosselFotos({ fotos, titulo }: { fotos: string[]; titulo: string }) {
+  const [index, setIndex] = useState(0);
+  if (fotos.length <= 1) return null;
 
-// ── Card pequeno da sidebar ───────────────────────────────────────────────────
-function CardSidebar({ noticia }: { noticia: Noticia }) {
+  const extras = fotos.slice(1); // ignora a capa
+  const prev = () => setIndex((i) => Math.max(0, i - 1));
+  const next = () => setIndex((i) => Math.min(extras.length - 1, i + 1));
+
   return (
-    <Link
-      href={`/noticias/${noticia.slug}`}
-      className="group relative block overflow-hidden rounded-[12px]"
+    <div className="relative mt-6">
+      <div className="overflow-hidden rounded-[12px]">
+        <div
+          className="flex transition-transform duration-500 ease-in-out"
+          style={{ transform: `translateX(-${index * 100}%)` }}
+        >
+          {extras.map((foto, i) => (
+            <div
+              key={i}
+              className="relative w-full shrink-0"
+              style={{ aspectRatio: "16/9" }}
+            >
+              <Image
+                src={foto}
+                alt={`${titulo} — foto ${i + 2}`}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 60vw"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Setas */}
+      {extras.length > 1 && (
+        <>
+          <button
+            onClick={prev}
+            disabled={index === 0}
+            aria-label="Foto anterior"
+            className={"absolute -left-4 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md border border-gray-100 text-[#006EB7] transition-all " + (index === 0 ? "opacity-30 cursor-not-allowed" : "hover:bg-[#006EB7] hover:text-white")}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+          </button>
+          <button
+            onClick={next}
+            disabled={index === extras.length - 1}
+            aria-label="Próxima foto"
+            className={"absolute -right-4 top-1/2 z-10 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md border border-gray-100 text-[#006EB7] transition-all " + (index === extras.length - 1 ? "opacity-30 cursor-not-allowed" : "hover:bg-[#006EB7] hover:text-white")}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
+          </button>
+        </>
+      )}
+
+      {/* Dots */}
+      {extras.length > 1 && (
+        <div className="mt-3 flex items-center justify-center gap-2">
+          {extras.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={"rounded-full transition-all duration-300 " + (i === index ? "w-6 h-2 bg-[#006EB7]" : "w-2 h-2 bg-gray-300 hover:bg-gray-400")}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Card da sidebar ───────────────────────────────────────────────────────────
+function CardSidebar({ noticia, ativo, onClick }: {
+  noticia: Noticia;
+  ativo: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={"group relative w-full overflow-hidden rounded-[12px] text-left transition-all " + (ativo ? "ring-2 ring-[#006EB7]" : "hover:ring-1 hover:ring-[#006EB7]/40")}
     >
       <div className="relative w-full" style={{ aspectRatio: "351/180" }}>
         <Image
@@ -22,29 +100,28 @@ function CardSidebar({ noticia }: { noticia: Noticia }) {
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="320px"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <h3 className="text-sm font-semibold leading-snug text-white">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-3">
+          <h3 className="text-xs font-semibold leading-snug text-white">
             {noticia.titulo}
           </h3>
-          <span className="mt-2 inline-block text-xs font-bold text-white underline underline-offset-2">
+          <span className="mt-1 inline-block text-xs font-bold text-white underline underline-offset-2">
             Saiba mais
           </span>
         </div>
       </div>
-    </Link>
+    </button>
   );
 }
 
 // ── Newsletter ────────────────────────────────────────────────────────────────
 function Newsletter() {
   const [email, setEmail] = useState("");
-
   return (
     <div className="rounded-[12px] bg-[#F6F6F6] p-5">
       <p className="text-sm font-bold text-[#006EB7]">Receba nossas notícias</p>
       <p className="mt-1 text-xs text-[#595959]">
-        Cadastre-se e receba nossas novidade em primeira mão.
+        Cadastre-se e receba nossas novidades em primeira mão.
       </p>
       <div className="mt-3 flex overflow-hidden rounded-[8px] border border-[#D1D1D1] bg-white">
         <input
@@ -54,9 +131,7 @@ function Newsletter() {
           onChange={(e) => setEmail(e.target.value)}
           className="flex-1 px-4 py-2.5 text-sm text-[#1A1A1A] placeholder:text-[#ABABAB] outline-none"
         />
-        <button
-          className="flex items-center gap-1.5 bg-[#006EB7] px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#00497F]"
-        >
+        <button className="flex items-center gap-1.5 bg-[#006EB7] px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#00497F]">
           Cadastrar
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5">
             <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
@@ -67,72 +142,28 @@ function Newsletter() {
   );
 }
 
-// ── Paginação ─────────────────────────────────────────────────────────────────
-function Paginacao({ current, total, onChange }: {
-  current: number;
-  total: number;
-  onChange: (page: number) => void;
-}) {
-  return (
-    <div className="flex items-center justify-center gap-1 mt-10">
-      {/* Anterior */}
-      <button
-        onClick={() => onChange(current - 1)}
-        disabled={current === 1}
-        className="flex h-8 w-8 items-center justify-center rounded border border-gray-200 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7] disabled:opacity-30 disabled:cursor-not-allowed"
-      >
-        ‹
-      </button>
-
-      {/* Números */}
-      {Array.from({ length: total }).map((_, i) => (
-        <button
-          key={i}
-          onClick={() => onChange(i + 1)}
-          className={
-            "flex h-8 w-8 items-center justify-center rounded border text-sm font-medium transition-colors " +
-            (current === i + 1
-              ? "border-[#006EB7] bg-[#006EB7] text-white"
-              : "border-gray-200 text-[#595959] hover:border-[#006EB7] hover:text-[#006EB7]")
-          }
-        >
-          {i + 1}
-        </button>
-      ))}
-
-      {/* Próximo */}
-      <button
-        onClick={() => onChange(current + 1)}
-        disabled={current === total}
-        className="flex h-8 w-8 items-center justify-center rounded border border-gray-200 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7] disabled:opacity-30 disabled:cursor-not-allowed"
-      >
-        ›
-      </button>
-    </div>
-  );
-}
-
 // ── Componente principal ──────────────────────────────────────────────────────
 export function NoticiasContent() {
-  const [pagina, setPagina] = useState(1);
+  const destaque = NOTICIAS.find((n) => n.destaque) ?? NOTICIAS[0];
+  const [ativa, setAtiva] = useState<Noticia>(destaque);
+  const topoRef = useRef<HTMLDivElement>(null);
 
-  const destaque   = NOTICIAS.find((n) => n.destaque) ?? NOTICIAS[0];
-  const outras     = NOTICIAS.filter((n) => n.id !== destaque.id);
-  const sidebar    = outras.slice(0, 3);
-
-  const totalPaginas = Math.ceil(NOTICIAS.length / NOTICIAS_POR_PAGINA);
-  const noticiaAtual = NOTICIAS[(pagina - 1) % NOTICIAS.length];
+  const handleSelect = (noticia: Noticia) => {
+    setAtiva(noticia);
+    // Scrolla suavemente para o topo do artigo em mobile
+    topoRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_360px] md:items-start md:gap-12">
 
-          {/* ── Notícia principal — esquerda ── */}
-          <article>
+          {/* ── Notícia ativa — esquerda ── */}
+          <article ref={topoRef}>
             {/* Categoria */}
             <p className="text-xs font-bold uppercase tracking-wider text-[#F47920]">
-              {noticiaAtual.categoria}
+              {ativa.categoria}
             </p>
 
             {/* Título */}
@@ -140,46 +171,38 @@ export function NoticiasContent() {
               className="mt-2 font-black leading-tight text-[#00497F]"
               style={{ fontSize: "clamp(1.4rem, 2.5vw, 2rem)" }}
             >
-              {noticiaAtual.titulo}
+              {ativa.titulo}
             </h1>
 
             {/* Divisor */}
             <div className="mt-3 rounded-full bg-[#006EB7]" style={{ width: "77px", height: "6px" }} />
 
             {/* Data */}
-            <p className="mt-3 text-xs text-[#BCBABA]">{formatarData(noticiaAtual.data)}</p>
+            <p className="mt-2 text-xs text-[#BCBABA]">{formatarData(ativa.data)}</p>
 
-            {/* Fotos — até 8 */}
-            <div className="mt-5 flex flex-col gap-4">
-              {noticiaAtual.fotos.map((foto, i) => (
-                <div key={i} className="relative w-full overflow-hidden rounded-[12px]" style={{ aspectRatio: "16/9" }}>
-                  <Image
-                    src={foto}
-                    alt={`${noticiaAtual.titulo} — foto ${i + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 60vw"
-                    priority={i === 0}
-                  />
-                </div>
-              ))}
+            {/* Foto capa */}
+            <div className="relative mt-5 w-full overflow-hidden rounded-[12px]" style={{ aspectRatio: "16/9" }}>
+              <Image
+                src={ativa.capa}
+                alt={ativa.titulo}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 60vw"
+                priority
+              />
             </div>
 
-            {/* Conteúdo */}
+            {/* Texto */}
             <div className="mt-6 flex flex-col gap-4">
-              {noticiaAtual.conteudo.split("\n\n").map((paragrafo, i) => (
+              {ativa.conteudo.split("\n\n").map((paragrafo, i) => (
                 <p key={i} className="text-sm leading-relaxed text-[#595959]">
                   {paragrafo}
                 </p>
               ))}
             </div>
 
-            {/* Paginação */}
-            <Paginacao
-              current={pagina}
-              total={totalPaginas}
-              onChange={setPagina}
-            />
+            {/* Carrossel de fotos extras */}
+            <CarrosselFotos fotos={ativa.fotos} titulo={ativa.titulo} />
           </article>
 
           {/* ── Sidebar — direita ── */}
@@ -188,14 +211,19 @@ export function NoticiasContent() {
               Outras notícias
             </h2>
 
-            {/* Cards das outras notícias */}
-            <div className="flex flex-col gap-4">
-              {sidebar.map((n) => (
-                <CardSidebar key={n.id} noticia={n} />
+            {/* Lista scrollável */}
+            <div className="flex flex-col gap-3 overflow-y-auto pr-1" style={{ maxHeight: "520px" }}>
+              {NOTICIAS.map((n) => (
+                <CardSidebar
+                  key={n.id}
+                  noticia={n}
+                  ativo={n.id === ativa.id}
+                  onClick={() => handleSelect(n)}
+                />
               ))}
             </div>
 
-            {/* Newsletter */}
+            {/* Newsletter — fora do scroll */}
             <Newsletter />
           </aside>
 
