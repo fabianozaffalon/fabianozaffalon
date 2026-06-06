@@ -16,7 +16,7 @@ const NAV_LINKS = [
   { label: "Atuação", href: "#solucoes", dropdown: ATUACAO_LINKS },
   { label: "FAQ", href: "/faq", dropdown: null },
   { label: "Notícias", href: "#noticias", dropdown: null },
-  { label: "Contato", href: "#contato", dropdown: null },
+  { label: "Contato", href: "/contato", dropdown: null },
 ];
 
 export function Header() {

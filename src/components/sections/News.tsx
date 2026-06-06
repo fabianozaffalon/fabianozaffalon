@@ -3,52 +3,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { NOTICIAS } from "@/data/noticias";
 
-/**
- * ─── COMO ADICIONAR NOTÍCIAS ─────────────────────────────────────────
- * 1. Adicione um novo objeto no array NEWS abaixo
- * 2. Coloque a imagem em /public/images/noticias/
- * 3. As setas e paginação se adaptam automaticamente
- * ─────────────────────────────────────────────────────────────────────
- */
-const NEWS = [
-  {
-    id: 1,
-    image: "/images/noticias/noticia-1.jpg",
-    title: "Fabiano Zaffalon é Destaque na Regional Sul no Programa Pdcon 2024",
-    href: "#",
-  },
-  {
-    id: 2,
-    image: "/images/noticias/noticia-2.jpg",
-    title: "A Resiliência de um Time: Como Conquistamos o Reconhecimento Nacional como Broker Top 1 da Nestlé",
-    href: "#",
-  },
-  {
-    id: 3,
-    image: "/images/noticias/noticia-3.jpg",
-    title: "Broker Zaffalon: Uma Trajetória de Sucesso e Crescimento",
-    href: "#",
-  },
-  {
-    id: 4,
-    image: "/images/noticias/noticia-4.jpg",
-    title: "Expansão da Distribuidora Alcança Novos Mercados no Sul do Brasil",
-    href: "#",
-  },
-  {
-    id: 5,
-    image: "/images/noticias/noticia-5.jpg",
-    title: "Parceria Estratégica Fortalece Portfólio de Marcas Representadas",
-    href: "#",
-  },
-  {
-    id: 6,
-    image: "/images/noticias/noticia-6.jpg",
-    title: "Fabiano Zaffalon Investe em Logística para Ampliar Cobertura Regional",
-    href: "#",
-  },
-];
+// Home exibe as 6 primeiras notícias — quando virar dinâmico, só troca por fetch
+const NEWS = NOTICIAS.slice(0, 6).map((n) => ({
+  id:    n.id,
+  image: n.capa,
+  title: n.titulo,
+  href:  `/noticias/${n.slug}`,
+}));
 
 const VISIBLE_DESKTOP = 3;
 const VISIBLE_MOBILE  = 1;
