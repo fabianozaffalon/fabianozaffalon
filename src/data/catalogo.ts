@@ -4,6 +4,7 @@ export type Marca = {
   id: string;
   name: string;
   logo: string;
+  size?: "sm" | "md" | "lg"; // controla o tamanho do logo no grid
 };
 
 export type UnidadeCatalogo = {
@@ -17,11 +18,11 @@ const MARCAS_SUL_CENTRAL: Marca[] = [
   { id: "suzano",    name: "Suzano",         logo: "/images/catalogo/logos/suzano.svg"    },
   { id: "piraque",   name: "Piraquê",        logo: "/images/catalogo/logos/piraque.svg"   },
   { id: "ype",       name: "Ypê",            logo: "/images/catalogo/logos/ype.svg"       },
-  { id: "havaianas", name: "Havaianas",      logo: "/images/catalogo/logos/havaianas.svg" },
+  { id: "havaianas", name: "Havaianas",      logo: "/images/catalogo/logos/havaianas.svg", size: "lg" },
   { id: "yoki",      name: "Yoki",           logo: "/images/catalogo/logos/yoki.svg"      },
   { id: "seara",     name: "Seara",          logo: "/images/catalogo/logos/seara.svg"     },
-  { id: "bunge",     name: "Bunge",          logo: "/images/catalogo/logos/bunge.svg"     },
-  { id: "kimberly",  name: "Kimberly-Clark", logo: "/images/catalogo/logos/kimberly.svg"  },
+  { id: "bunge",     name: "Bunge",          logo: "/images/catalogo/logos/bunge.svg",     size: "lg" },
+  { id: "kimberly",  name: "Kimberly-Clark", logo: "/images/catalogo/logos/kimberly.svg",  size: "lg" },
   { id: "condor",    name: "Condor",         logo: "/images/catalogo/logos/condor.svg"    },
   { id: "isabela",   name: "Isabela",        logo: "/images/catalogo/logos/isabela.svg"   },
   { id: "bic",       name: "BIC",            logo: "/images/catalogo/logos/bic.svg"       },
@@ -31,9 +32,9 @@ const MARCAS_SUL_CENTRAL: Marca[] = [
 
 const MARCAS_BROKER: Marca[] = [
   { id: "nestle",              name: "Nestlé",              logo: "/images/catalogo/logos/nestle.svg"              },
-  { id: "purina",              name: "Purina",              logo: "/images/catalogo/logos/purina.svg"              },
+  { id: "purina",              name: "Purina",              logo: "/images/catalogo/logos/purina.svg",              size: "lg" },
   { id: "garoto",              name: "Garoto",              logo: "/images/catalogo/logos/garoto.svg"              },
-  { id: "nestle-professional", name: "Nestlé Professional", logo: "/images/catalogo/logos/nestle-professional.svg" },
+  { id: "nestle-professional", name: "Nestlé Professional", logo: "/images/catalogo/logos/nestle-professional.svg", size: "lg" },
 ];
 
 export const UNIDADES_CATALOGO: UnidadeCatalogo[] = [

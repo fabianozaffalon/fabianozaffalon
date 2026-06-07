@@ -77,9 +77,14 @@ export function CatalogoSection() {
                 <Image
                   src={marca.logo}
                   alt={marca.name}
-                  width={140}
-                  height={60}
-                  className="h-12 w-auto max-w-[140px] object-contain"
+                  width={160}
+                  height={80}
+                  className={
+                    "w-auto object-contain " +
+                    (marca.size === "lg"
+                      ? "h-16 max-w-[160px]"
+                      : "h-12 max-w-[140px]")
+                  }
                 />
               </div>
             ))}
