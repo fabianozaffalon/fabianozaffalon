@@ -22,8 +22,14 @@ export function CatalogoHero() {
           className="flex flex-col justify-center"
           style={{ minHeight: "clamp(240px, 28vw, 340px)" }}
         >
-          <nav className="mb-4 flex items-center gap-2 text-xs font-medium text-white/70" aria-label="Breadcrumb">
-            <Link href="/" className="underline underline-offset-2 hover:text-white transition-colors">
+          <nav
+            className="mb-4 flex items-center gap-2 text-xs font-medium text-white/70"
+            aria-label="Breadcrumb"
+          >
+            <Link
+              href="/"
+              className="underline underline-offset-2 hover:text-white transition-colors"
+            >
               HOME
             </Link>
             <span className="text-white/40">›</span>
@@ -37,8 +43,8 @@ export function CatalogoHero() {
             Catálogo
           </h1>
           <p className="mt-2 max-w-[380px] text-sm text-white/90">
-            Conheça as marcas que distribuímos em cada região
-            <br />e unidade de atendimento.
+            Conheça as marcas que distribuímos em cada região e unidade de
+            atendimento.
           </p>
         </div>
       </div>
