@@ -60,14 +60,24 @@ export function EmpresaMarcas() {
             <br />
             Representamos
           </h2>
-          <p className="text-sm leading-relaxed text-white/80 md:text-base md:pt-2">
-            A confiança conquistada ao longo de nossa trajetória nos permitiu construir parcerias
-            sólidas com grandes marcas do mercado brasileiro. Hoje, representamos um portfólio com
-            mais de <strong className="font-semibold text-white">4 mil produtos</strong>, reunindo marcas que são reconhecidamente líderes em
-            qualidade, credibilidade e relevância em seus segmentos. Uma seleção que nos permite
-            oferecer soluções completas para o varejo e food service, independentemente do tamanho
-            do negócio.
-          </p>
+          <div className="flex flex-col gap-5 md:pt-2">
+            <p className="text-sm leading-relaxed text-white/80 md:text-base">
+              A confiança conquistada ao longo de nossa trajetória nos permitiu construir parcerias
+              sólidas com grandes marcas do mercado brasileiro. Hoje, representamos um portfólio com
+              mais de <strong className="font-semibold text-white">4 mil produtos</strong>, reunindo marcas que são reconhecidamente líderes em
+              qualidade, credibilidade e relevância em seus segmentos. Uma seleção que nos permite
+              oferecer soluções completas para o varejo e food service, independentemente do tamanho
+              do negócio.
+            </p>
+            <div>
+              <a
+                href="/catalogo"
+                className="inline-flex items-center gap-2 rounded-[8px] border-2 border-white px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#1A4FA0] whitespace-nowrap"
+              >
+                Ver catálogo completo →
+              </a>
+            </div>
+          </div>
         </div>
 
       </div>

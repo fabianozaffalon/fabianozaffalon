@@ -61,11 +61,19 @@ export function Brands() {
       className="bg-[#1A4FA0]"
       style={{ paddingTop: "56px", paddingBottom: "56px" }}
     >
-      {/* Título */}
+      {/* Título + link catálogo */}
       <div className="mx-auto max-w-[1280px] px-6">
-        <h2 className="mb-10 text-center text-xl font-semibold text-white md:text-2xl">
-          Marcas que Representamos
-        </h2>
+        <div className="mb-10 flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-center text-xl font-semibold text-white md:text-2xl sm:text-left">
+            Marcas que Representamos
+          </h2>
+          <a
+            href="/catalogo"
+            className="shrink-0 rounded-[8px] border-2 border-white px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#1A4FA0] whitespace-nowrap"
+          >
+            Ver catálogo completo →
+          </a>
+        </div>
       </div>
 
       {/* Carrossel */}

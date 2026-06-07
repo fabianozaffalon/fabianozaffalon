@@ -10,10 +10,10 @@ export type Noticia = {
   titulo: string;
   resumo: string;
   conteudo: string;
-  capa: string;          // imagem principal — usada na home e nos cards
-  fotos: string[];       // até 8 fotos para a matéria completa
-  data: string;          // ISO 8601 — ex: "2024-11-15"
-  destaque: boolean;     // true = aparece como notícia principal na página
+  capa: string; // imagem principal — usada na home e nos cards
+  fotos: string[]; // até 8 fotos para a matéria completa
+  data: string; // ISO 8601 — ex: "2024-11-15"
+  destaque: boolean; // true = aparece como notícia principal na página
 };
 
 export const NOTICIAS: Noticia[] = [
@@ -21,7 +21,8 @@ export const NOTICIAS: Noticia[] = [
     id: 1,
     slug: "pdcon-2024",
     categoria: "Conquistas",
-    titulo: "Fabiano Zaffalon é Destaque na Regional Sul no Programa Pdcon 2024",
+    titulo:
+      "Fabiano Zaffalon é Destaque na Regional Sul no Programa Pdcon 2024",
     resumo:
       "Fomos reconhecidos com destaque na Regional Sul no PDCON 2024, programa promovido pela Condor, uma das principais marcas do país nos segmentos de limpeza, beleza e higiene.",
     conteudo: `A Fabiano Zaffalon & Cia Ltda tem o orgulho de compartilhar mais uma importante conquista: fomos reconhecidos com destaque na Regional Sul no PDCON 2024, programa promovido pela Condor, uma das principais marcas do país nos segmentos de limpeza, beleza e higiene.
@@ -35,6 +36,7 @@ Agradecemos a Condor pela parceria e confiança, e parabenizamos todos os colabo
     fotos: [
       "/images/noticias/noticia-1/capa.jpg",
       "/images/noticias/noticia-1/foto-2.jpg",
+      "/images/noticias/noticia-1/foto-3.jpg",
     ],
     data: "2024-11-15",
     destaque: true,
@@ -43,7 +45,8 @@ Agradecemos a Condor pela parceria e confiança, e parabenizamos todos os colabo
     id: 2,
     slug: "broker-top1-nestle",
     categoria: "Conquistas",
-    titulo: "A Resiliência de um Time: Como Conquistamos o Reconhecimento Nacional como Broker Top 1 da Nestlé",
+    titulo:
+      "A Resiliência de um Time: Como Conquistamos o Reconhecimento Nacional como Broker Top 1 da Nestlé",
     resumo:
       "Uma trajetória de comprometimento, superação e resultado que nos levou ao reconhecimento nacional como o melhor Broker Nestlé do Brasil.",
     conteudo: `Ser reconhecido como Broker Top 1 da Nestlé no Brasil é resultado de anos de dedicação, parceria e uma equipe que não desiste diante dos desafios.
@@ -52,9 +55,7 @@ Nossa operação como Broker Nestlé exige alta performance em todos os indicado
 
 Agradecemos à Nestlé pela confiança e parceria, e reafirmamos nosso compromisso de manter o alto nível de excelência que nos trouxe até aqui.`,
     capa: "/images/noticias/noticia-2/capa.jpg",
-    fotos: [
-      "/images/noticias/noticia-2/capa.jpg",
-    ],
+    fotos: ["/images/noticias/noticia-2/capa.jpg"],
     data: "2024-08-20",
     destaque: false,
   },
@@ -69,9 +70,7 @@ Agradecemos à Nestlé pela confiança e parceria, e reafirmamos nosso compromis
 
 Ao longo dos anos, construímos uma operação robusta, com equipe especializada, processos definidos e uma cultura voltada para resultados. Essa trajetória nos permitiu crescer de forma consistente e nos consolidar como um dos principais Brokers do Rio Grande do Sul.`,
     capa: "/images/noticias/noticia-3/capa.jpg",
-    fotos: [
-      "/images/noticias/noticia-3/capa.jpg",
-    ],
+    fotos: ["/images/noticias/noticia-3/capa.jpg"],
     data: "2024-06-10",
     destaque: false,
   },
@@ -86,9 +85,7 @@ Ao longo dos anos, construímos uma operação robusta, com equipe especializada
 
 Essa expansão reflete nosso comprometimento em levar as melhores marcas a cada ponto de venda, independentemente do porte ou localização.`,
     capa: "/images/noticias/noticia-4/capa.jpg",
-    fotos: [
-      "/images/noticias/noticia-4/capa.jpg",
-    ],
+    fotos: ["/images/noticias/noticia-4/capa.jpg"],
     data: "2024-04-05",
     destaque: false,
   },
@@ -103,9 +100,7 @@ Essa expansão reflete nosso comprometimento em levar as melhores marcas a cada 
 
 Com mais de 4 mil produtos em linha, seguimos ampliando as possibilidades para nossos parceiros varejistas, food service e indústria.`,
     capa: "/images/noticias/noticia-5/capa.jpg",
-    fotos: [
-      "/images/noticias/noticia-5/capa.jpg",
-    ],
+    fotos: ["/images/noticias/noticia-5/capa.jpg"],
     data: "2024-02-18",
     destaque: false,
   },
@@ -113,16 +108,15 @@ Com mais de 4 mil produtos em linha, seguimos ampliando as possibilidades para n
     id: 6,
     slug: "investimento-logistica",
     categoria: "Logística",
-    titulo: "Fabiano Zaffalon Investe em Logística para Ampliar Cobertura Regional",
+    titulo:
+      "Fabiano Zaffalon Investe em Logística para Ampliar Cobertura Regional",
     resumo:
       "Novos investimentos em frota e infraestrutura garantem mais agilidade, segurança e eficiência nas entregas em todo o RS.",
     conteudo: `A Fabiano Zaffalon anuncia novos investimentos em logística para ampliar sua cobertura regional e garantir um serviço ainda mais eficiente.
 
 Com uma frota renovada e processos otimizados, seguimos firmes no compromisso de entregar com pontualidade, segurança e qualidade em todo o Rio Grande do Sul.`,
     capa: "/images/noticias/noticia-6/capa.jpg",
-    fotos: [
-      "/images/noticias/noticia-6/capa.jpg",
-    ],
+    fotos: ["/images/noticias/noticia-6/capa.jpg"],
     data: "2024-01-30",
     destaque: false,
   },
