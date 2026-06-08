@@ -8,7 +8,7 @@ const SOLUTIONS = [
     description:
       "Estamos ao lado do pequeno, médio e grande varejo para que sejam sempre competitivos.",
     image: "/images/solutions/varejo.png",
-    href: "#solucoes",
+    href: "/varejo",
   },
   {
     id: "food-service",
@@ -16,7 +16,7 @@ const SOLUTIONS = [
     description:
       "Quem faz da alimentação um negócio que transforma sabor em resultado precisa de um parceiro comprometido.",
     image: "/images/solutions/food-service.png",
-    href: "#solucoes",
+    href: "/food-service",
   },
   {
     id: "industria",
@@ -24,7 +24,7 @@ const SOLUTIONS = [
     description:
       "Estamos junto da indústria para transformar grandes produtos em líderes de mercado",
     image: "/images/solutions/industria.png",
-    href: "#solucoes",
+    href: "/industria",
   },
 ];
 
