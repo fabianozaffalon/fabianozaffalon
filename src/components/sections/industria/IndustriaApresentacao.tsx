@@ -48,34 +48,36 @@ export function IndustriaApresentacao() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
-
-            {/* Barra azul com 2 stats */}
-            <div className="grid grid-cols-2 bg-[#006EB7] px-4 py-5 items-center">
-              <div className="flex items-center justify-center gap-3 border-r border-white/20 px-4 py-2">
+            {/* Barra azul com 2 stats — altura 108px */}
+            <div
+              className="grid grid-cols-2 bg-[#006EB7] px-4 items-center"
+              style={{ height: "108px" }}
+            >
+              <div className="flex items-center justify-center gap-3 px-4">
                 <Image
-                  src="/images/icons/icon-desde.svg"
+                  src="/images/icons/icon-calendario.svg"
                   alt=""
                   aria-hidden="true"
-                  width={56}
-                  height={56}
-                  className="h-14 w-14 shrink-0 brightness-0 invert"
+                  width={86}
+                  height={86}
+                  className="h-[86px] w-[86px] shrink-0 brightness-0 invert"
                 />
-                <p className="text-base font-light text-white leading-snug">
+                <p className="text-xl font-light text-white leading-snug">
                   30 anos de
                   <br />
                   atuação
                 </p>
               </div>
-              <div className="flex items-center justify-center gap-3 px-4 py-2">
+              <div className="flex items-center justify-center gap-3 px-4">
                 <Image
                   src="/images/icons/icon-rs.svg"
                   alt=""
                   aria-hidden="true"
-                  width={56}
-                  height={56}
-                  className="h-14 w-14 shrink-0 brightness-0 invert"
+                  width={66}
+                  height={66}
+                  className="h-[66px] w-[66px] shrink-0 brightness-0 invert"
                 />
-                <p className="text-base font-light text-white leading-snug">
+                <p className="text-xl font-light text-white leading-snug">
                   Presente em
                   <br />
                   todo RS

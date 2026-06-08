@@ -17,7 +17,7 @@ const UNIDADES = [
     horario: "Seg. a Sex. 8h às 18h",
     pedidoHref: "#contato",
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!4v1780701218038!6m8!1m7!1sqV3EER9EMTj8Lkz6oRPxQw!2m2!1d-31.72557873927473!2d-52.3441931567227!3f345.28136033791566!4f-0.7456615118900345!5f0.7820865974627469",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.8!2d-52.3441931567227!3d-31.72557873927473!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9511b5364df1a70b%3A0x9c9c1dc6e84fcff1!2sFabiano%20Zaffalon%20%26%20Cia%20Ltda!5e0!3m2!1spt-BR!2sbr!4v1780699770282!5m2!1spt-BR!2sbr",
   },
   {
     id: "rio-pardo",
@@ -30,7 +30,7 @@ const UNIDADES = [
     horario: "Seg. a Sex. 8h às 18h",
     pedidoHref: "#contato",
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!4v1780700851399!6m8!1m7!1s_ecOrafjbJ4nfPek1OWGIg!2m2!1d-29.99246068124005!2d-52.36828410640743!3f76.12739286149834!4f-7.613471978969628!5f0.7820865974627469",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.8!2d-52.36828410640743!3d-29.99246068124005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951b5d5110ae4b03%3A0x79aa6f3f8939c3f1!2sBR-471%2C%20900%20-%20Jardim%20Boa%20Vista%2C%20Rio%20Pardo%20-%20RS%2C%2096640-000!5e0!3m2!1spt-BR!2sbr!4v1780700027097!5m2!1spt-BR!2sbr",
   },
   {
     id: "broker",
@@ -43,7 +43,7 @@ const UNIDADES = [
     horario: "Seg. a Sex. 8h às 18h",
     pedidoHref: "#contato",
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1033.7426768929695!2d-52.3678330891196!3d-29.992139473485718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951b5d9864ddbed9%3A0x8926895859d25f7f!2sNestl%C3%A9%20Rio%20Pardo!5e1!3m2!1spt-BR!2sbr!4v1780699898789!5m2!1spt-BR!2sbr",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1033.7426768929695!2d-52.3678330891196!3d-29.992139473485718!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951b5d9864ddbed9%3A0x8926895859d25f7f!2sNestl%C3%A9%20Rio%20Pardo!5e0!3m2!1spt-BR!2sbr!4v1780699898789!5m2!1spt-BR!2sbr",
   },
 ];
 

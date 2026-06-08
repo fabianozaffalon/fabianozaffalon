@@ -49,7 +49,9 @@ export function IndustriaCards() {
                   aria-hidden="true"
                   width={64}
                   height={64}
-                  className="h-16 w-16 brightness-0 invert"
+                  className={`${
+                    card.id === "rede" ? "h-20 w-20" : "h-16 w-16"
+                  } brightness-0 invert`}
                 />
               </div>
 
@@ -66,18 +68,23 @@ export function IndustriaCards() {
                 </p>
               </div>
 
-              {/* Foto — direita, proporção 544/222 fiel ao Figma */}
+              {/* Foto — direita, 4 cantos arredondados com margem interna */}
               <div
-                className="relative hidden shrink-0 overflow-hidden rounded-r-[20px] md:block"
-                style={{ width: "44%", minHeight: "269px" }}
+                className="relative hidden shrink-0 self-stretch md:flex md:items-stretch"
+                style={{ width: "44%", padding: "12px 12px 12px 0" }}
               >
-                <Image
-                  src={card.imagem}
-                  alt={card.alt}
-                  fill
-                  className="object-cover object-center"
-                  sizes="44vw"
-                />
+                <div
+                  className="relative w-full overflow-hidden rounded-[16px]"
+                  style={{ minHeight: "245px" }}
+                >
+                  <Image
+                    src={card.imagem}
+                    alt={card.alt}
+                    fill
+                    className="object-cover object-center"
+                    sizes="44vw"
+                  />
+                </div>
               </div>
             </div>
           ))}
