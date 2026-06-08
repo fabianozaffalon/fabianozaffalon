@@ -16,7 +16,7 @@ const SOLUTIONS = [
     description:
       "Quem faz da alimentação um negócio que transforma sabor em resultado precisa de um parceiro comprometido.",
     image: "/images/solutions/food-service.png",
-    href: "/food-service",
+    href: "/foodservice",
   },
   {
     id: "industria",
