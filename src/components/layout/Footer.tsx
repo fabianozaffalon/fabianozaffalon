@@ -5,16 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 const EMPRESA = [
-  { label: "A Empresa", href: "#empresa" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Notícias", href: "#noticias" },
-  { label: "Trabalhe Conosco", href: "#trabalhe" },
+  { label: "A Empresa", href: "/empresa" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Notícias", href: "/noticias" },
+  { label: "Trabalhe Conosco", href: "/contato" },
 ];
 
 const SOLUCOES = [
-  { label: "Varejo", href: "#solucoes" },
-  { label: "Food Service", href: "#solucoes" },
-  { label: "Indústria", href: "#solucoes" },
+  { label: "Varejo", href: "/varejo" },
+  { label: "Food Service", href: "/foodservice" },
+  { label: "Indústria", href: "/industria" },
 ];
 
 const UNIDADES = [
@@ -268,7 +268,7 @@ export function Footer() {
                 ))}
               </ul>
               <Link
-                href="#contato"
+                href="/contato"
                 className="mt-4 inline-block rounded-[8px] border border-white/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#00497F]"
               >
                 Contato
