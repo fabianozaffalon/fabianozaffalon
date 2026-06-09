@@ -1,169 +1,148 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 
-/**
- * ─── COMO ADICIONAR MARCAS ───────────────────────────────────────────
- * Adicione um novo objeto no array BRANDS e coloque o SVG/PNG em
- * /public/images/brands/. O carrossel ajusta automaticamente.
- * ─────────────────────────────────────────────────────────────────────
- */
 const BRANDS = [
-  { id: "suzano-1", name: "Suzano", logo: "/images/brands/suzano.svg" },
-  { id: "piraque-1", name: "Piraquê", logo: "/images/brands/piraque.svg" },
-  { id: "bic-1", name: "BIC", logo: "/images/brands/bic.svg" },
-  {
-    id: "havaianas-1",
-    name: "Havaianas",
-    logo: "/images/brands/havaianas.svg",
-  },
-  { id: "yoki-1", name: "Yoki", logo: "/images/brands/yoki.svg" },
-  // Adicione mais marcas aqui ↓
-  // { id: "novamarca-1", name: "Nova Marca", logo: "/images/brands/novamarca.svg" },
+  { id: "suzano",    name: "Suzano",         logo: "/images/brands/suzano.svg"    },
+  { id: "piraque",   name: "Piraquê",        logo: "/images/brands/piraque.svg"   },
+  { id: "bic",       name: "BIC",            logo: "/images/brands/bic.svg"       },
+  { id: "havaianas", name: "Havaianas",      logo: "/images/brands/havaianas.svg" },
+  { id: "yoki",      name: "Yoki",           logo: "/images/brands/yoki.svg"      },
+  { id: "aurea",     name: "Áurea",          logo: "/images/brands/aurea.svg"     },
+  { id: "condor",    name: "Condor",         logo: "/images/brands/condor.svg"    },
+  { id: "dori",      name: "Dori",           logo: "/images/brands/dori.svg"      },
+  { id: "ype",       name: "Ypê",            logo: "/images/brands/ype.svg"       },
+  { id: "seara",     name: "Seara",          logo: "/images/brands/seara.svg"     },
+  { id: "bunge",     name: "Bunge",          logo: "/images/brands/bunge.svg"     },
+  { id: "kimberly",  name: "Kimberly-Clark", logo: "/images/brands/kimberly.svg"  },
+  { id: "isabela",   name: "Isabela",        logo: "/images/brands/isabela.svg"   },
+  { id: "nestle",    name: "Nestlé",         logo: "/images/brands/nestle.svg"    },
+  { id: "purina",    name: "Purina",         logo: "/images/brands/purina.svg"    },
+  { id: "garoto",    name: "Garoto",         logo: "/images/brands/garoto.svg"    },
+  { id: "nestle-pro",name: "Nestlé Pro",     logo: "/images/brands/nestle-professional.svg" },
+  { id: "ferrero",   name: "Ferrero",        logo: "/images/brands/ferrero.svg"   },
 ];
 
-// Lista triplicada para loop imperceptível
-const TRACK = [...BRANDS, ...BRANDS, ...BRANDS];
-const ITEM_W = 280; // ← mais espaço entre logos
-const SPEED = 0.5; // px por frame — suave e profissional
+const PER_PAGE = 9;
+const INTERVAL = 4000;
 
 export function Brands() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const posRef = useRef(0);
-  const rafRef = useRef<number>(0);
+  const [page, setPage] = useState(0);
+  const [fading, setFading] = useState(false);
   const pausedRef = useRef(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const blockW = BRANDS.length * ITEM_W;
+  const totalPages = Math.ceil(BRANDS.length / PER_PAGE);
+  const currentBrands = BRANDS.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
 
-  const animate = useCallback(() => {
-    if (!pausedRef.current && trackRef.current) {
-      posRef.current += SPEED;
-      if (posRef.current >= blockW) posRef.current -= blockW;
-      trackRef.current.style.transform = `translateX(-${posRef.current}px)`;
-    }
-    rafRef.current = requestAnimationFrame(animate);
-  }, [blockW]);
+  // Divide em linhas de 3 — última linha centralizada se incompleta
+  const rows: typeof BRANDS[] = [];
+  for (let i = 0; i < currentBrands.length; i += 3) {
+    rows.push(currentBrands.slice(i, i + 3));
+  }
+
+  const goTo = (next: number) => {
+    if (fading) return;
+    setFading(true);
+    setTimeout(() => {
+      setPage(next);
+      setFading(false);
+    }, 350);
+  };
 
   useEffect(() => {
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [animate]);
-
-  const pause = () => {
-    pausedRef.current = true;
-  };
-  const resume = () => {
-    pausedRef.current = false;
-  };
-
-  const scrollBy = (dir: 1 | -1) => {
-    posRef.current += dir * ITEM_W * 2;
-    if (posRef.current < 0) posRef.current += blockW;
-    if (posRef.current >= blockW) posRef.current -= blockW;
-  };
+    timerRef.current = setTimeout(() => {
+      if (!pausedRef.current) goTo((page + 1) % totalPages);
+    }, INTERVAL);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+  }, [page, fading]);
 
   return (
     <section
       id="marcas"
       className="bg-[#1A4FA0]"
       style={{ paddingTop: "56px", paddingBottom: "56px" }}
+      onMouseEnter={() => { pausedRef.current = true; }}
+      onMouseLeave={() => { pausedRef.current = false; }}
     >
-      {/* Título + link catálogo */}
       <div className="mx-auto max-w-[1280px] px-6">
-        <div className="mb-10 flex flex-col items-center gap-3 text-center">
-          <h2 className="text-xl font-semibold text-white md:text-2xl">
-            Marcas que Representamos
-          </h2>
-          <a
-            href="/catalogo"
-            className="rounded-[8px] border-2 border-white/60 px-6 py-2 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-white hover:text-[#1A4FA0]"
-          >
-            Ver catálogo completo →
-          </a>
-        </div>
-      </div>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-16">
 
-      {/* Carrossel */}
-      <div
-        className="relative"
-        onMouseEnter={pause}
-        onMouseLeave={resume}
-        onTouchStart={pause}
-        onTouchEnd={resume}
-        aria-label="Marcas representadas"
-      >
-        {/* Fade esquerda */}
-        <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-28 bg-gradient-to-r from-[#1A4FA0] to-transparent" />
-        {/* Fade direita */}
-        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-28 bg-gradient-to-l from-[#1A4FA0] to-transparent" />
-
-        {/* Seta esquerda */}
-        <button
-          onClick={() => scrollBy(-1)}
-          aria-label="Marcas anteriores"
-          className="absolute left-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 items-center justify-center text-white/70 transition hover:text-white md:left-6 md:h-10 md:w-10"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 19.5 8.25 12l7.5-7.5"
-            />
-          </svg>
-        </button>
-
-        {/* Seta direita */}
-        <button
-          onClick={() => scrollBy(1)}
-          aria-label="Próximas marcas"
-          className="absolute right-4 top-1/2 z-20 -translate-y-1/2 flex h-8 w-8 items-center justify-center text-white/70 transition hover:text-white md:right-6 md:h-10 md:w-10"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m8.25 4.5 7.5 7.5-7.5 7.5"
-            />
-          </svg>
-        </button>
-
-        {/* Faixa deslizante */}
-        <div className="overflow-hidden">
-          <div
-            ref={trackRef}
-            className="flex items-center will-change-transform"
-          >
-            {TRACK.map((brand, i) => (
-              <div
-                key={`${brand.id}-${i}`}
-                aria-hidden={i >= BRANDS.length}
-                className="flex shrink-0 items-center justify-center"
-                style={{ width: `${ITEM_W}px` }}
+          {/* Esquerda — título + texto + botão */}
+          <div className="flex flex-col gap-5">
+            <h2
+              className="font-black leading-tight text-white"
+              style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)" }}
+            >
+              Marcas que
+              <br />Representamos
+            </h2>
+            <p className="text-sm leading-relaxed text-white/80 md:text-base">
+              A confiança construída ao longo da nossa trajetória nos permitiu reunir um
+              portfólio com mais de{" "}
+              <strong className="font-semibold text-white">4 mil produtos</strong> de marcas
+              líderes em qualidade e credibilidade, oferecendo soluções completas para
+              varejo e food service de todos os portes.
+            </p>
+            <div>
+              <a
+                href="/catalogo"
+                className="inline-flex items-center gap-2 rounded-[8px] border-2 border-white px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#1A4FA0] whitespace-nowrap"
               >
-                <Image
-                  src={brand.logo}
-                  alt={i < BRANDS.length ? brand.name : ""}
-                  width={100}
-                  height={40}
-                  className="h-7 w-auto object-contain brightness-0 invert opacity-80 transition-opacity hover:opacity-100 md:h-8"
+                Veja nosso catálogo
+              </a>
+            </div>
+          </div>
+
+          {/* Direita — logos + dots */}
+          <div className="flex flex-col gap-6">
+
+            {/* Logos — linhas de 3, última centralizada */}
+            <div
+              className="flex flex-col gap-5 transition-opacity duration-350"
+              style={{ opacity: fading ? 0 : 1 }}
+            >
+              {rows.map((row, rowIdx) => (
+                <div
+                  key={rowIdx}
+                  className="flex items-center justify-center gap-6"
+                >
+                  {row.map((brand) => (
+                    <div
+                      key={brand.id}
+                      className="flex flex-1 items-center justify-center"
+                    >
+                      <Image
+                        src={brand.logo}
+                        alt={brand.name}
+                        width={130}
+                        height={52}
+                        className="h-10 w-auto max-w-[130px] object-contain brightness-0 invert opacity-90 transition-opacity hover:opacity-100 md:h-12"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            {/* Dots */}
+            <div className="flex items-center justify-center gap-2">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  aria-label={`Página ${i + 1}`}
+                  className={
+                    "rounded-full transition-all duration-300 " +
+                    (i === page
+                      ? "w-6 h-2.5 bg-white"
+                      : "w-2.5 h-2.5 bg-white/40 hover:bg-white/70")
+                  }
                 />
-              </div>
-            ))}
+              ))}
+            </div>
+
           </div>
         </div>
       </div>

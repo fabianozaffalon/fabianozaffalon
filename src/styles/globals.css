@@ -5,6 +5,9 @@
 @layer base {
   :root {
     --font-poppins: "Poppins", sans-serif;
+  }
+  /* scroll-behavior no seletor correto para Next.js 16 */
+  [data-scroll-behavior="smooth"] {
     scroll-behavior: smooth;
   }
   body {

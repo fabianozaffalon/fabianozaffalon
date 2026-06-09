@@ -47,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={poppins.variable}>
+    <html lang="pt-BR" className={poppins.variable} data-scroll-behavior="smooth">
       <body>
         <Analytics />
         {/* Skip to main content — acessibilidade */}

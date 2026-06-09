@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const ATUACAO_LINKS = [
   { label: "Varejo", href: "/varejo" },
@@ -20,6 +21,7 @@ const NAV_LINKS = [
 ];
 
 export function Header() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileAtuacaoOpen, setMobileAtuacaoOpen] = useState(false);
@@ -110,7 +112,7 @@ export function Header() {
                 "h-auto transition-all duration-300 " +
                 (scrolled ? "w-[150px] md:w-[180px]" : "w-[180px] md:w-[230px]")
               }
-              style={{ height: "auto", width: undefined }}
+              style={{ height: "auto" }}
             />
           </Link>
 
@@ -129,7 +131,12 @@ export function Header() {
                   onMouseLeave={handleDropdownLeave}
                 >
                   <button
-                    className="flex items-center gap-1 font-sans text-sm font-normal text-[#595959] transition-colors hover:text-[#006EB7] focus:outline-none"
+                    className={
+                      "flex items-center gap-1 font-sans text-sm transition-colors hover:text-[#006EB7] focus:outline-none " +
+                      (ATUACAO_LINKS.some(sub => pathname === sub.href)
+                        ? "font-semibold text-[#006EB7]"
+                        : "font-normal text-[#595959]")
+                    }
                     aria-haspopup="true"
                     aria-expanded={dropdownOpen}
                     onClick={() => setDropdownOpen((v) => !v)}
@@ -182,7 +189,12 @@ export function Header() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="font-sans text-sm font-normal text-[#595959] transition-colors hover:text-[#006EB7] whitespace-nowrap"
+                  className={
+                    "font-sans text-sm whitespace-nowrap transition-colors hover:text-[#006EB7] " +
+                    (pathname === link.href
+                      ? "font-semibold text-[#006EB7]"
+                      : "font-normal text-[#595959]")
+                  }
                 >
                   {link.label}
                 </Link>
@@ -336,10 +348,18 @@ export function Header() {
                 key={link.label}
                 href={link.href}
                 onClick={close}
-                className="flex items-center gap-3 rounded-[8px] px-3 py-3.5 text-base font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                className={
+                  "flex items-center gap-3 rounded-[8px] px-3 py-3.5 text-base transition-colors hover:bg-white/10 hover:text-white " +
+                  (pathname === link.href
+                    ? "font-semibold text-white bg-white/10"
+                    : "font-medium text-white/80")
+                }
                 style={{ transitionDelay: menuOpen ? `${i * 40}ms` : "0ms" }}
               >
-                <span className="h-px w-4 shrink-0 bg-white/30" />
+                <span className={
+                  "h-px w-4 shrink-0 " +
+                  (pathname === link.href ? "bg-white" : "bg-white/30")
+                } />
                 {link.label}
               </Link>
             )

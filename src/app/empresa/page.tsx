@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { EmpresaHero }    from "@/components/sections/empresa/EmpresaHero";
-import { EmpresaAbout }   from "@/components/sections/empresa/EmpresaAbout";
-import { EmpresaVideo }   from "@/components/sections/empresa/EmpresaVideo";
+import { EmpresaHero } from "@/components/sections/empresa/EmpresaHero";
+import { EmpresaAbout } from "@/components/sections/empresa/EmpresaAbout";
+import { EmpresaVideo } from "@/components/sections/empresa/EmpresaVideo";
 import { EmpresaOndeEstamos } from "@/components/sections/empresa/EmpresaOndeEstamos";
-import { EmpresaMarcas }  from "@/components/sections/empresa/EmpresaMarcas";
+import { Brands } from "@/components/sections/Brands";
 import { EmpresaCultura } from "@/components/sections/empresa/EmpresaCultura";
-import { EmpresaRede }    from "@/components/sections/empresa/EmpresaRede";
-import { EmpresaCases }   from "@/components/sections/empresa/EmpresaCases";
-import { CtaBanner }      from "@/components/sections/CtaBanner";
-import { Contact }        from "@/components/sections/Contact";
+import { EmpresaRede } from "@/components/sections/empresa/EmpresaRede";
+import { EmpresaCases } from "@/components/sections/empresa/EmpresaCases";
+import { CtaBanner } from "@/components/sections/CtaBanner";
+import { Contact } from "@/components/sections/Contact";
 
 export const metadata: Metadata = {
   title: "A Empresa",
@@ -23,7 +23,7 @@ export default function EmpresaPage() {
       <EmpresaAbout />
       <EmpresaVideo />
       <EmpresaOndeEstamos />
-      <EmpresaMarcas />
+      <Brands />
       <EmpresaCultura />
       <EmpresaRede />
       <EmpresaCases />

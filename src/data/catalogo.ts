@@ -4,7 +4,7 @@ export type Marca = {
   id: string;
   name: string;
   logo: string;
-  size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl";
+  catalogoPdf?: string; // ← preparado para fase dinâmica
 };
 
 export type UnidadeCatalogo = {
@@ -15,106 +15,26 @@ export type UnidadeCatalogo = {
 };
 
 const MARCAS_SUL_CENTRAL: Marca[] = [
-  {
-    id: "suzano",
-    name: "Suzano",
-    logo: "/images/catalogo/logos/suzano.svg",
-    size: "lg",
-  },
-  {
-    id: "piraque",
-    name: "Piraquê",
-    logo: "/images/catalogo/logos/piraque.svg",
-    size: "lg",
-  },
-  {
-    id: "ype",
-    name: "Ypê",
-    logo: "/images/catalogo/logos/ype.svg",
-    size: "lg",
-  },
-  {
-    id: "havaianas",
-    name: "Havaianas",
-    logo: "/images/catalogo/logos/havaianas.svg",
-    size: "4xl",
-  },
-  {
-    id: "yoki",
-    name: "Yoki",
-    logo: "/images/catalogo/logos/yoki.svg",
-    size: "md",
-  },
-  {
-    id: "seara",
-    name: "Seara",
-    logo: "/images/catalogo/logos/seara.svg",
-    size: "lg",
-  },
-  {
-    id: "bunge",
-    name: "Bunge",
-    logo: "/images/catalogo/logos/bunge.svg",
-    size: "lg",
-  },
-  {
-    id: "kimberly",
-    name: "Kimberly-Clark",
-    logo: "/images/catalogo/logos/kimberly.svg",
-    size: "3xl",
-  },
-  {
-    id: "condor",
-    name: "Condor",
-    logo: "/images/catalogo/logos/condor.svg",
-    size: "lg",
-  },
-  {
-    id: "isabela",
-    name: "Isabela",
-    logo: "/images/catalogo/logos/isabela.svg",
-    size: "lg",
-  },
-  {
-    id: "bic",
-    name: "BIC",
-    logo: "/images/catalogo/logos/bic.svg",
-    size: "lg",
-  },
-  {
-    id: "dori",
-    name: "Dori",
-    logo: "/images/catalogo/logos/dori.svg",
-    size: "lg",
-  },
-  {
-    id: "aurea",
-    name: "Áurea",
-    logo: "/images/catalogo/logos/aurea.svg",
-    size: "lg",
-  },
+  { id: "suzano",    name: "Suzano",         logo: "/images/catalogo/logos/suzano.svg"    },
+  { id: "piraque",   name: "Piraquê",        logo: "/images/catalogo/logos/piraque.svg"   },
+  { id: "ype",       name: "Ypê",            logo: "/images/catalogo/logos/ype.svg"       },
+  { id: "havaianas", name: "Havaianas",      logo: "/images/catalogo/logos/havaianas.svg" },
+  { id: "yoki",      name: "Yoki",           logo: "/images/catalogo/logos/yoki.svg"      },
+  { id: "seara",     name: "Seara",          logo: "/images/catalogo/logos/seara.svg"     },
+  { id: "bunge",     name: "Bunge",          logo: "/images/catalogo/logos/bunge.svg"     },
+  { id: "kimberly",  name: "Kimberly-Clark", logo: "/images/catalogo/logos/kimberly.svg"  },
+  { id: "condor",    name: "Condor",         logo: "/images/catalogo/logos/condor.svg"    },
+  { id: "isabela",   name: "Isabela",        logo: "/images/catalogo/logos/isabela.svg"   },
+  { id: "bic",       name: "BIC",            logo: "/images/catalogo/logos/bic.svg"       },
+  { id: "dori",      name: "Dori",           logo: "/images/catalogo/logos/dori.svg"      },
+  { id: "aurea",     name: "Áurea",          logo: "/images/catalogo/logos/aurea.svg"     },
 ];
 
 const MARCAS_BROKER: Marca[] = [
-  { id: "nestle", name: "Nestlé", logo: "/images/catalogo/logos/nestle.svg" },
-  {
-    id: "purina",
-    name: "Purina",
-    logo: "/images/catalogo/logos/purina.svg",
-    size: "xl",
-  },
-  {
-    id: "garoto",
-    name: "Garoto",
-    logo: "/images/catalogo/logos/garoto.png",
-    size: "lg",
-  },
-  {
-    id: "nestle-professional",
-    name: "Nestlé Professional",
-    logo: "/images/catalogo/logos/nestle-professional.svg",
-    size: "3xl",
-  },
+  { id: "nestle",              name: "Nestlé",              logo: "/images/catalogo/logos/nestle.svg"              },
+  { id: "purina",              name: "Purina",              logo: "/images/catalogo/logos/purina.svg"              },
+  { id: "garoto",              name: "Garoto",              logo: "/images/catalogo/logos/garoto.svg"              },
+  { id: "nestle-professional", name: "Nestlé Professional", logo: "/images/catalogo/logos/nestle-professional.svg" },
 ];
 
 export const UNIDADES_CATALOGO: UnidadeCatalogo[] = [

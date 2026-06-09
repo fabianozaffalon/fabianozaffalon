@@ -4,20 +4,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { UNIDADES_CATALOGO, type UnidadeCatalogo } from "@/data/catalogo";
 
-const LOGO_SIZE: Record<string, string> = {
-  sm:  "h-10 max-w-[120px]",
-  md:  "h-12 max-w-[140px]",
-  lg:  "h-16 max-w-[160px]",
-  xl:  "h-24 max-w-[200px]",
-  "2xl": "h-32 max-w-[220px]",
-  "3xl": "h-40 max-w-[260px]",
-  "4xl": "h-48 max-w-[300px]",
-};
-
 const mapaMap: Record<string, string> = {
-  sul:     "/images/maps/sul-catalogo.svg",
+  sul: "/images/maps/sul-catalogo.svg",
   central: "/images/maps/central-catalogo.svg",
-  broker:  "/images/maps/broker-catalogo.svg",
+  broker: "/images/maps/broker-catalogo.svg",
 };
 
 export function CatalogoSection() {
@@ -26,74 +16,75 @@ export function CatalogoSection() {
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
+        {/* Título + Tabs */}
+        <div className="mb-10 flex flex-col items-center gap-6">
+          <h2 className="text-lg font-bold text-[#006EB7]">
+            Selecione a unidade:
+          </h2>
 
-          {/* Título + Tabs */}
-          <div className="mb-10 flex flex-col items-center gap-6">
-            <h2 className="text-lg font-bold text-[#006EB7]">
-              Selecione a unidade:
-            </h2>
-
-            <div className="grid w-full max-w-[780px] grid-cols-3 overflow-hidden rounded-[8px] border border-[#D1D1D1]">
-              {UNIDADES_CATALOGO.map((u, index) => (
-                <button
-                  key={u.id}
-                  onClick={() => setAtiva(u)}
+          <div className="grid w-full max-w-[780px] grid-cols-3 overflow-hidden rounded-[8px] border border-[#D1D1D1]">
+            {UNIDADES_CATALOGO.map((u, index) => (
+              <button
+                key={u.id}
+                onClick={() => setAtiva(u)}
+                className={
+                  "flex flex-col items-center justify-center py-3 px-2 transition-colors " +
+                  (ativa.id === u.id
+                    ? "bg-[#00497F] text-white"
+                    : "bg-[#EFEFEF] text-[#595959] hover:bg-gray-200") +
+                  (index < UNIDADES_CATALOGO.length - 1
+                    ? " border-r border-[#D1D1D1]"
+                    : "")
+                }
+              >
+                <span className="text-sm font-bold">{u.label}</span>
+                <span
                   className={
-                    "flex flex-col items-center justify-center py-3 px-2 transition-colors " +
-                    (ativa.id === u.id
-                      ? "bg-[#00497F] text-white"
-                      : "bg-[#EFEFEF] text-[#595959] hover:bg-gray-200") +
-                    (index < UNIDADES_CATALOGO.length - 1 ? " border-r border-[#D1D1D1]" : "")
+                    "text-xs " +
+                    (ativa.id === u.id ? "text-white/80" : "text-[#BCBABA]")
                   }
                 >
-                  <span className="text-sm font-bold">{u.label}</span>
-                  <span className={
-                    "text-xs " + (ativa.id === u.id ? "text-white/80" : "text-[#BCBABA]")
-                  }>
-                    {u.sublabel}
-                  </span>
-                </button>
-              ))}
+                  {u.sublabel}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Mapa + Grid */}
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-[420px_1fr] md:items-center md:gap-12">
+          {/* Mapa — esquerda */}
+          <div className="flex items-center justify-center">
+            <div className="relative h-[380px] w-full md:h-[520px]">
+              <Image
+                src={mapaMap[ativa.id]}
+                alt={`Mapa ${ativa.label}`}
+                fill
+                className="object-contain"
+                sizes="420px"
+              />
             </div>
           </div>
 
-          {/* Mapa + Grid */}
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-[420px_1fr] md:items-center md:gap-12">
-
-            {/* Mapa — esquerda, maior */}
-            <div className="flex items-center justify-center">
-              <div className="relative h-[380px] w-full md:h-[520px]">
+          {/* Grid de logos — 218x131px fiel ao Figma */}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-5">
+            {ativa.marcas.map((marca) => (
+              <div
+                key={marca.id}
+                className="flex items-center justify-center rounded-[16px] bg-[#F5F5F5] transition-shadow hover:shadow-md overflow-hidden"
+                style={{ height: "131px" }}
+              >
                 <Image
-                  src={mapaMap[ativa.id]}
-                  alt={`Mapa ${ativa.label}`}
-                  fill
-                  className="object-contain"
-                  sizes="420px"
+                  src={marca.logo}
+                  alt={marca.name}
+                  width={218}
+                  height={131}
+                  className="w-full h-full object-contain p-10"
                 />
               </div>
-            </div>
-
-            {/* Grid de logos — direita */}
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:gap-5">
-              {ativa.marcas.map((marca) => (
-                <div
-                  key={marca.id}
-                  className="flex items-center justify-center rounded-[16px] bg-[#F5F5F5] p-6 transition-shadow hover:shadow-md"
-                  style={{ height: "140px" }}
-                >
-                  <Image
-                    src={marca.logo}
-                    alt={marca.name}
-                    width={300}
-                    height={150}
-                    className={"w-auto object-contain " + (LOGO_SIZE[marca.size ?? "md"] ?? LOGO_SIZE.md)}
-                  />
-                </div>
-              ))}
-            </div>
-
+            ))}
           </div>
-
+        </div>
       </div>
     </section>
   );
