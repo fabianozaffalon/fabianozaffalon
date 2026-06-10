@@ -13,13 +13,13 @@ const STATS = [
   },
   {
     icon: "/images/icons/icon-unidades.svg",
-    value: "2 Unidade",
+    value: "2 Unidades",
     label: "Pelotas e Rio Pardo",
   },
   {
     icon: "/images/icons/icon-desde.svg",
-    value: "1997",         // número azul grande
-    label: "Desde",        // label cinza pequeno — aparece ACIMA do valor
+    value: "1997",
+    label: "Desde",
     labelTop: true,
   },
 ];
@@ -29,39 +29,49 @@ export function EmpresaAbout() {
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16 md:items-start">
-
           {/* Texto institucional — esquerda */}
           <div className="flex flex-col gap-5">
             <p className="text-sm leading-relaxed text-[#595959]">
-              Um empreendimento geralmente nasce de um sonho, mas não prospera apenas baseado em
-              idealização.{" "}
+              Um empreendimento geralmente nasce de um sonho, mas não prospera
+              apenas baseado em idealização.{" "}
               <strong className="font-semibold text-[#595959]">
                 Desde os primeiros passos de nossa trajetória, em 1997,
               </strong>{" "}
-              o compromisso foi enraizado na rotina de cada dia. Compromisso absoluto com todos os
-              nossos parceiros, com as relações de confiança que construímos e com os desafios que
-              nos propomos a enfrentar.
+              o compromisso foi enraizado na rotina de cada dia. Compromisso
+              absoluto com todos os nossos parceiros, com as relações de
+              confiança que construímos e com os desafios que nos propomos a
+              enfrentar.
             </p>
             <p className="text-sm leading-relaxed text-[#595959]">
-              A partir do estabelecimento de uma estrutura consistente, conquistamos a capacidade de
-              realizar mais de{" "}
-              <strong className="font-semibold text-[#595959]">70 mil entregas por ano</strong> e
-              contamos com cerca de{" "}
-              <strong className="font-semibold text-[#595959]">300 colaboradores</strong> nas{" "}
+              A partir do estabelecimento de uma estrutura consistente,
+              conquistamos a capacidade de realizar mais de{" "}
+              <strong className="font-semibold text-[#595959]">
+                70 mil entregas por ano
+              </strong>{" "}
+              e contamos com cerca de{" "}
+              <strong className="font-semibold text-[#595959]">
+                300 colaboradores
+              </strong>{" "}
+              nas{" "}
               <strong className="font-semibold text-[#595959]">
                 unidades de Pelotas e Rio Pardo.
               </strong>{" "}
-              Estamos presentes no pequeno, médio e grande varejo, no segmento de food service e na
-              indústria. Temos orgulho de distribuir produtos de marcas de prestígio nacional e
-              oferecer soluções alinhadas às necessidades específicas de cada negócio. Ainda assim,
-              sabemos que sempre há espaço para evoluir. Afinal, somos movidos pelos desafios.
+              Estamos presentes no pequeno, médio e grande varejo, no segmento
+              de food service e na indústria. Temos orgulho de distribuir
+              produtos de marcas de prestígio nacional e oferecer soluções
+              alinhadas às necessidades específicas de cada negócio. Ainda
+              assim, sabemos que sempre há espaço para evoluir. Afinal, somos
+              movidos pelos desafios.
             </p>
           </div>
 
           {/* Stats — 2×2 grid */}
           <div className="grid grid-cols-2 gap-8 md:gap-10">
             {STATS.map((stat) => (
-              <div key={stat.value} className="flex flex-col items-center gap-3 text-center">
+              <div
+                key={stat.value}
+                className="flex flex-col items-center gap-1 text-center"
+              >
                 {/* Ícone */}
                 <Image
                   src={stat.icon}
@@ -71,26 +81,23 @@ export function EmpresaAbout() {
                   className="h-16 w-16"
                 />
 
-                {/* Valor + Label */}
-                <div className="flex flex-col items-center gap-0.5">
-                  {/* "Desde" aparece acima do valor quando labelTop é true */}
+                {/* Valor + Label — sem gap, leading-none para colar */}
+                <div className="flex flex-col items-center gap-0">
                   {stat.labelTop && (
-                    <span className="text-sm font-normal text-[#595959]">
+                    <span className="text-sm font-normal leading-tight text-[#006EB7]">
                       {stat.label}
                     </span>
                   )}
 
-                  {/* Valor — sempre azul e bold */}
                   <span
-                    className="font-black text-[#006EB7]"
+                    className="font-black leading-none text-[#006EB7]"
                     style={{ fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
                   >
                     {stat.value}
                   </span>
 
-                  {/* Label — cinza, abaixo do valor (exceto quando labelTop) */}
                   {!stat.labelTop && (
-                    <span className="text-sm font-normal text-[#595959]">
+                    <span className="text-sm font-normal leading-tight text-[#006EB7]">
                       {stat.label}
                     </span>
                   )}
@@ -98,7 +105,6 @@ export function EmpresaAbout() {
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </section>
