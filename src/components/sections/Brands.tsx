@@ -118,7 +118,8 @@ export function Brands() {
                         alt={brand.name}
                         width={130}
                         height={52}
-                        className="h-10 w-auto max-w-[130px] object-contain brightness-0 invert opacity-90 transition-opacity hover:opacity-100 md:h-12"
+                        className="h-10 max-w-[130px] object-contain brightness-0 invert opacity-90 transition-opacity hover:opacity-100 md:h-12"
+                        style={{ width: "auto" }}
                       />
                     </div>
                   ))}
