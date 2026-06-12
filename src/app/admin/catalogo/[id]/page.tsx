@@ -12,7 +12,6 @@ const UNIDADES = [
 export default function EditarMarcaPage() {
   const router = useRouter();
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
   const [salvando, setSalvando] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -26,7 +25,6 @@ export default function EditarMarcaPage() {
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string>("");
 
-  // Carrega dados da marca
   useEffect(() => {
     fetch(`/api/marcas/${id}`)
       .then((r) => r.json())
@@ -71,7 +69,6 @@ export default function EditarMarcaPage() {
       let logoUrl = form.logo;
       let pdfUrl = form.catalogoPdf;
 
-      // Novo logo
       if (logoFile) {
         const logoData = new FormData();
         logoData.append("file", logoFile);
@@ -81,12 +78,17 @@ export default function EditarMarcaPage() {
         logoUrl = url;
       }
 
-      // Novo PDF
+      // Novo PDF — Vercel Blob
       if (pdfFile) {
         const pdfData = new FormData();
         pdfData.append("file", pdfFile);
-        pdfData.append("pasta", "catalogo/pdfs");
-        const res = await fetch("/api/upload", { method: "POST", body: pdfData });
+        const res = await fetch("/api/upload-pdf", { method: "POST", body: pdfData });
+        if (!res.ok) {
+          const err = await res.json();
+          alert(err.error ?? "Erro ao enviar o PDF.");
+          setSalvando(false);
+          return;
+        }
         const { url } = await res.json();
         pdfUrl = url;
       }
@@ -114,22 +116,19 @@ export default function EditarMarcaPage() {
   };
 
   const handleDelete = async () => {
-    if (!confirm("Desativar esta marca?")) return;
+    if (!confirm("Tem certeza? Esta ação é permanente e não pode ser desfeita.")) return;
     await fetch(`/api/marcas/${id}`, { method: "DELETE" });
     router.push("/admin/catalogo");
   };
 
-  if (loading) return <div className="flex min-h-screen items-center justify-center">Carregando...</div>;
-
   return (
     <div className="min-h-screen bg-[#F6F6F6]">
-      {/* Header */}
       <header className="flex items-center justify-between bg-[#00497F] px-8 py-4">
         <div className="flex items-center gap-4">
           <img src="/images/logo-white.svg" alt="Fabiano Zaffalon" className="w-36" />
           <span className="text-sm text-white/60">| Painel Admin</span>
         </div>
-        <a href="/admin/catalogo" className="text-xs text-white/60 hover:text-white transition-colors">
+        <a href="/admin/catalogo" className="text-xs text-white/60 transition-colors hover:text-white">
           ← Voltar
         </a>
       </header>
@@ -146,7 +145,7 @@ export default function EditarMarcaPage() {
               type="text"
               value={form.name}
               onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-              className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#006EB7] transition-colors"
+              className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm text-[#1A1A1A] outline-none transition-colors focus:border-[#006EB7]"
             />
           </div>
 
@@ -171,18 +170,18 @@ export default function EditarMarcaPage() {
             </div>
           </div>
 
-          {/* Logo atual + novo upload */}
+          {/* Logo */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-[#595959]">Logo</label>
+            <label className="text-sm font-semibold text-[#595959]">Logo <span className="font-normal text-[#BCBABA]">(PNG ou JPG)</span></label>
             <div className="flex items-center gap-4">
               {logoPreview && (
                 <div className="flex h-16 w-32 items-center justify-center rounded-[8px] bg-[#1A4FA0]">
-                  <img src={logoPreview} alt="Logo" className="h-10 w-auto object-contain brightness-0 invert" />
+                  <img src={logoPreview} alt="Logo atual" className="h-10 w-auto object-contain" />
                 </div>
               )}
-              <label className="cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+              <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
                 Trocar logo
-                <input type="file" accept=".svg,.png,.jpg" onChange={handleLogo} className="hidden" />
+                <input type="file" accept=".png,.jpg,.jpeg" onChange={handleLogo} className="hidden" />
               </label>
             </div>
             {logoFile && <p className="text-xs text-[#006EB7]">{logoFile.name}</p>}
@@ -195,15 +194,20 @@ export default function EditarMarcaPage() {
             </label>
             {form.catalogoPdf && (
               <a href={form.catalogoPdf} target="_blank" rel="noopener noreferrer"
-                className="text-xs text-[#006EB7] underline underline-offset-2 w-fit">
+                className="w-fit text-xs text-[#006EB7] underline underline-offset-2">
                 Ver PDF atual
               </a>
             )}
-            <label className="cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7] w-fit">
+            <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
               {form.catalogoPdf ? "Trocar PDF" : "Adicionar PDF"}
               <input type="file" accept=".pdf" onChange={handlePdf} className="hidden" />
             </label>
-            {pdfFile && <p className="text-xs text-[#006EB7]">{pdfFile.name}</p>}
+            {pdfFile && (
+              <p className="text-xs text-[#006EB7]">
+                {pdfFile.name} ({(pdfFile.size / 1024 / 1024).toFixed(1)}MB)
+              </p>
+            )}
+            <p className="text-xs text-[#BCBABA]">Tamanho máximo: 50MB</p>
           </div>
 
           {/* Ordem */}
@@ -213,7 +217,7 @@ export default function EditarMarcaPage() {
               type="number"
               value={form.ordem}
               onChange={(e) => setForm((p) => ({ ...p, ordem: Number(e.target.value) }))}
-              className="w-24 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none focus:border-[#006EB7] transition-colors"
+              className="w-24 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]"
             />
           </div>
 
@@ -235,12 +239,12 @@ export default function EditarMarcaPage() {
           </div>
 
           {/* Ações */}
-          <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center justify-between border-t border-[#F6F6F6] pt-6">
             <button
               onClick={handleDelete}
-              className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors"
+              className="text-sm font-medium text-red-500 transition-colors hover:text-red-700"
             >
-              Desativar marca
+              Excluir marca permanentemente
             </button>
             <button
               onClick={handleSubmit}

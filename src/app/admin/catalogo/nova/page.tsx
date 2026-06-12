@@ -52,25 +52,35 @@ export default function NovaMarcaPage() {
     setLoading(true);
 
     try {
-      // Upload logo
+      // Upload logo — Cloudinary
       const logoData = new FormData();
       logoData.append("file", logoFile);
       logoData.append("pasta", "catalogo/logos");
       const logoRes = await fetch("/api/upload", { method: "POST", body: logoData });
+      if (!logoRes.ok) {
+        const err = await logoRes.json();
+        alert(err.error ?? "Erro ao enviar o logo.");
+        setLoading(false);
+        return;
+      }
       const { url: logoUrl } = await logoRes.json();
 
-      // Upload PDF (opcional)
+      // Upload PDF — Vercel Blob
       let pdfUrl = null;
       if (pdfFile) {
         const pdfData = new FormData();
         pdfData.append("file", pdfFile);
-        pdfData.append("pasta", "catalogo/pdfs");
-        const pdfRes = await fetch("/api/upload", { method: "POST", body: pdfData });
+        const pdfRes = await fetch("/api/upload-pdf", { method: "POST", body: pdfData });
+        if (!pdfRes.ok) {
+          const err = await pdfRes.json();
+          alert(err.error ?? "Erro ao enviar o PDF.");
+          setLoading(false);
+          return;
+        }
         const { url } = await pdfRes.json();
         pdfUrl = url;
       }
 
-      // Salva no banco
       await fetch("/api/marcas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -94,13 +104,12 @@ export default function NovaMarcaPage() {
 
   return (
     <div className="min-h-screen bg-[#F6F6F6]">
-      {/* Header */}
       <header className="flex items-center justify-between bg-[#00497F] px-8 py-4">
         <div className="flex items-center gap-4">
           <img src="/images/logo-white.svg" alt="Fabiano Zaffalon" className="w-36" />
           <span className="text-sm text-white/60">| Painel Admin</span>
         </div>
-        <a href="/admin/catalogo" className="text-xs text-white/60 hover:text-white transition-colors">
+        <a href="/admin/catalogo" className="text-xs text-white/60 transition-colors hover:text-white">
           ← Voltar
         </a>
       </header>
@@ -118,7 +127,7 @@ export default function NovaMarcaPage() {
               value={form.name}
               onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
               placeholder="Ex: Nestlé"
-              className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#006EB7] transition-colors"
+              className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm text-[#1A1A1A] outline-none transition-colors focus:border-[#006EB7]"
             />
           </div>
 
@@ -145,27 +154,36 @@ export default function NovaMarcaPage() {
 
           {/* Upload Logo */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-[#595959]">Logo*</label>
+            <label className="text-sm font-semibold text-[#595959]">Logo* <span className="font-normal text-[#BCBABA]">(PNG ou JPG)</span></label>
             <div className="flex items-center gap-4">
-              <label className="cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
-                Selecionar arquivo (SVG, PNG)
-                <input type="file" accept=".svg,.png,.jpg" onChange={handleLogo} className="hidden" />
+              <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+                Selecionar arquivo
+                <input type="file" accept=".png,.jpg,.jpeg" onChange={handleLogo} className="hidden" />
               </label>
               {logoPreview && (
-                <img src={logoPreview} alt="Preview" className="h-12 w-auto object-contain" />
+                <div className="flex h-16 w-32 items-center justify-center rounded-[8px] bg-[#1A4FA0]">
+                  <img src={logoPreview} alt="Preview" className="h-10 w-auto object-contain" />
+                </div>
               )}
             </div>
             {logoFile && <p className="text-xs text-[#006EB7]">{logoFile.name}</p>}
           </div>
 
-          {/* Upload PDF */}
+          {/* Upload PDF — Vercel Blob, até 50MB */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-[#595959]">PDF do Catálogo <span className="font-normal text-[#BCBABA]">(opcional)</span></label>
-            <label className="cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7] w-fit">
+            <label className="text-sm font-semibold text-[#595959]">
+              PDF do Catálogo <span className="font-normal text-[#BCBABA]">(opcional)</span>
+            </label>
+            <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
               Selecionar PDF
               <input type="file" accept=".pdf" onChange={handlePdf} className="hidden" />
             </label>
-            {pdfFile && <p className="text-xs text-[#006EB7]">{pdfFile.name}</p>}
+            {pdfFile && (
+              <p className="text-xs text-[#006EB7]">
+                {pdfFile.name} ({(pdfFile.size / 1024 / 1024).toFixed(1)}MB)
+              </p>
+            )}
+            <p className="text-xs text-[#BCBABA]">Tamanho máximo: 50MB</p>
           </div>
 
           {/* Ordem */}
@@ -175,7 +193,7 @@ export default function NovaMarcaPage() {
               type="number"
               value={form.ordem}
               onChange={(e) => setForm((p) => ({ ...p, ordem: Number(e.target.value) }))}
-              className="w-24 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none focus:border-[#006EB7] transition-colors"
+              className="w-24 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]"
             />
           </div>
 

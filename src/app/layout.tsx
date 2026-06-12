@@ -1,15 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "@/styles/globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { Analytics } from "@/components/layout/Analytics";
-import { WhatsAppButton } from "@/components/sections/Hero";
 
 // Poppins — carrega só os pesos usados no projeto
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "900"], // ← adiciona 500, 600, 700
+  weight: ["400", "500", "600", "700", "900"],
   variable: "--font-poppins",
   display: "swap",
 });
@@ -48,20 +44,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={poppins.variable} data-scroll-behavior="smooth">
-      <body>
-        <Analytics />
-        {/* Skip to main content — acessibilidade */}
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:rounded"
-        >
-          Ir ao conteúdo principal
-        </a>
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
-        <WhatsAppButton />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
