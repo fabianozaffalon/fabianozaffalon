@@ -1,0 +1,258 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+
+const UNIDADES = [
+  { id: "sul",     label: "Região Sul"     },
+  { id: "central", label: "Região Central" },
+  { id: "broker",  label: "Broker Nestlé"  },
+];
+
+export default function EditarMarcaPage() {
+  const router = useRouter();
+  const { id } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    unidades: [] as string[],
+    ordem: 0,
+    ativo: true,
+    logo: "",
+    catalogoPdf: "",
+  });
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string>("");
+
+  // Carrega dados da marca
+  useEffect(() => {
+    fetch(`/api/marcas/${id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setForm({
+          name:        data.name,
+          unidades:    data.unidades,
+          ordem:       data.ordem,
+          ativo:       data.ativo,
+          logo:        data.logo,
+          catalogoPdf: data.catalogoPdf ?? "",
+        });
+        setLogoPreview(data.logo);
+      });
+  }, [id]);
+
+  const handleUnidade = (uid: string) => {
+    setForm((prev) => ({
+      ...prev,
+      unidades: prev.unidades.includes(uid)
+        ? prev.unidades.filter((u) => u !== uid)
+        : [...prev.unidades, uid],
+    }));
+  };
+
+  const handleLogo = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setLogoFile(file);
+      setLogoPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handlePdf = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) setPdfFile(file);
+  };
+
+  const handleSubmit = async () => {
+    setSalvando(true);
+    try {
+      let logoUrl = form.logo;
+      let pdfUrl = form.catalogoPdf;
+
+      // Novo logo
+      if (logoFile) {
+        const logoData = new FormData();
+        logoData.append("file", logoFile);
+        logoData.append("pasta", "catalogo/logos");
+        const res = await fetch("/api/upload", { method: "POST", body: logoData });
+        const { url } = await res.json();
+        logoUrl = url;
+      }
+
+      // Novo PDF
+      if (pdfFile) {
+        const pdfData = new FormData();
+        pdfData.append("file", pdfFile);
+        pdfData.append("pasta", "catalogo/pdfs");
+        const res = await fetch("/api/upload", { method: "POST", body: pdfData });
+        const { url } = await res.json();
+        pdfUrl = url;
+      }
+
+      await fetch(`/api/marcas/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name:        form.name,
+          logo:        logoUrl,
+          catalogoPdf: pdfUrl || null,
+          unidades:    form.unidades,
+          ordem:       form.ordem,
+          ativo:       form.ativo,
+        }),
+      });
+
+      router.push("/admin/catalogo");
+    } catch (err) {
+      alert("Erro ao salvar.");
+      console.error(err);
+    } finally {
+      setSalvando(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!confirm("Desativar esta marca?")) return;
+    await fetch(`/api/marcas/${id}`, { method: "DELETE" });
+    router.push("/admin/catalogo");
+  };
+
+  if (loading) return <div className="flex min-h-screen items-center justify-center">Carregando...</div>;
+
+  return (
+    <div className="min-h-screen bg-[#F6F6F6]">
+      {/* Header */}
+      <header className="flex items-center justify-between bg-[#00497F] px-8 py-4">
+        <div className="flex items-center gap-4">
+          <img src="/images/logo-white.svg" alt="Fabiano Zaffalon" className="w-36" />
+          <span className="text-sm text-white/60">| Painel Admin</span>
+        </div>
+        <a href="/admin/catalogo" className="text-xs text-white/60 hover:text-white transition-colors">
+          ← Voltar
+        </a>
+      </header>
+
+      <main className="mx-auto max-w-[720px] px-8 py-12">
+        <h1 className="mb-8 text-2xl font-black text-[#00497F]">Editar Marca</h1>
+
+        <div className="flex flex-col gap-6 rounded-[20px] bg-white p-8 shadow-sm">
+
+          {/* Nome */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">Nome da marca*</label>
+            <input
+              type="text"
+              value={form.name}
+              onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+              className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm text-[#1A1A1A] outline-none focus:border-[#006EB7] transition-colors"
+            />
+          </div>
+
+          {/* Unidades */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">Unidades*</label>
+            <div className="flex gap-3">
+              {UNIDADES.map((u) => (
+                <button
+                  key={u.id}
+                  onClick={() => handleUnidade(u.id)}
+                  className={
+                    "rounded-[8px] border-2 px-4 py-2 text-sm font-medium transition-colors " +
+                    (form.unidades.includes(u.id)
+                      ? "border-[#006EB7] bg-[#006EB7] text-white"
+                      : "border-[#D1D1D1] text-[#595959] hover:border-[#006EB7]")
+                  }
+                >
+                  {u.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Logo atual + novo upload */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">Logo</label>
+            <div className="flex items-center gap-4">
+              {logoPreview && (
+                <div className="flex h-16 w-32 items-center justify-center rounded-[8px] bg-[#1A4FA0]">
+                  <img src={logoPreview} alt="Logo" className="h-10 w-auto object-contain brightness-0 invert" />
+                </div>
+              )}
+              <label className="cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+                Trocar logo
+                <input type="file" accept=".svg,.png,.jpg" onChange={handleLogo} className="hidden" />
+              </label>
+            </div>
+            {logoFile && <p className="text-xs text-[#006EB7]">{logoFile.name}</p>}
+          </div>
+
+          {/* PDF */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">
+              PDF do Catálogo <span className="font-normal text-[#BCBABA]">(opcional)</span>
+            </label>
+            {form.catalogoPdf && (
+              <a href={form.catalogoPdf} target="_blank" rel="noopener noreferrer"
+                className="text-xs text-[#006EB7] underline underline-offset-2 w-fit">
+                Ver PDF atual
+              </a>
+            )}
+            <label className="cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7] w-fit">
+              {form.catalogoPdf ? "Trocar PDF" : "Adicionar PDF"}
+              <input type="file" accept=".pdf" onChange={handlePdf} className="hidden" />
+            </label>
+            {pdfFile && <p className="text-xs text-[#006EB7]">{pdfFile.name}</p>}
+          </div>
+
+          {/* Ordem */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">Ordem de exibição</label>
+            <input
+              type="number"
+              value={form.ordem}
+              onChange={(e) => setForm((p) => ({ ...p, ordem: Number(e.target.value) }))}
+              className="w-24 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none focus:border-[#006EB7] transition-colors"
+            />
+          </div>
+
+          {/* Status */}
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-semibold text-[#595959]">Ativo</label>
+            <button
+              onClick={() => setForm((p) => ({ ...p, ativo: !p.ativo }))}
+              className={
+                "relative h-6 w-11 rounded-full transition-colors " +
+                (form.ativo ? "bg-[#006EB7]" : "bg-gray-300")
+              }
+            >
+              <span className={
+                "absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all " +
+                (form.ativo ? "left-5" : "left-0.5")
+              } />
+            </button>
+          </div>
+
+          {/* Ações */}
+          <div className="flex items-center justify-between pt-2">
+            <button
+              onClick={handleDelete}
+              className="text-sm font-medium text-red-500 hover:text-red-700 transition-colors"
+            >
+              Desativar marca
+            </button>
+            <button
+              onClick={handleSubmit}
+              disabled={salvando}
+              className="rounded-[8px] bg-[#006EB7] px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#00497F] disabled:opacity-50"
+            >
+              {salvando ? "Salvando..." : "Salvar alterações"}
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  );
+}
