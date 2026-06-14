@@ -19,6 +19,20 @@ model Marca {
   updatedAt   DateTime @updatedAt
 }
 
+model Noticia {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  categoria String
+  titulo    String
+  resumo    String
+  conteudo  String   @db.Text
+  capa      String
+  fotos     String[]
+  publicada Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique

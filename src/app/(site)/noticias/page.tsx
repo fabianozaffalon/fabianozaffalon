@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { NoticiasHero }    from "@/components/sections/noticias/NoticiasHero";
-import { NoticiasContent } from "@/components/sections/noticias/NoticiasContent";
+import { NoticiasHero } from "@/components/sections/noticias/NoticiasHero";
+import { NoticiasList } from "@/components/sections/noticias/NoticiasList";
+import { NewsletterBanner } from "@/components/sections/noticias/NewsletterBanner";
 
 export const metadata: Metadata = {
   title: "Notícias",
@@ -12,7 +13,8 @@ export default function NoticiasPage() {
   return (
     <>
       <NoticiasHero />
-      <NoticiasContent />
+      <NoticiasList />
+      <NewsletterBanner />
     </>
   );
 }
