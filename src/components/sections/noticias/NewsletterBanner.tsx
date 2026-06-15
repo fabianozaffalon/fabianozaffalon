@@ -32,7 +32,7 @@ export function NewsletterBanner() {
                 placeholder="Seu e-mail"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 rounded-[8px] border border-white/30 bg-white/10 px-5 py-3 text-sm text-white placeholder:text-white/50 outline-none focus:border-white transition-colors"
+                className="flex-1 rounded-[8px] border border-white/30 bg-white px-5 py-3 text-sm text-[#1A1A1A] placeholder:text-[#ABABAB] outline-none focus:border-[#006EB7] transition-colors"
               />
               <button className="flex shrink-0 items-center justify-center gap-2 rounded-[8px] border-2 border-white px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]">
                 Cadastrar
