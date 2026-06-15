@@ -13,7 +13,7 @@ const ATUACAO_LINKS = [
 
 const NAV_LINKS = [
   { label: "A Empresa", href: "/empresa", dropdown: null },
-  { label: "Broker Nestlé", href: "#broker", dropdown: null },
+  { label: "Broker Nestlé", href: "/broker-nestle", dropdown: null },
   { label: "Atuação", href: "#solucoes", dropdown: ATUACAO_LINKS },
   { label: "FAQ", href: "/faq", dropdown: null },
   { label: "Notícias", href: "/noticias", dropdown: null },
@@ -133,7 +133,7 @@ export function Header() {
                   <button
                     className={
                       "flex items-center gap-1 font-sans text-sm transition-colors hover:text-[#006EB7] focus:outline-none " +
-                      (ATUACAO_LINKS.some(sub => pathname === sub.href)
+                      (ATUACAO_LINKS.some((sub) => pathname === sub.href)
                         ? "font-semibold text-[#006EB7]"
                         : "font-normal text-[#595959]")
                     }
@@ -356,10 +356,12 @@ export function Header() {
                 }
                 style={{ transitionDelay: menuOpen ? `${i * 40}ms` : "0ms" }}
               >
-                <span className={
-                  "h-px w-4 shrink-0 " +
-                  (pathname === link.href ? "bg-white" : "bg-white/30")
-                } />
+                <span
+                  className={
+                    "h-px w-4 shrink-0 " +
+                    (pathname === link.href ? "bg-white" : "bg-white/30")
+                  }
+                />
                 {link.label}
               </Link>
             )
