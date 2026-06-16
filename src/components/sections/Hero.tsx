@@ -142,6 +142,7 @@ export function Hero() {
             alt={slide.title}
             fill
             priority={i === 0}
+            loading={i === 0 ? "eager" : "eager"}
             className="object-cover object-center"
             sizes="100vw"
           />
