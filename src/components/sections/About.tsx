@@ -34,7 +34,7 @@ export function About() {
                 seus colaboradores têm em fazer parte desta organização.
               </p>
               <Link
-                href="#contato"
+                href="/empresa"
                 className="mt-5 self-start rounded-[8px] border-2 border-[#006EB7] bg-[#006EB7] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
               >
                 Saiba mais sobre nós
@@ -88,7 +88,7 @@ export function About() {
                 ampliando oportunidades para o varejo e food service.
               </p>
               <Link
-                href="#contato"
+                href="/broker-nestle"
                 className="mt-5 self-start rounded-[8px] border-2 border-[#006EB7] bg-[#006EB7] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
               >
                 Saiba mais sobre nós

@@ -5,9 +5,29 @@ export default async function AdminPage() {
   const session = await auth();
   if (!session) redirect("/admin/login");
 
+  const MODULOS = [
+    {
+      href: "/admin/catalogo",
+      titulo: "Catálogo",
+      descricao: "Gerenciar marcas e PDFs do catálogo",
+      icon: "M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12",
+    },
+    {
+      href: "/admin/noticias",
+      titulo: "Notícias",
+      descricao: "Publicar e gerenciar notícias do site",
+      icon: "M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z",
+    },
+    {
+      href: "/admin/cases",
+      titulo: "Cases de Crescimento",
+      descricao: "Gerenciar histórias e marcos da empresa",
+      icon: "M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172M5.25 4.236c-.982.143-1.954.317-2.916.52A6.003 6.003 0 007.73 9.728M5.25 4.236V4.5c0 2.108.966 3.99 2.48 5.228M5.25 4.236V2.721C7.456 2.41 9.71 2.25 12 2.25c2.291 0 4.545.16 6.75.47v1.516M7.73 9.728a6.726 6.726 0 002.748 1.35m8.272-6.842V4.5c0 2.108-.966 3.99-2.48 5.228m2.48-5.492a46.32 46.32 0 012.916.52 6.003 6.003 0 01-5.395 4.972m0 0a6.726 6.726 0 01-2.749 1.35m0 0a6.772 6.772 0 01-3.044 0",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-[#F6F6F6]">
-      {/* Header */}
       <header className="bg-[#00497F] px-8 py-4">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between">
           <div className="flex items-center gap-3">
@@ -40,33 +60,19 @@ export default async function AdminPage() {
 
       <main className="mx-auto max-w-[1280px] px-8 py-12">
         <h1 className="mb-8 text-2xl font-black text-[#00497F]">Bem-vindo ao painel</h1>
-
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-          {/* Catálogo */}
-          <a href="/admin/catalogo"
-            className="flex flex-col gap-3 rounded-[16px] bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#006EB7]/10">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#006EB7" className="h-6 w-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-              </svg>
-            </div>
-            <h2 className="text-lg font-bold text-[#00497F]">Catálogo</h2>
-            <p className="text-sm text-[#595959]">Gerenciar marcas e PDFs do catálogo</p>
-          </a>
-
-          {/* Notícias */}
-          <a href="/admin/noticias"
-            className="flex flex-col gap-3 rounded-[16px] bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#006EB7]/10">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#006EB7" className="h-6 w-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" />
-              </svg>
-            </div>
-            <h2 className="text-lg font-bold text-[#00497F]">Notícias</h2>
-            <p className="text-sm text-[#595959]">Publicar e gerenciar notícias do site</p>
-          </a>
-
+          {MODULOS.map((m) => (
+            <a key={m.href} href={m.href}
+              className="flex flex-col gap-3 rounded-[16px] bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#006EB7]/10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#006EB7" className="h-6 w-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d={m.icon} />
+                </svg>
+              </div>
+              <h2 className="text-lg font-bold text-[#00497F]">{m.titulo}</h2>
+              <p className="text-sm text-[#595959]">{m.descricao}</p>
+            </a>
+          ))}
         </div>
       </main>
     </div>

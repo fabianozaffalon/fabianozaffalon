@@ -112,7 +112,7 @@ export function Header() {
                 "h-auto transition-all duration-300 " +
                 (scrolled ? "w-[150px] md:w-[180px]" : "w-[180px] md:w-[230px]")
               }
-              style={{ height: "auto" }}
+              style={{ width: "auto", height: "auto" }}
             />
           </Link>
 
@@ -287,7 +287,7 @@ export function Header() {
             width={150}
             height={54}
             className="h-auto w-[150px]"
-            style={{ height: "auto" }}
+            style={{ width: "auto", height: "auto" }}
           />
         </div>
 

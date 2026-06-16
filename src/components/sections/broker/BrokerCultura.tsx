@@ -4,25 +4,27 @@ const CULTURA = [
   {
     icon: "/images/icons/icon-missao.svg",
     titulo: "Missão",
-    texto: "Representar a Nestlé com excelência, conectando estratégia e execução por meio de uma atuação próxima ao mercado, orientada por resultados e comprometida com o fortalecimento da marca, o desenvolvimento dos parceiros e a geração de valor para toda a cadeia de negócios.",
+    texto:
+      "Representar a Nestlé com excelência, conectando estratégia e execução por meio de uma atuação próxima ao mercado, orientada por resultados e comprometida com o fortalecimento da marca, o desenvolvimento dos parceiros e a geração de valor para toda a cadeia de negócios.",
   },
   {
     icon: "/images/icons/icon-visao.svg",
     titulo: "Visão",
-    texto: "Ser referência nacional em operação de broker, reconhecida pela capacidade de transformar conhecimento de mercado, relacionamento e execução em crescimento sustentável para as marcas que representamos, consolidando uma atuação cada vez mais relevante e estratégica.",
+    texto:
+      "Ser referência nacional em operação de broker, reconhecida pela capacidade de transformar conhecimento de mercado, relacionamento e execução em crescimento sustentável para as marcas que representamos, consolidando uma atuação cada vez mais relevante e estratégica.",
   },
   {
     icon: "/images/icons/icon-valores.svg",
     titulo: "Valores",
-    texto: "Atuamos com compromisso, ética e responsabilidade nos relacionamentos que construímos. Valorizamos a excelência na execução, a busca contínua por evolução, o respeito às pessoas e a dedicação aos resultados, entendendo que a confiança é a base para o desenvolvimento de parcerias sólidas e duradouras.",
+    texto:
+      "Atuamos com compromisso, ética e responsabilidade nos relacionamentos que construímos. Valorizamos a excelência na execução, a busca contínua por evolução, o respeito às pessoas e a dedicação aos resultados, entendendo que a confiança é a base para o desenvolvimento de parcerias sólidas e duradouras.",
   },
 ];
 
 export function BrokerCultura() {
   return (
-    <section className="bg-white py-14 md:py-20">
+    <section className="bg-white pb-14 md:pb-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-
         {/* Título */}
         <h2
           className="mb-10 text-center font-semibold text-[#595959]"
@@ -77,7 +79,6 @@ export function BrokerCultura() {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

@@ -141,7 +141,7 @@ export function Footer() {
               width={180}
               height={64}
               className="w-[180px] h-auto"
-              style={{ height: "auto" }}
+              style={{ width: "auto", height: "auto" }}
             />
           </Link>
           <p className="max-w-[280px] text-sm font-normal leading-relaxed text-white/70">
