@@ -56,7 +56,7 @@ export function BrokerApresentacao() {
                   aria-hidden="true"
                   width={48}
                   height={48}
-                  className="h-14 w-14 shrink-0 brightness-0 invert"
+                  className="h-16 w-16 shrink-0 brightness-0 invert"
                 />
                 <div className="flex flex-col">
                   <span className="text-lg font-normal leading-none text-white/70">
@@ -74,7 +74,7 @@ export function BrokerApresentacao() {
                   aria-hidden="true"
                   width={48}
                   height={48}
-                  className="h-14 w-14 shrink-0 brightness-0 invert"
+                  className="h-16 w-16 shrink-0 brightness-0 invert"
                 />
                 <div className="flex flex-col">
                   <span className="text-lg font-normal leading-none text-white/70">
