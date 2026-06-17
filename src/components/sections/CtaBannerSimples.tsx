@@ -16,7 +16,7 @@ export function CtaBannerSimples() {
                 <br />
                 conquistar o seu espaço.
               </h2>
-              <p className="text-sm font-normal text-white/80">
+              <p className="text-sm font-normal text-white/95">
                 Temos sempre uma grande oportunidade para o seu negócio.
                 <br className="hidden sm:block" />
                 Chame o consultor da sua região e descubra.

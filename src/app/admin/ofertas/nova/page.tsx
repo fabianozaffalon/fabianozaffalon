@@ -1,0 +1,140 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function NovaOfertaPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({ titulo: "", link: "", ordem: 0, ativo: true });
+  const [imagemFile, setImagemFile] = useState<File | null>(null);
+  const [imagemPreview, setImagemPreview] = useState("");
+
+  const handleImagem = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) { setImagemFile(file); setImagemPreview(URL.createObjectURL(file)); }
+  };
+
+  const handleSubmit = async () => {
+    if (!form.titulo || !imagemFile) {
+      alert("Preenche o título e seleciona a imagem.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const data = new FormData();
+      data.append("file", imagemFile);
+      data.append("pasta", "ofertas");
+      const res = await fetch("/api/upload", { method: "POST", body: data });
+      if (!res.ok) throw new Error("Erro no upload");
+      const { url } = await res.json();
+
+      await fetch("/api/ofertas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, imagem: url }),
+      });
+      router.push("/admin/ofertas");
+    } catch (err) {
+      alert("Erro ao salvar.");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#F6F6F6]">
+      <header className="flex items-center justify-between bg-[#00497F] px-8 py-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-[8px] bg-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="h-5 w-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+            </svg>
+          </div>
+          <div>
+            <span className="text-sm font-bold text-white">Painel Administrativo</span>
+            <p className="text-xs text-white/50">Fabiano Zaffalon</p>
+          </div>
+        </div>
+        <a href="/admin/ofertas" className="text-xs text-white/60 transition-colors hover:text-white">← Voltar</a>
+      </header>
+
+      <main className="mx-auto max-w-[720px] px-8 py-12">
+        <h1 className="mb-2 text-2xl font-black text-[#00497F]">Nova Oferta</h1>
+        <nav className="mb-8 flex items-center gap-2 text-xs text-[#BCBABA]">
+          <a href="/admin" className="hover:text-[#006EB7]">Painel</a>
+          <span>/</span>
+          <a href="/admin/ofertas" className="hover:text-[#006EB7]">Ofertas</a>
+          <span>/</span>
+          <span className="text-[#595959]">Nova</span>
+        </nav>
+
+        <div className="flex flex-col gap-6 rounded-[20px] bg-white p-8 shadow-sm">
+
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">Título*</label>
+            <input type="text" value={form.titulo}
+              onChange={(e) => setForm((p) => ({ ...p, titulo: e.target.value }))}
+              placeholder="Ex: Ações de Abril — Kimberly-Clark"
+              className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
+          </div>
+
+          {/* Imagem */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">
+              Imagem do encarte* <span className="font-normal text-[#BCBABA]">(PNG ou JPG — recomendado 1080x618px)</span>
+            </label>
+            <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+              Selecionar imagem
+              <input type="file" accept=".png,.jpg,.jpeg" onChange={handleImagem} className="hidden" />
+            </label>
+            {imagemPreview && (
+              <div className="mt-2 overflow-hidden rounded-[12px]" style={{ maxWidth: "480px" }}>
+                <img src={imagemPreview} alt="Preview" className="w-full h-auto rounded-[12px]" />
+              </div>
+            )}
+            {imagemFile && <p className="text-xs text-[#006EB7]">{imagemFile.name}</p>}
+          </div>
+
+          {/* Link opcional */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">
+              Link <span className="font-normal text-[#BCBABA]">(opcional — ex: /catalogo)</span>
+            </label>
+            <input type="text" value={form.link}
+              onChange={(e) => setForm((p) => ({ ...p, link: e.target.value }))}
+              placeholder="Ex: /catalogo ou https://..."
+              className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
+          </div>
+
+          {/* Ordem */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">Ordem de exibição</label>
+            <input type="number" value={form.ordem}
+              onChange={(e) => setForm((p) => ({ ...p, ordem: Number(e.target.value) }))}
+              className="w-24 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
+          </div>
+
+          {/* Status */}
+          <div className="flex items-center gap-3">
+            <label className="text-sm font-semibold text-[#595959]">Publicar imediatamente</label>
+            <button onClick={() => setForm((p) => ({ ...p, ativo: !p.ativo }))}
+              className={"relative h-6 w-11 rounded-full transition-colors " + (form.ativo ? "bg-[#006EB7]" : "bg-gray-300")}>
+              <span className={"absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all " + (form.ativo ? "left-5" : "left-0.5")} />
+            </button>
+            <span className="text-xs text-[#BCBABA]">{form.ativo ? "Será publicada" : "Rascunho"}</span>
+          </div>
+
+          <div className="flex justify-end border-t border-[#F6F6F6] pt-6">
+            <button onClick={handleSubmit} disabled={loading}
+              className="rounded-[8px] bg-[#006EB7] px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#00497F] disabled:opacity-50">
+              {loading ? "Salvando..." : "Salvar oferta"}
+            </button>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  );
+}
