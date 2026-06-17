@@ -39,7 +39,7 @@ const SLIDES = [
     image: "/images/hero/slide-5.png",
     title: "Saiba como fazemos a diferença.",
     subtitle: "Processos, tecnologia e uma cultura de confiança e respeito.",
-    cta: { label: "CONHEÇA A FABIANO ZAFFALON", href: "#empresa" },
+    cta: { label: "CONHEÇA A FABIANO ZAFFALON", href: "/empresa" },
   },
 ];
 

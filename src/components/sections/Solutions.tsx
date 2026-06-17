@@ -73,7 +73,7 @@ export function Solutions() {
                   alt={item.title}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 80vw, 33vw"
+                  sizes="(max-width: 768px) 80vw, (max-width: 1280px) 33vw, 420px"
                 />
 
                 {/* Overlay gradiente */}
@@ -83,7 +83,7 @@ export function Solutions() {
                   <h3 className="text-lg font-semibold text-white md:text-xl">
                     {item.title}
                   </h3>
-                  <p className="mt-1.5 text-xs font-normal leading-relaxed text-white/85">
+                  <p className="mt-1.5 text-xs font-normal leading-relaxed text-white/95">
                     {item.description}
                   </p>
                   <Link

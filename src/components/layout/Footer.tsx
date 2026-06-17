@@ -322,13 +322,13 @@ export function Footer() {
       {/* ── Rodapé inferior ── */}
       <div className="border-t border-gray-200 bg-white">
         <div className="mx-auto flex w-full max-w-[1280px] items-center justify-center px-5 py-4 md:px-12">
-          <p className="text-xs font-normal text-gray-400">
+          <p className="text-xs font-normal text-gray-600">
             Desenvolvido por{" "}
             <a
               href="https://megusta.com.br"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-gray-500 hover:text-gray-700 transition-colors"
+              className="font-semibold text-gray-700 hover:text-gray-900 transition-colors"
             >
               Me Gusta
             </a>
