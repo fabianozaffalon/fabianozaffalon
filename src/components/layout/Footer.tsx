@@ -321,7 +321,7 @@ export function Footer() {
 
       {/* ── Rodapé inferior ── */}
       <div className="border-t border-gray-200 bg-white">
-        <div className="mx-auto flex w-full max-w-[1280px] items-center justify-center px-5 py-4 md:px-12">
+        <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center justify-between gap-3 px-5 py-4 md:flex-row md:px-12">
           <p className="text-xs font-normal text-gray-600">
             Desenvolvido por{" "}
             <a
@@ -333,6 +333,12 @@ export function Footer() {
               Me Gusta
             </a>
           </p>
+          <Link
+            href="/politica-de-privacidade"
+            className="text-xs font-normal text-gray-600 transition-colors hover:text-gray-900"
+          >
+            Política de Privacidade
+          </Link>
         </div>
       </div>
     </footer>
