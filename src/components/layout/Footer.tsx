@@ -333,12 +333,21 @@ export function Footer() {
               Me Gusta
             </a>
           </p>
-          <Link
-            href="/politica-de-privacidade"
-            className="text-xs font-normal text-gray-600 transition-colors hover:text-gray-900"
-          >
-            Política de Privacidade
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/termos-de-servico"
+              className="text-xs font-normal text-gray-600 transition-colors hover:text-gray-900"
+            >
+              Termos de Serviço
+            </Link>
+            <span className="text-gray-300">|</span>
+            <Link
+              href="/politica-de-privacidade"
+              className="text-xs font-normal text-gray-600 transition-colors hover:text-gray-900"
+            >
+              Política de Privacidade
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
