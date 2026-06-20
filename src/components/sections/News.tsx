@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NewsCarrossel } from "./NewsCarrossel";
+import { InstagramFeed } from "@/components/sections/instagram/InstagramFeed";
 
 export async function News() {
   const noticias = await prisma.noticia.findMany({
@@ -21,5 +22,5 @@ export async function News() {
     href:  `/noticias/${n.slug}`,
   }));
 
-  return <NewsCarrossel items={items} />;
+  return <NewsCarrossel items={items} instagramSlot={<InstagramFeed limit={2} />} />;
 }

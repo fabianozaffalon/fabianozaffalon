@@ -19,31 +19,32 @@ export async function EmpresaCases() {
   });
 
   const items = cases.map((c) => ({
-    id:       c.id,
-    slug:     c.slug,
-    tag:      c.tag,
-    titulo:   c.titulo,
+    id: c.id,
+    slug: c.slug,
+    tag: c.tag,
+    titulo: c.titulo,
     subtitulo: c.subtitulo,
-    capa:     c.capa,
+    capa: c.capa,
   }));
 
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-16 md:items-center">
-
           {/* Título + texto + botão — esquerda */}
           <div className="flex flex-col gap-5">
             <h2
               className="font-black leading-tight text-[#006EB7]"
               style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)" }}
             >
-              Cases de
-              <br />crescimento
+              Cases &
+              <br />
+              Conquistas
             </h2>
             <p className="text-sm leading-relaxed text-[#595959] md:text-base">
-              A nossa história é contada também por alguns casos de sucesso. Confira
-              e descubra como a Fabiano Zaffalon transforma desafio em resultado.
+              A nossa história é contada também por alguns casos de sucesso.
+              Confira e descubra como a Fabiano Zaffalon transforma desafio em
+              resultado.
             </p>
             <Link
               href="/cases"
@@ -55,7 +56,6 @@ export async function EmpresaCases() {
 
           {/* Carrossel — direita */}
           <EmpresaCasesCarrossel items={items} />
-
         </div>
       </div>
     </section>

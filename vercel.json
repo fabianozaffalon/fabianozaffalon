@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/renovar-token",
+      "schedule": "0 3 */45 * *"
+    }
+  ]
+}
