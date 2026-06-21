@@ -24,7 +24,7 @@ export async function GET() {
 
   try {
     const fields = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp";
-    const url = `https://graph.facebook.com/v21.0/${businessId}/media?fields=${fields}&limit=8&access_token=${token}`;
+    const url = `https://graph.facebook.com/v21.0/${businessId}/media?fields=${fields}&limit=9&access_token=${token}`;
 
     const res = await fetch(url, { next: { revalidate: 3600 } });
 
