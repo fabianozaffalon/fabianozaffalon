@@ -8,7 +8,8 @@ const EMPRESA = [
   { label: "A Empresa", href: "/empresa" },
   { label: "FAQ", href: "/faq" },
   { label: "Notícias", href: "/noticias" },
-  { label: "Trabalhe Conosco", href: "/contato" },
+  { label: "Fale com a gente", href: "/contato" },
+  { label: "Trabalhe Conosco", href: "/contato?aba=trabalhe-conosco" },
 ];
 
 const SOLUCOES = [

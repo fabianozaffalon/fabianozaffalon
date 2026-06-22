@@ -11,24 +11,33 @@ const ATUACAO_LINKS = [
   { label: "Indústria", href: "/industria" },
 ];
 
+const CONTATO_LINKS = [
+  { label: "Fale com a gente", href: "/contato" },
+  { label: "Trabalhe Conosco", href: "/contato?aba=trabalhe-conosco" },
+];
+
 const NAV_LINKS = [
   { label: "A Empresa", href: "/empresa", dropdown: null },
   { label: "Broker Nestlé", href: "/broker-nestle", dropdown: null },
   { label: "Atuação", href: "#solucoes", dropdown: ATUACAO_LINKS },
   { label: "FAQ", href: "/faq", dropdown: null },
   { label: "Notícias", href: "/noticias", dropdown: null },
-  { label: "Contato", href: "/contato", dropdown: null },
+  { label: "Contato", href: "/contato", dropdown: CONTATO_LINKS },
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [contatoDropdownOpen, setContatoDropdownOpen] = useState(false);
   const [mobileAtuacaoOpen, setMobileAtuacaoOpen] = useState(false);
+  const [mobileContatoOpen, setMobileContatoOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const contatoDropdownRef = useRef<HTMLDivElement>(null);
   const dropdownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const contatoTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Shrink no scroll
   useEffect(() => {
@@ -74,6 +83,7 @@ export function Header() {
   const close = () => {
     setMenuOpen(false);
     setMobileAtuacaoOpen(false);
+    setMobileContatoOpen(false);
   };
 
   const handleDropdownEnter = () => {
@@ -83,6 +93,15 @@ export function Header() {
 
   const handleDropdownLeave = () => {
     dropdownTimerRef.current = setTimeout(() => setDropdownOpen(false), 120);
+  };
+
+  const handleContatoEnter = () => {
+    if (contatoTimerRef.current) clearTimeout(contatoTimerRef.current);
+    setContatoDropdownOpen(true);
+  };
+
+  const handleContatoLeave = () => {
+    contatoTimerRef.current = setTimeout(() => setContatoDropdownOpen(false), 120);
   };
 
   return (
@@ -125,21 +144,24 @@ export function Header() {
               link.dropdown ? (
                 <div
                   key={link.label}
-                  ref={dropdownRef}
+                  ref={link.label === "Atuação" ? dropdownRef : contatoDropdownRef}
                   className="relative"
-                  onMouseEnter={handleDropdownEnter}
-                  onMouseLeave={handleDropdownLeave}
+                  onMouseEnter={link.label === "Atuação" ? handleDropdownEnter : handleContatoEnter}
+                  onMouseLeave={link.label === "Atuação" ? handleDropdownLeave : handleContatoLeave}
                 >
                   <button
                     className={
                       "flex items-center gap-1 font-sans text-sm transition-colors hover:text-[#006EB7] focus:outline-none " +
-                      (ATUACAO_LINKS.some((sub) => pathname === sub.href)
+                      (link.dropdown.some((sub) => pathname === sub.href)
                         ? "font-semibold text-[#006EB7]"
                         : "font-normal text-[#595959]")
                     }
                     aria-haspopup="true"
-                    aria-expanded={dropdownOpen}
-                    onClick={() => setDropdownOpen((v) => !v)}
+                    aria-expanded={link.label === "Atuação" ? dropdownOpen : contatoDropdownOpen}
+                    onClick={() => link.label === "Atuação"
+                      ? setDropdownOpen((v) => !v)
+                      : setContatoDropdownOpen((v) => !v)
+                    }
                   >
                     {link.label}
                     <svg
@@ -148,7 +170,9 @@ export function Header() {
                       fill="currentColor"
                       className={
                         "h-4 w-4 transition-transform duration-200 " +
-                        (dropdownOpen ? "rotate-180 text-[#006EB7]" : "")
+                        ((link.label === "Atuação" ? dropdownOpen : contatoDropdownOpen)
+                          ? "rotate-180 text-[#006EB7]"
+                          : "")
                       }
                     >
                       <path
@@ -163,7 +187,7 @@ export function Header() {
                   <div
                     className={
                       "absolute left-0 top-full pt-3 transition-all duration-200 " +
-                      (dropdownOpen
+                      ((link.label === "Atuação" ? dropdownOpen : contatoDropdownOpen)
                         ? "pointer-events-auto translate-y-0 opacity-100"
                         : "pointer-events-none -translate-y-1 opacity-0")
                     }
@@ -173,7 +197,10 @@ export function Header() {
                         <Link
                           key={sub.label}
                           href={sub.href}
-                          onClick={() => setDropdownOpen(false)}
+                          onClick={() => {
+                            setDropdownOpen(false);
+                            setContatoDropdownOpen(false);
+                          }}
                           className={
                             "block px-4 py-3 text-sm text-[#595959] transition-colors hover:bg-[#f0f7ff] hover:text-[#006EB7] " +
                             (idx !== 0 ? "border-t border-gray-100" : "")
@@ -296,7 +323,10 @@ export function Header() {
             link.dropdown ? (
               <div key={link.label}>
                 <button
-                  onClick={() => setMobileAtuacaoOpen((v) => !v)}
+                  onClick={() => link.label === "Atuação"
+                    ? setMobileAtuacaoOpen((v) => !v)
+                    : setMobileContatoOpen((v) => !v)
+                  }
                   className="flex w-full items-center justify-between rounded-[8px] px-3 py-3.5 text-base font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                   style={{ transitionDelay: menuOpen ? `${i * 40}ms` : "0ms" }}
                 >
@@ -310,7 +340,7 @@ export function Header() {
                     fill="currentColor"
                     className={
                       "h-4 w-4 transition-transform duration-200 " +
-                      (mobileAtuacaoOpen ? "rotate-180" : "")
+                      ((link.label === "Atuação" ? mobileAtuacaoOpen : mobileContatoOpen) ? "rotate-180" : "")
                     }
                   >
                     <path
@@ -323,7 +353,7 @@ export function Header() {
                 <div
                   className={
                     "overflow-hidden transition-all duration-200 " +
-                    (mobileAtuacaoOpen
+                    ((link.label === "Atuação" ? mobileAtuacaoOpen : mobileContatoOpen)
                       ? "max-h-48 opacity-100"
                       : "max-h-0 opacity-0")
                   }

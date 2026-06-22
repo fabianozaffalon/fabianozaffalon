@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
-import { ContatoHero }    from "@/components/sections/contato/ContatoHero";
+import { Suspense } from "react";
 import { ContatoSection } from "@/components/sections/contato/ContatoSection";
 
 export const metadata: Metadata = {
   title: "Contato",
-  description:
-    "Entre em contato com a Fabiano Zaffalon. Fale com nossa equipe, envie seu currículo ou faça um pedido. Unidades em Pelotas e Rio Pardo.",
+  description: "Entre em contato ou candidate-se a uma vaga na Fabiano Zaffalon Distribuidora.",
 };
 
 export default function ContatoPage() {
   return (
-    <>
-      <ContatoHero />
+    <Suspense fallback={null}>
       <ContatoSection />
-    </>
+    </Suspense>
   );
 }
