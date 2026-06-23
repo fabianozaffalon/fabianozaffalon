@@ -102,8 +102,6 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
     <section
       id="cta"
       className="bg-[#EFEFEF] py-10 md:py-14"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="rounded-[28px] bg-[#006EB7] px-6 py-6 md:rounded-[40px] md:px-8 md:py-8">
@@ -114,20 +112,34 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
                 Destaques do mês
               </p>
 
-              {/* Imagem com fade */}
+              {/* Imagem com fade — clicável, pausa só aqui */}
               <div
-                className="relative w-full overflow-hidden rounded-[16px]"
                 style={{ opacity, transition: "opacity 300ms ease-in-out" }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
-                <Image
-                  src={oferta.imagem}
-                  alt={oferta.titulo}
-                  width={1080}
-                  height={618}
-                  className="w-full h-auto"
-                  sizes="(max-width: 768px) 100vw, 38vw"
-                  priority={index === 0}
-                />
+                <Link
+                  href={`/ofertas?id=${oferta.id}`}
+                  className="relative block w-full overflow-hidden rounded-[16px] cursor-pointer group"
+                  aria-label={`Ver oferta: ${oferta.titulo}`}
+                >
+                  <Image
+                    src={oferta.imagem}
+                    alt={oferta.titulo}
+                    width={1080}
+                    height={618}
+                    className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 38vw"
+                    priority={index === 0}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-[16px]" />
+                  <div className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-[#006EB7] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    Ver oferta
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3.5 w-3.5">
+                      <path fillRule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </Link>
               </div>
 
               {/* Setas — só se tiver mais de 1 */}

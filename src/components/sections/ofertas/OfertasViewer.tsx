@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,7 +14,17 @@ type Oferta = {
 };
 
 export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
+  const searchParams = useSearchParams();
   const [selected, setSelected] = useState(0);
+
+  // Abre a oferta correta se vier ?id= na URL
+  useEffect(() => {
+    const id = searchParams.get("id");
+    if (id) {
+      const idx = ofertas.findIndex((o) => o.id === id);
+      if (idx !== -1) setSelected(idx);
+    }
+  }, [searchParams, ofertas]);
 
   if (ofertas.length === 0) {
     return (
@@ -34,7 +45,6 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
       <section className="bg-white py-10 md:py-14">
         <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
 
-          {/* Cabeçalho da oferta */}
           <div className="mb-6 flex items-center justify-between">
             <div className="flex flex-col gap-1">
               <span className="text-xs font-bold uppercase tracking-wider text-[#0084E5]">
@@ -44,7 +54,6 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
                 {oferta.titulo}
               </h2>
             </div>
-            {/* Botão download */}
             <a
               href={oferta.imagem}
               download
@@ -60,11 +69,8 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
             </a>
           </div>
 
-          {/* Imagem principal — centralizada, máximo possível */}
-          <div
-            className="mx-auto w-full overflow-hidden rounded-[16px] shadow-lg transition-opacity duration-300"
-            style={{ maxWidth: "900px" }}
-          >
+          {/* Imagem principal */}
+          <div className="mx-auto w-full overflow-hidden rounded-[16px] shadow-lg" style={{ maxWidth: "900px" }}>
             <Image
               key={oferta.id}
               src={oferta.imagem}
@@ -77,7 +83,6 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
             />
           </div>
 
-          {/* Link opcional */}
           {oferta.link && (
             <div className="mt-5 flex justify-center">
               <Link
@@ -91,7 +96,6 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
               </Link>
             </div>
           )}
-
         </div>
       </section>
 
@@ -103,7 +107,7 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
               Outras ofertas
             </h3>
 
-            {/* Desktop — grid responsivo */}
+            {/* Desktop */}
             <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-4">
               {ofertas.map((o, i) => (
                 <button
@@ -139,7 +143,7 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
               ))}
             </div>
 
-            {/* Mobile — scroll horizontal */}
+            {/* Mobile */}
             <div className="flex gap-3 overflow-x-auto pb-2 md:hidden">
               {ofertas.map((o, i) => (
                 <button
@@ -173,7 +177,6 @@ export function OfertasViewer({ ofertas }: { ofertas: Oferta[] }) {
                 </button>
               ))}
             </div>
-
           </div>
         </section>
       )}

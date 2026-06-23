@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { OfertasViewer } from "@/components/sections/ofertas/OfertasViewer";
 
@@ -28,10 +29,7 @@ export default async function OfertasPage() {
           <p className="mb-2 text-sm font-bold uppercase tracking-wider text-[#0084E5]">
             Promoções vigentes
           </p>
-          <h1
-            className="font-black leading-tight text-white"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
-          >
+          <h1 className="font-black leading-tight text-white" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}>
             Ofertas do Mês
           </h1>
           <p className="mt-3 max-w-[520px] text-sm leading-relaxed text-white/80 md:text-base">
@@ -41,7 +39,9 @@ export default async function OfertasPage() {
         </div>
       </section>
 
-      <OfertasViewer ofertas={ofertas} />
+      <Suspense fallback={null}>
+        <OfertasViewer ofertas={ofertas} />
+      </Suspense>
     </main>
   );
 }
