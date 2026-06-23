@@ -4,8 +4,9 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
-  title: "Cases de Crescimento",
-  description: "Conheça os principais marcos da história da Fabiano Zaffalon Distribuidora.",
+  title: "Cases & Conquistas",
+  description:
+    "Conheça os principais marcos da história da Fabiano Zaffalon Distribuidora.",
 };
 
 export default async function CasesPage() {
@@ -26,7 +27,7 @@ export default async function CasesPage() {
             className="font-black leading-tight text-white"
             style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }}
           >
-            Cases de Crescimento
+            Cases & Conquistas
           </h1>
           <p className="mt-4 max-w-[600px] text-sm leading-relaxed text-white/80 md:text-base">
             Momentos que marcaram a trajetória da Fabiano Zaffalon. Conquistas
@@ -40,7 +41,9 @@ export default async function CasesPage() {
       <section className="py-16 md:py-24">
         <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
           {cases.length === 0 ? (
-            <p className="text-center text-sm text-[#BCBABA]">Nenhum case publicado ainda.</p>
+            <p className="text-center text-sm text-[#BCBABA]">
+              Nenhum case publicado ainda.
+            </p>
           ) : (
             <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {cases.map((c) => (
@@ -50,7 +53,10 @@ export default async function CasesPage() {
                   className="group flex flex-col overflow-hidden rounded-[16px] border border-gray-100 bg-white shadow-sm transition-shadow hover:shadow-lg"
                 >
                   {/* Foto */}
-                  <div className="relative w-full overflow-hidden" style={{ aspectRatio: "16/9" }}>
+                  <div
+                    className="relative w-full overflow-hidden"
+                    style={{ aspectRatio: "16/9" }}
+                  >
                     <Image
                       src={c.capa}
                       alt={c.titulo}
@@ -69,10 +75,14 @@ export default async function CasesPage() {
                       {c.titulo}
                     </h2>
                     {c.subtitulo && (
-                      <p className="text-sm text-[#595959] line-clamp-2">{c.subtitulo}</p>
+                      <p className="text-sm text-[#595959] line-clamp-2">
+                        {c.subtitulo}
+                      </p>
                     )}
                     <div className="mt-auto flex items-center justify-between pt-2">
-                      {c.data && <span className="text-xs text-[#BCBABA]">{c.data}</span>}
+                      {c.data && (
+                        <span className="text-xs text-[#BCBABA]">{c.data}</span>
+                      )}
                       <span className="ml-auto text-xs font-bold text-[#006EB7] underline underline-offset-2">
                         Saiba mais →
                       </span>
