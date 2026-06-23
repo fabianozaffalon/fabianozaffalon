@@ -15,12 +15,11 @@ export async function POST(req: Request) {
   // Converte string "2026-06-23" para fim do dia em UTC
   let validade: Date | null = null;
   if (body.validade && body.validade !== "") {
-    console.log("[debug] validade recebida:", body.validade);
-    const parts = (body.validade as string).split("-").map(Number);
-    console.log("[debug] parts:", parts);
-    const [y, m, d] = parts;
+    const raw = body.validade as string;
+    // Se já vier como ISO completo (ex: "2026-06-25T02:59:59.000Z"), extrai só a data
+    const dateStr = raw.includes("T") ? raw.split("T")[0] : raw;
+    const [y, m, d] = dateStr.split("-").map(Number);
     validade = new Date(Date.UTC(y, m - 1, d, 23, 59, 59));
-    console.log("[debug] validade convertida:", validade);
   }
 
   const oferta = await prisma.oferta.create({

@@ -13,23 +13,23 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const body = await req.json();
 
   // Converte string "2026-06-23" para fim do dia em UTC
-  let validade: Date | null = null;
-  if (body.validade) {
-    const [y, m, d] = (body.validade as string).split("-").map(Number);
-    validade = new Date(Date.UTC(y, m - 1, d, 23, 59, 59));
+  let validade: Date | null | undefined = undefined;
+  if ("validade" in body) {
+    if (body.validade && body.validade !== "") {
+      const raw = body.validade as string;
+      const dateStr = raw.includes("T") ? raw.split("T")[0] : raw;
+      const [y, m, d] = dateStr.split("-").map(Number);
+      validade = new Date(Date.UTC(y, m - 1, d, 23, 59, 59));
+    } else {
+      validade = null;
+    }
   }
 
-  const oferta = await prisma.oferta.update({
-    where: { id },
-    data: {
-      titulo:   body.titulo,
-      imagem:   body.imagem,
-      link:     body.link ?? null,
-      ordem:    body.ordem ?? 0,
-      ativo:    body.ativo ?? true,
-      validade,
-    },
-  });
+  const data: Record<string, unknown> = { ...body };
+  if (validade !== undefined) data.validade = validade;
+  else delete data.validade;
+
+  const oferta = await prisma.oferta.update({ where: { id }, data });
   return NextResponse.json(oferta);
 }
 
