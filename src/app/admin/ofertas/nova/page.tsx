@@ -35,7 +35,7 @@ export default function NovaOfertaPage() {
         body: JSON.stringify({
           ...form,
           imagem: url,
-          validade: form.validade ? new Date(form.validade).toISOString() : null,
+          validade: form.validade ? new Date(form.validade + "T23:59:59-03:00").toISOString() : null,
         }),
       });
       router.push("/admin/ofertas");

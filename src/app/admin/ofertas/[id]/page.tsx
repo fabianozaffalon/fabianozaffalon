@@ -49,7 +49,7 @@ export default function EditarOfertaPage() {
         body: JSON.stringify({
           ...form,
           imagem: imagemUrl,
-          validade: form.validade ? new Date(form.validade + "T23:59:59").toISOString() : null,
+          validade: form.validade ? new Date(form.validade + "T23:59:59-03:00").toISOString() : null,
         }),
       });
       router.push("/admin/ofertas");

@@ -7,13 +7,24 @@ function BadgeValidade({ validade }: { validade: Date | null }) {
   if (!validade) return (
     <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">Sem validade</span>
   );
+
   const agora = new Date();
-  const vencida = validade < agora;
-  const diasRestantes = Math.ceil((validade.getTime() - agora.getTime()) / (1000 * 60 * 60 * 24));
+
+  // Compara só as datas (sem hora) para evitar problemas de fuso
+  const agoraData = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
+  const validadeData = new Date(validade.getFullYear(), validade.getMonth(), validade.getDate());
+
+  const diasRestantes = Math.round((validadeData.getTime() - agoraData.getTime()) / (1000 * 60 * 60 * 24));
   const formatada = validade.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
 
-  if (vencida) return (
+  if (diasRestantes < 0) return (
     <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-600">Vencida — {formatada}</span>
+  );
+  if (diasRestantes === 0) return (
+    <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-600">Vence hoje</span>
+  );
+  if (diasRestantes === 1) return (
+    <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-600">Vence amanhã — {formatada}</span>
   );
   if (diasRestantes <= 7) return (
     <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-600">Vence em {diasRestantes}d — {formatada}</span>
