@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 
 const BRANDS = [
+  { id: "isabela", name: "Isabela", logo: "/images/brands/isabela.svg" },
   { id: "suzano", name: "Suzano", logo: "/images/brands/suzano.svg" },
   { id: "piraque", name: "Piraquê", logo: "/images/brands/piraque.svg" },
   { id: "ferrero", name: "Ferrero", logo: "/images/brands/ferrero.svg" },
@@ -18,7 +19,7 @@ const BRANDS = [
     name: "Kimberly-Clark",
     logo: "/images/brands/kimberly.svg",
   },
-  { id: "isabela", name: "Isabela", logo: "/images/brands/isabela.svg" },
+  { id: "suzano", name: "Suzano", logo: "/images/brands/suzano.svg" },
   { id: "nestle", name: "Nestlé", logo: "/images/brands/nestle.svg" },
   { id: "purina", name: "Purina", logo: "/images/brands/purina.svg" },
   { id: "garoto", name: "Garoto", logo: "/images/brands/garoto.svg" },
