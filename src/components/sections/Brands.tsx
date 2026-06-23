@@ -6,13 +6,12 @@ import Image from "next/image";
 const BRANDS = [
   { id: "suzano", name: "Suzano", logo: "/images/brands/suzano.svg" },
   { id: "piraque", name: "Piraquê", logo: "/images/brands/piraque.svg" },
-  { id: "bic", name: "BIC", logo: "/images/brands/bic.svg" },
+  { id: "ferrero", name: "Ferrero", logo: "/images/brands/ferrero.svg" },
   { id: "seara", name: "Seara", logo: "/images/brands/seara.svg" },
   { id: "yoki", name: "Yoki", logo: "/images/brands/yoki.svg" },
   { id: "aurea", name: "Áurea", logo: "/images/brands/aurea.svg" },
   { id: "condor", name: "Condor", logo: "/images/brands/condor.svg" },
   { id: "dori", name: "Dori", logo: "/images/brands/dori.svg" },
-  { id: "ype", name: "Ypê", logo: "/images/brands/ype.svg" },
   { id: "bunge", name: "Bunge", logo: "/images/brands/bunge.svg" },
   {
     id: "kimberly",
@@ -28,7 +27,13 @@ const BRANDS = [
     name: "Nestlé Pro",
     logo: "/images/brands/nestle-professional.svg",
   },
-  { id: "ferrero", name: "Ferrero", logo: "/images/brands/ferrero.svg" },
+  { id: "bic", name: "BIC", logo: "/images/brands/bic.svg" },
+  { id: "ype", name: "Ypê", logo: "/images/brands/ype.svg" },
+  {
+    id: "fleischmann",
+    name: "Fleischmann",
+    logo: "/images/brands/fleischmann.svg",
+  },
 ];
 
 const PER_PAGE = 9;
