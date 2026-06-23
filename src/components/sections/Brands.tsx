@@ -5,7 +5,6 @@ import Image from "next/image";
 
 const BRANDS = [
   { id: "isabela", name: "Isabela", logo: "/images/brands/isabela.svg" },
-  { id: "suzano", name: "Suzano", logo: "/images/brands/suzano.svg" },
   { id: "piraque", name: "Piraquê", logo: "/images/brands/piraque.svg" },
   { id: "ferrero", name: "Ferrero", logo: "/images/brands/ferrero.svg" },
   { id: "seara", name: "Seara", logo: "/images/brands/seara.svg" },
