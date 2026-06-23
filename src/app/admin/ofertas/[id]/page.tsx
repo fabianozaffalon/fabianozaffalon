@@ -7,13 +7,20 @@ export default function EditarOfertaPage() {
   const router = useRouter();
   const { id } = useParams();
   const [salvando, setSalvando] = useState(false);
-  const [form, setForm] = useState({ titulo: "", link: "", ordem: 0, ativo: true, imagem: "" });
+  const [form, setForm] = useState({ titulo: "", link: "", ordem: 0, ativo: true, imagem: "", validade: "" });
   const [imagemFile, setImagemFile] = useState<File | null>(null);
   const [imagemPreview, setImagemPreview] = useState("");
 
   useEffect(() => {
     fetch(`/api/ofertas/${id}`).then((r) => r.json()).then((data) => {
-      setForm({ titulo: data.titulo, link: data.link ?? "", ordem: data.ordem, ativo: data.ativo, imagem: data.imagem });
+      setForm({
+        titulo: data.titulo,
+        link: data.link ?? "",
+        ordem: data.ordem,
+        ativo: data.ativo,
+        imagem: data.imagem,
+        validade: data.validade ? new Date(data.validade).toISOString().split("T")[0] : "",
+      });
       setImagemPreview(data.imagem);
     });
   }, [id]);
@@ -39,7 +46,11 @@ export default function EditarOfertaPage() {
       await fetch(`/api/ofertas/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, imagem: imagemUrl }),
+        body: JSON.stringify({
+          ...form,
+          imagem: imagemUrl,
+          validade: form.validade ? new Date(form.validade + "T23:59:59").toISOString() : null,
+        }),
       });
       router.push("/admin/ofertas");
     } catch (err) {
@@ -51,10 +62,12 @@ export default function EditarOfertaPage() {
   };
 
   const handleDelete = async () => {
-    if (!confirm("Tem certeza? Esta ação é permanente.")) return;
+    if (!confirm("Tem certeza? Esta ação é permanente e remove a imagem do storage.")) return;
     await fetch(`/api/ofertas/${id}`, { method: "DELETE" });
     router.push("/admin/ofertas");
   };
+
+  const hoje = new Date().toISOString().split("T")[0];
 
   return (
     <div className="min-h-screen bg-[#F6F6F6]">
@@ -115,6 +128,30 @@ export default function EditarOfertaPage() {
               className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
           </div>
 
+          {/* Validade */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">
+              Data de validade <span className="font-normal text-[#BCBABA]">(opcional — sem data = sempre visível)</span>
+            </label>
+            <div className="flex items-center gap-3">
+              <input type="date" value={form.validade} min={hoje}
+                onChange={(e) => setForm((p) => ({ ...p, validade: e.target.value }))}
+                className="w-48 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
+              {form.validade && (
+                <button onClick={() => setForm((p) => ({ ...p, validade: "" }))}
+                  className="text-xs text-[#BCBABA] hover:text-red-500 transition-colors">
+                  Remover validade
+                </button>
+              )}
+            </div>
+            {form.validade && (
+              <p className="text-xs text-[#BCBABA]">
+                Esta oferta será removida automaticamente após{" "}
+                {new Date(form.validade + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })}
+              </p>
+            )}
+          </div>
+
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">Ordem de exibição</label>
             <input type="number" value={form.ordem}
@@ -134,7 +171,7 @@ export default function EditarOfertaPage() {
           <div className="flex items-center justify-between border-t border-[#F6F6F6] pt-6">
             <button onClick={handleDelete}
               className="text-sm font-medium text-red-500 transition-colors hover:text-red-700">
-              Excluir oferta permanentemente
+              Excluir permanentemente
             </button>
             <button onClick={handleSubmit} disabled={salvando}
               className="rounded-[8px] bg-[#006EB7] px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#00497F] disabled:opacity-50">

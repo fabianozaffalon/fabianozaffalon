@@ -50,14 +50,16 @@ model Case {
 }
 
 model Oferta {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   titulo    String
   imagem    String
   link      String?
-  ordem     Int      @default(0)
-  ativo     Boolean  @default(true)
-  createdAt DateTime @default(now())
+  ordem     Int       @default(0)
+  ativo     Boolean   @default(true)
+  validade  DateTime?           // null = sem validade definida (sempre visível)
+  createdAt DateTime  @default(now())
 }
+
 
 model User {
   id        String   @id @default(cuid())

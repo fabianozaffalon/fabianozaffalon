@@ -3,13 +3,36 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
+function BadgeValidade({ validade }: { validade: Date | null }) {
+  if (!validade) return (
+    <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-700">Sem validade</span>
+  );
+  const agora = new Date();
+  const vencida = validade < agora;
+  const diasRestantes = Math.ceil((validade.getTime() - agora.getTime()) / (1000 * 60 * 60 * 24));
+  const formatada = validade.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+
+  if (vencida) return (
+    <span className="rounded-full bg-red-100 px-3 py-1 text-xs font-medium text-red-600">Vencida — {formatada}</span>
+  );
+  if (diasRestantes <= 7) return (
+    <span className="rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-600">Vence em {diasRestantes}d — {formatada}</span>
+  );
+  return (
+    <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">Válida até {formatada}</span>
+  );
+}
+
 export default async function AdminOfertasPage() {
   const session = await auth();
   if (!session) redirect("/admin/login");
 
-  const ofertas = await prisma.oferta.findMany({
-    orderBy: { ordem: "asc" },
-  });
+  const agora = new Date();
+  const ofertas = await prisma.oferta.findMany({ orderBy: { ordem: "asc" } });
+
+  // Separa ativas e vencidas para exibição
+  const ativas   = ofertas.filter((o) => !o.validade || o.validade > agora);
+  const vencidas = ofertas.filter((o) => o.validade && o.validade <= agora);
 
   return (
     <div className="min-h-screen bg-[#F6F6F6]">
@@ -53,13 +76,25 @@ export default async function AdminOfertasPage() {
           </Link>
         </div>
 
+        {/* Aviso se há ofertas vencidas aguardando limpeza */}
+        {vencidas.length > 0 && (
+          <div className="mb-6 flex items-center gap-3 rounded-[12px] border border-orange-200 bg-orange-50 px-5 py-4">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ea580c" className="h-5 w-5 shrink-0">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+            </svg>
+            <p className="text-sm text-orange-700">
+              <span className="font-semibold">{vencidas.length} oferta(s) vencida(s)</span> — serão removidas automaticamente pelo cron job nos dias 1 e 15 de cada mês.
+            </p>
+          </div>
+        )}
+
         <div className="overflow-hidden rounded-[16px] bg-white shadow-sm">
           <table className="w-full">
             <thead className="bg-[#F6F6F6]">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-[#595959]">Imagem</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-[#595959]">Título</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-[#595959]">Ordem</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-[#595959]">Validade</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-[#595959]">Status</th>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-[#595959]">Ações</th>
               </tr>
@@ -72,29 +107,34 @@ export default async function AdminOfertasPage() {
                   </td>
                 </tr>
               ) : (
-                ofertas.map((o) => (
-                  <tr key={o.id} className="transition-colors hover:bg-[#F6F6F6]/50">
-                    <td className="px-6 py-4">
-                      <div className="relative h-12 w-20 overflow-hidden rounded-[6px]">
-                        <img src={o.imagem} alt={o.titulo} className="h-full w-full object-cover" />
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-sm font-medium text-[#595959]">{o.titulo}</td>
-                    <td className="px-6 py-4 text-sm text-[#595959]">{o.ordem}</td>
-                    <td className="px-6 py-4">
-                      <span className={"rounded-full px-3 py-1 text-xs font-medium " +
-                        (o.ativo ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500")}>
-                        {o.ativo ? "Ativa" : "Inativa"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <Link href={`/admin/ofertas/${o.id}`}
-                        className="text-xs font-medium text-[#006EB7] transition-colors hover:text-[#00497F]">
-                        Editar
-                      </Link>
-                    </td>
-                  </tr>
-                ))
+                ofertas.map((o) => {
+                  const vencida = o.validade && o.validade <= agora;
+                  return (
+                    <tr key={o.id} className={"transition-colors hover:bg-[#F6F6F6]/50 " + (vencida ? "opacity-60" : "")}>
+                      <td className="px-6 py-4">
+                        <div className="relative h-12 w-20 overflow-hidden rounded-[6px]">
+                          <img src={o.imagem} alt={o.titulo} className="h-full w-full object-cover" />
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm font-medium text-[#595959]">{o.titulo}</td>
+                      <td className="px-6 py-4">
+                        <BadgeValidade validade={o.validade} />
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={"rounded-full px-3 py-1 text-xs font-medium " +
+                          (o.ativo && !vencida ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500")}>
+                          {vencida ? "Vencida" : o.ativo ? "Ativa" : "Inativa"}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <Link href={`/admin/ofertas/${o.id}`}
+                          className="text-xs font-medium text-[#006EB7] transition-colors hover:text-[#00497F]">
+                          Editar
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })
               )}
             </tbody>
           </table>

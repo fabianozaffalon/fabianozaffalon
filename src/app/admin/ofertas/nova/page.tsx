@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export default function NovaOfertaPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ titulo: "", link: "", ordem: 0, ativo: true });
+  const [form, setForm] = useState({ titulo: "", link: "", ordem: 0, ativo: true, validade: "" });
   const [imagemFile, setImagemFile] = useState<File | null>(null);
   const [imagemPreview, setImagemPreview] = useState("");
 
@@ -32,7 +32,11 @@ export default function NovaOfertaPage() {
       await fetch("/api/ofertas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, imagem: url }),
+        body: JSON.stringify({
+          ...form,
+          imagem: url,
+          validade: form.validade ? new Date(form.validade).toISOString() : null,
+        }),
       });
       router.push("/admin/ofertas");
     } catch (err) {
@@ -42,6 +46,8 @@ export default function NovaOfertaPage() {
       setLoading(false);
     }
   };
+
+  const hoje = new Date().toISOString().split("T")[0];
 
   return (
     <div className="min-h-screen bg-[#F6F6F6]">
@@ -80,7 +86,6 @@ export default function NovaOfertaPage() {
               className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
           </div>
 
-          {/* Imagem */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">
               Imagem do encarte* <span className="font-normal text-[#BCBABA]">(PNG ou JPG — recomendado 1080x618px)</span>
@@ -97,10 +102,9 @@ export default function NovaOfertaPage() {
             {imagemFile && <p className="text-xs text-[#006EB7]">{imagemFile.name}</p>}
           </div>
 
-          {/* Link opcional */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">
-              Link <span className="font-normal text-[#BCBABA]">(opcional — ex: /catalogo)</span>
+              Link <span className="font-normal text-[#BCBABA]">(opcional)</span>
             </label>
             <input type="text" value={form.link}
               onChange={(e) => setForm((p) => ({ ...p, link: e.target.value }))}
@@ -108,7 +112,22 @@ export default function NovaOfertaPage() {
               className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
           </div>
 
-          {/* Ordem */}
+          {/* Validade */}
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-[#595959]">
+              Data de validade <span className="font-normal text-[#BCBABA]">(opcional — sem data = sempre visível)</span>
+            </label>
+            <input type="date" value={form.validade} min={hoje}
+              onChange={(e) => setForm((p) => ({ ...p, validade: e.target.value }))}
+              className="w-48 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
+            {form.validade && (
+              <p className="text-xs text-[#BCBABA]">
+                Esta oferta será removida automaticamente após{" "}
+                {new Date(form.validade + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })}
+              </p>
+            )}
+          </div>
+
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">Ordem de exibição</label>
             <input type="number" value={form.ordem}
@@ -116,7 +135,6 @@ export default function NovaOfertaPage() {
               className="w-24 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
           </div>
 
-          {/* Status */}
           <div className="flex items-center gap-3">
             <label className="text-sm font-semibold text-[#595959]">Publicar imediatamente</label>
             <button onClick={() => setForm((p) => ({ ...p, ativo: !p.ativo }))}
