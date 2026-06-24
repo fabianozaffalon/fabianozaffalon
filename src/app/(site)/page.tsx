@@ -8,12 +8,18 @@ import { News } from "@/components/sections/News";
 import { Contact } from "@/components/sections/Contact";
 import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Fabiano Zaffalon Distribuidora | Soluções em Distribuição",
-  description:
-    "Distribuidora consolidada no mercado, com amplo portfólio de produtos das melhores marcas. Soluções para varejo, food service e indústria no Rio Grande do Sul.",
-  path: "/",
-});
+const HOME_TITLE = "Fabiano Zaffalon Distribuidora | Movidos pelos desafios";
+
+export const metadata: Metadata = {
+  ...buildMetadata({
+    title: HOME_TITLE,
+    description:
+      "Distribuidora consolidada no mercado, com amplo portfólio de produtos das melhores marcas. Soluções para varejo, food service e indústria no Rio Grande do Sul.",
+    path: "/",
+  }),
+  // bypassa o title.template do layout raiz, que duplicaria o sufixo "| Fabiano Zaffalon"
+  title: { absolute: HOME_TITLE },
+};
 
 export default function Home() {
   return (
