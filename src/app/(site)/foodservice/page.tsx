@@ -5,12 +5,15 @@ import { FoodServicePortfolio } from "@/components/sections/foodservice/FoodServ
 import { FoodServiceBeneficios } from "@/components/sections/foodservice/FoodServiceBeneficios";
 import { FoodServiceCampanha } from "@/components/sections/foodservice/FoodServiceCampanha";
 import { CtaBannerSimples } from "@/components/sections/CtaBannerSimples";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Food Service",
   description:
     "Distribuição para restaurantes, padarias, hotéis e cozinhas industriais. A Fabiano Zaffalon garante abastecimento constante, marcas líderes e atendimento especializado para o seu negócio.",
-};
+  path: "/foodservice",
+  image: "/images/foodservice/hero-foodservice.jpg",
+});
 
 export default function FoodServicePage() {
   return (

@@ -2,11 +2,16 @@ import type { Metadata } from "next";
 import { FaqHero }    from "@/components/sections/faq/FaqHero";
 import { FaqSection } from "@/components/sections/faq/FaqSection";
 import { Contact }    from "@/components/sections/Contact";
+import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "FAQ — Perguntas Frequentes",
-  description:
-    "Tire suas dúvidas sobre distribuição, logística, varejo e nossas soluções. Respostas claras e objetivas da Fabiano Zaffalon Distribuidora.",
+  ...buildMetadata({
+    title: "FAQ — Perguntas Frequentes",
+    description:
+      "Tire suas dúvidas sobre distribuição, logística, varejo e nossas soluções. Respostas claras e objetivas da Fabiano Zaffalon Distribuidora.",
+    path: "/faq",
+    image: "/images/faq/hero-faq.jpg",
+  }),
   keywords: [
     "FAQ distribuidora",
     "perguntas frequentes distribuição",

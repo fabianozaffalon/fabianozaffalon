@@ -2,12 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Cases & Conquistas",
   description:
     "Conheça os principais marcos da história da Fabiano Zaffalon Distribuidora.",
-};
+  path: "/cases",
+  image: "/images/cases/case-1.jpg",
+});
 
 export default async function CasesPage() {
   const cases = await prisma.case.findMany({

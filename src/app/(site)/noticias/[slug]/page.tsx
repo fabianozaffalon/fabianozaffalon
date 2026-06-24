@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { NoticiasHero } from "@/components/sections/noticias/NoticiasHero";
 import { NewsletterCompact } from "@/components/sections/noticias/NewsletterCompact";
 import { CarrosselFotos } from "@/components/sections/noticias/CarrosselFotos";
+import { buildMetadata } from "@/lib/seo";
 
 function formatarData(date: Date): string {
   return new Date(date).toLocaleDateString("pt-BR", {
@@ -30,11 +31,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const noticia = await prisma.noticia.findUnique({ where: { slug } });
-  if (!noticia) return { title: "Notícia não encontrada" };
-  return {
+  if (!noticia) return { title: "Notícia não encontrada", robots: { index: false, follow: false } };
+  return buildMetadata({
     title: noticia.titulo,
     description: noticia.resumo,
-  };
+    path: `/noticias/${noticia.slug}`,
+    image: noticia.capa,
+    type: "article",
+  });
 }
 
 export default async function NoticiaPage({

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Exclusão de Dados",
   description: "Como solicitar a exclusão dos seus dados pessoais junto à Fabiano Zaffalon Distribuidora.",
-  robots: { index: true, follow: true },
-};
+  path: "/exclusao-de-dados",
+});
 
 export default function ExclusaoDadosPage() {
   return (

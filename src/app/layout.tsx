@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "@/styles/globals.css";
+import { SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 // Poppins — carrega só os pesos usados no projeto
 const poppins = Poppins({
@@ -10,14 +11,17 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const DEFAULT_TITLE = "Fabiano Zaffalon Distribuidora | Soluções em Distribuição";
+const DEFAULT_DESCRIPTION =
+  "Distribuidora consolidada no mercado, com amplo portfólio de produtos das melhores marcas. Soluções para varejo, food service e indústria.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.fabianozaffalon.com.br"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Fabiano Zaffalon Distribuidora | Soluções em Distribuição",
+    default: DEFAULT_TITLE,
     template: "%s | Fabiano Zaffalon",
   },
-  description:
-    "Distribuidora consolidada no mercado, com amplo portfólio de produtos das melhores marcas. Soluções para varejo, food service e indústria.",
+  description: DEFAULT_DESCRIPTION,
   keywords: [
     "distribuidora",
     "food service",
@@ -28,13 +32,36 @@ export const metadata: Metadata = {
     "Yoki",
     "Piraquê",
   ],
+  alternates: { canonical: SITE_URL },
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "Fabiano Zaffalon Distribuidora",
+    url: SITE_URL,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [{ url: DEFAULT_OG_IMAGE }],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: {
+    card: "summary_large_image",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
+  },
   robots: { index: true, follow: true },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Fabiano Zaffalon Distribuidora",
+  url: SITE_URL,
+  logo: DEFAULT_OG_IMAGE,
+  sameAs: [
+    "https://www.instagram.com/fabianozaffalon.cia/",
+    "https://www.linkedin.com/company/distribuidora-fabiano-zaffalon/",
+    "https://www.facebook.com/fabianozaffalon.cia/",
+  ],
 };
 
 export default function RootLayout({
@@ -44,7 +71,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR" className={poppins.variable} data-scroll-behavior="smooth">
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

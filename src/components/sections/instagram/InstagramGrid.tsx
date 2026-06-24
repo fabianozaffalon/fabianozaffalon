@@ -50,7 +50,7 @@ export async function InstagramGrid() {
               Não foi possível carregar as publicações do Instagram no momento.
             </p>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/fabianozaffalon.cia/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm font-semibold text-[#006EB7] underline underline-offset-2"

@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { OfertasViewer } from "@/components/sections/ofertas/OfertasViewer";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Ofertas do Mês",
   description: "Confira as ofertas e ações promocionais vigentes da Fabiano Zaffalon Distribuidora.",
-};
+  path: "/ofertas",
+});
 
 export default async function OfertasPage() {
   const agora = new Date();

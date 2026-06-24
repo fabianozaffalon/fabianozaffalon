@@ -9,12 +9,15 @@ import { EmpresaRede } from "@/components/sections/empresa/EmpresaRede";
 import { EmpresaCases } from "@/components/sections/empresa/EmpresaCases";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Contact } from "@/components/sections/Contact";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "A Empresa",
   description:
     "Conheça a história, estrutura e valores da Fabiano Zaffalon Distribuidora — quase 30 anos conectando grandes marcas ao mercado do Sul do Brasil.",
-};
+  path: "/empresa",
+  image: "/images/empresa/hero-caminhao.jpg",
+});
 
 export default function EmpresaPage() {
   return (

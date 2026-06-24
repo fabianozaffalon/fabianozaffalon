@@ -151,17 +151,17 @@ export function Footer() {
           <div className="flex items-center justify-center gap-3">
             <SocialIcon
               name="icon-linkedin"
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/distribuidora-fabiano-zaffalon/"
               label="LinkedIn"
             />
             <SocialIcon
               name="icon-facebook"
-              href="https://facebook.com"
+              href="https://www.facebook.com/fabianozaffalon.cia/"
               label="Facebook"
             />
             <SocialIcon
               name="icon-instagram"
-              href="https://instagram.com"
+              href="https://www.instagram.com/fabianozaffalon.cia/"
               label="Instagram"
             />
           </div>
@@ -190,17 +190,17 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <SocialIcon
                 name="icon-linkedin"
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/distribuidora-fabiano-zaffalon/"
                 label="LinkedIn"
               />
               <SocialIcon
                 name="icon-facebook"
-                href="https://facebook.com"
+                href="https://www.facebook.com/fabianozaffalon.cia/"
                 label="Facebook"
               />
               <SocialIcon
                 name="icon-instagram"
-                href="https://instagram.com"
+                href="https://www.instagram.com/fabianozaffalon.cia/"
                 label="Instagram"
               />
             </div>

@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { CaseGaleria } from "@/components/sections/cases/CaseGaleria";
 import { OutrosCasesCarrossel } from "@/components/sections/cases/OutrosCasesCarrossel";
 import { CtaBannerSimples } from "@/components/sections/CtaBannerSimples";
+import { buildMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const cases = await prisma.case.findMany({
@@ -18,8 +19,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const case_ = await prisma.case.findUnique({ where: { slug } });
-  if (!case_) return { title: "Case não encontrado" };
-  return { title: case_.titulo, description: case_.subtitulo ?? undefined };
+  if (!case_) return { title: "Case não encontrado", robots: { index: false, follow: false } };
+  return buildMetadata({
+    title: case_.titulo,
+    description: case_.subtitulo ?? `Conheça o case "${case_.titulo}" da Fabiano Zaffalon Distribuidora.`,
+    path: `/cases/${case_.slug}`,
+    image: case_.capa,
+    type: "article",
+  });
 }
 
 export default async function CasePage({ params }: { params: Promise<{ slug: string }> }) {

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Termos de Serviço",
   description: "Termos de Serviço de uso do site da Fabiano Zaffalon Distribuidora.",
-  robots: { index: true, follow: true },
-};
+  path: "/termos-de-servico",
+});
 
 export default function TermosServicoPage() {
   return (
