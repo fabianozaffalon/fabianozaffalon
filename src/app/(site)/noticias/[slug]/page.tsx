@@ -37,6 +37,7 @@ export async function generateMetadata({
     description: noticia.resumo,
     path: `/noticias/${noticia.slug}`,
     type: "article",
+    hasOwnOgImage: true,
   });
 }
 

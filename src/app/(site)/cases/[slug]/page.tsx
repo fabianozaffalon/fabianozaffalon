@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: case_.subtitulo ?? `Conheça o case "${case_.titulo}" da Fabiano Zaffalon Distribuidora.`,
     path: `/cases/${case_.slug}`,
     type: "article",
+    hasOwnOgImage: true,
   });
 }
 
