@@ -15,7 +15,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Conheça a operação Broker Nestlé da Fabiano Zaffalon — parceria exclusiva construída com trabalho, comprometimento e resultados consistentes.",
   path: "/broker-nestle",
-  image: "/images/broker/hero-broker.jpg",
 });
 
 export default function BrokerNestlePage() {

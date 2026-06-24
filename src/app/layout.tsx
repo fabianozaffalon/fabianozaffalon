@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "@/styles/globals.css";
-import { SITE_URL, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { SITE_URL } from "@/lib/seo";
+
+const LOGO_URL = `${SITE_URL}/images/logo.png`;
 
 // Poppins — carrega só os pesos usados no projeto
 const poppins = Poppins({
@@ -40,13 +42,11 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [{ url: DEFAULT_OG_IMAGE }],
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
-    images: [DEFAULT_OG_IMAGE],
   },
   robots: { index: true, follow: true },
 };
@@ -56,7 +56,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "Fabiano Zaffalon Distribuidora",
   url: SITE_URL,
-  logo: DEFAULT_OG_IMAGE,
+  logo: LOGO_URL,
   sameAs: [
     "https://www.instagram.com/fabianozaffalon.cia/",
     "https://www.linkedin.com/company/distribuidora-fabiano-zaffalon/",

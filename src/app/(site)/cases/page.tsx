@@ -9,7 +9,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Conheça os principais marcos da história da Fabiano Zaffalon Distribuidora.",
   path: "/cases",
-  image: "/images/cases/case-1.jpg",
 });
 
 export default async function CasesPage() {

@@ -9,7 +9,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Conheça o portfólio completo de marcas distribuídas pela Fabiano Zaffalon em cada região do Rio Grande do Sul.",
   path: "/catalogo",
-  image: "/images/catalogo/hero-catalogo.jpg",
 });
 
 export default function CatalogoPage() {

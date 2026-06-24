@@ -10,7 +10,6 @@ export const metadata: Metadata = {
     description:
       "Tire suas dúvidas sobre distribuição, logística, varejo e nossas soluções. Respostas claras e objetivas da Fabiano Zaffalon Distribuidora.",
     path: "/faq",
-    image: "/images/faq/hero-faq.jpg",
   }),
   keywords: [
     "FAQ distribuidora",

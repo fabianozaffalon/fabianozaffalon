@@ -12,7 +12,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Fique por dentro das novidades, lançamentos, parcerias e conquistas da Fabiano Zaffalon Distribuidora.",
   path: "/noticias",
-  image: "/images/noticias/hero-noticias.jpg",
 });
 
 export default function NoticiasPage() {

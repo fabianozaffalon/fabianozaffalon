@@ -16,7 +16,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Conheça a história, estrutura e valores da Fabiano Zaffalon Distribuidora — quase 30 anos conectando grandes marcas ao mercado do Sul do Brasil.",
   path: "/empresa",
-  image: "/images/empresa/hero-caminhao.jpg",
 });
 
 export default function EmpresaPage() {

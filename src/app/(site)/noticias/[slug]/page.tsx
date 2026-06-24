@@ -36,7 +36,6 @@ export async function generateMetadata({
     title: noticia.titulo,
     description: noticia.resumo,
     path: `/noticias/${noticia.slug}`,
-    image: noticia.capa,
     type: "article",
   });
 }

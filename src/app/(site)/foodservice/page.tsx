@@ -12,7 +12,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Distribuição para restaurantes, padarias, hotéis e cozinhas industriais. A Fabiano Zaffalon garante abastecimento constante, marcas líderes e atendimento especializado para o seu negócio.",
   path: "/foodservice",
-  image: "/images/foodservice/hero-foodservice.jpg",
 });
 
 export default function FoodServicePage() {

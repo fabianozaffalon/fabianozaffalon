@@ -16,7 +16,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Soluções de distribuição para o varejo local, médio e grande. A Fabiano Zaffalon conecta grandes marcas ao seu negócio com eficiência, proximidade e compromisso.",
   path: "/varejo",
-  image: "/images/varejo/hero-varejo.jpg",
 });
 
 export default function VarejoPage() {

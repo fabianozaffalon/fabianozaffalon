@@ -11,7 +11,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Por que distribuir com a Fabiano Zaffalon? Estrutura sólida, logística eficiente e uma rede com mais de 7 mil pontos de venda no Rio Grande do Sul para conectar sua marca ao mercado.",
   path: "/industria",
-  image: "/images/industria/hero-industria.jpg",
 });
 
 export default function IndustriaPage() {

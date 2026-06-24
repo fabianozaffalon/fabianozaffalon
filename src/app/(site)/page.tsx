@@ -13,7 +13,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "Distribuidora consolidada no mercado, com amplo portfólio de produtos das melhores marcas. Soluções para varejo, food service e indústria no Rio Grande do Sul.",
   path: "/",
-  image: "/images/hero/slide-1.png",
 });
 
 export default function Home() {
