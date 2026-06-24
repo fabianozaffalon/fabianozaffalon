@@ -30,7 +30,6 @@ export const metadata: Metadata = {
     "indústria",
     "Suzano",
     "BIC",
-    "Havaianas",
     "Yoki",
     "Piraquê",
   ],
@@ -42,11 +41,20 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Fabiano Zaffalon Distribuidora",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: ["/opengraph-image.png"],
   },
   robots: { index: true, follow: true },
 };
