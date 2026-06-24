@@ -5,7 +5,6 @@ import { SITE_URL } from "@/lib/seo";
 
 const LOGO_URL = `${SITE_URL}/images/logo.png`;
 
-// Poppins — carrega só os pesos usados no projeto
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "900"],
@@ -13,8 +12,7 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const DEFAULT_TITLE =
-  "Fabiano Zaffalon Distribuidora | Soluções em Distribuição";
+const DEFAULT_TITLE = "Fabiano Zaffalon Distribuidora | Soluções em Distribuição";
 const DEFAULT_DESCRIPTION =
   "Distribuidora consolidada no mercado, com amplo portfólio de produtos das melhores marcas. Soluções para varejo, food service e indústria.";
 
@@ -42,11 +40,20 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [
+      {
+        url: `${SITE_URL}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Fabiano Zaffalon Distribuidora",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+    images: [`${SITE_URL}/opengraph-image`],
   },
   robots: { index: true, follow: true },
 };
@@ -70,17 +77,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="pt-BR"
-      className={poppins.variable}
-      data-scroll-behavior="smooth"
-    >
+    <html lang="pt-BR" className={poppins.variable} data-scroll-behavior="smooth">
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         {children}
       </body>
