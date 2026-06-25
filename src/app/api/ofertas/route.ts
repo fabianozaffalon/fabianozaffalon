@@ -18,7 +18,8 @@ export async function POST(req: Request) {
     const raw = body.validade as string;
     const dateStr = raw.includes("T") ? raw.split("T")[0] : raw;
     const [y, m, d] = dateStr.split("-").map(Number);
-    validade = new Date(Date.UTC(y, m - 1, d, 23, 59, 59));
+    // Início do dia seguinte em UTC — evita que o fuso (BRT = UTC-3) corte a validade antes da meia-noite local.
+    validade = new Date(Date.UTC(y, m - 1, d + 1, 0, 0, 0));
   }
 
   const oferta = await prisma.oferta.create({
