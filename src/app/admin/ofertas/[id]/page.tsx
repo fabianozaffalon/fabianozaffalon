@@ -19,7 +19,9 @@ export default function EditarOfertaPage() {
         ordem: data.ordem,
         ativo: data.ativo,
         imagem: data.imagem,
-        validade: data.validade ? new Date(data.validade).toISOString().split("T")[0] : "",
+        validade: data.validade
+          ? new Date(new Date(data.validade).getTime() - 86400000).toISOString().split("T")[0]
+          : "",
       });
       setImagemPreview(data.imagem);
     });
@@ -49,10 +51,7 @@ export default function EditarOfertaPage() {
         body: JSON.stringify({
           ...form,
           imagem: imagemUrl,
-          validade: form.validade ? (() => {
-            const [y, m, d] = form.validade.split("-").map(Number);
-            return new Date(y, m - 1, d, 23, 59, 59).toISOString();
-          })() : null,
+          validade: form.validade || null,
         }),
       });
       router.push("/admin/ofertas");
