@@ -11,7 +11,7 @@ export function BrokerStarB() {
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-16">
           {/* Esquerda — logo + texto */}
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5 items-center md:items-start">
             <Image
               src="/images/broker/starb-logo.png"
               alt="Star B Nestlé — Programa de Excelência 20 anos"

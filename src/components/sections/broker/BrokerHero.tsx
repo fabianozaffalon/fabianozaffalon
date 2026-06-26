@@ -29,9 +29,9 @@ export function BrokerHero() {
             <br />constroem confiança
           </h2>
         </div>
-        <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
+        <div className="relative w-full" style={{ aspectRatio: "750/420" }}>
           <Image
-            src="/images/broker/hero-broker.jpg"
+            src="/images/broker/hero-broker-mobile.jpg"
             alt="Broker Nestlé — Fabiano Zaffalon"
             fill
             className="object-cover object-center"

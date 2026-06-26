@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 
 const CULTURA = [
@@ -23,64 +23,6 @@ const CULTURA = [
       "Atuamos com compromisso, ética e responsabilidade nos relacionamentos que construímos. Valorizamos a excelência na execução, a busca contínua por evolução, o respeito às pessoas e a dedicação aos resultados, entendendo que a confiança é a base para o desenvolvimento de parcerias sólidas e duradouras.",
   },
 ];
-
-export function BrokerCultura() {
-  const [index, setIndex] = useState(0);
-
-  return (
-    <section className="bg-white pb-14 md:pb-20">
-      <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-
-        {/* Título */}
-        <h2
-          className="mb-10 text-center font-semibold text-[#595959]"
-          style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}
-        >
-          Nossa Cultura
-        </h2>
-
-        {/* Desktop — grid 3 colunas */}
-        <div className="hidden md:grid md:grid-cols-3 md:gap-6">
-          {CULTURA.map((item) => (
-            <Card key={item.titulo} item={item} />
-          ))}
-        </div>
-
-        {/* Mobile — carrossel */}
-        <div className="md:hidden">
-          <div className="overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${index * 100}%)` }}
-            >
-              {CULTURA.map((item) => (
-                <div key={item.titulo} className="w-full shrink-0 px-1">
-                  <Card item={item} />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Dots */}
-          <div className="mt-6 flex items-center justify-center gap-2">
-            {CULTURA.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                aria-label={`Card ${i + 1}`}
-                className={
-                  "rounded-full transition-all duration-300 " +
-                  (i === index ? "w-6 h-2 bg-[#006EB7]" : "w-2 h-2 bg-gray-300")
-                }
-              />
-            ))}
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
 
 function Card({ item }: { item: typeof CULTURA[0] }) {
   return (
@@ -110,5 +52,95 @@ function Card({ item }: { item: typeof CULTURA[0] }) {
         <p className="text-sm leading-relaxed text-[#595959]">{item.texto}</p>
       </div>
     </div>
+  );
+}
+
+export function BrokerCultura() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Atualiza dot ativo conforme scroll
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const idx = Math.round(el.scrollLeft / el.offsetWidth);
+      setActiveIndex(idx);
+    };
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const goTo = (i: number) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.offsetWidth, behavior: "smooth" });
+  };
+
+  return (
+    <section className="bg-white pb-14 md:pb-20">
+      <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
+
+        <h2
+          className="mb-10 text-center font-semibold text-[#595959]"
+          style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}
+        >
+          Nossa Cultura
+        </h2>
+
+        {/* Desktop — grid 3 colunas */}
+        <div className="hidden md:grid md:grid-cols-3 md:gap-6">
+          {CULTURA.map((item) => (
+            <Card key={item.titulo} item={item} />
+          ))}
+        </div>
+
+        {/* Mobile — scroll snap fullwidth */}
+        <div className="md:hidden">
+          <div
+            ref={scrollRef}
+            className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {CULTURA.map((item) => (
+              <div
+                key={item.titulo}
+                className="w-full shrink-0 snap-center snap-always"
+              >
+                <Card item={item} />
+              </div>
+            ))}
+          </div>
+
+          {/* Dots + hint */}
+          <div className="mt-5 flex flex-col items-center gap-2">
+            <div className="flex items-center gap-2">
+              {CULTURA.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  aria-label={`${CULTURA[i].titulo}`}
+                  className={
+                    "rounded-full transition-all duration-300 " +
+                    (i === activeIndex
+                      ? "w-6 h-2 bg-[#006EB7]"
+                      : "w-2 h-2 bg-gray-300 hover:bg-gray-400")
+                  }
+                />
+              ))}
+            </div>
+            {activeIndex < CULTURA.length - 1 && (
+              <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                <span>Deslize para ver mais</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-3.5 w-3.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                </svg>
+              </div>
+            )}
+          </div>
+        </div>
+
+      </div>
+    </section>
   );
 }
