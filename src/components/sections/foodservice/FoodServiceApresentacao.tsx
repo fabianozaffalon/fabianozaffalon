@@ -52,34 +52,34 @@ export function FoodServiceApresentacao() {
             </div>
 
             {/* Barra azul — ícone esquerda, texto direita */}
-            <div className="grid grid-cols-2 bg-[#006EB7] px-4 py-5 items-center">
+            <div className="grid grid-cols-2 bg-[#006EB7] px-3 py-4 items-center md:px-4 md:py-5">
               {/* Stat 1 */}
-              <div className="flex items-center justify-center gap-3 px-4 py-2">
+              <div className="flex items-center justify-center gap-2 px-2 py-1 md:gap-3 md:px-4 md:py-2">
                 <Image
                   src="/images/icons/icon-abastecimento.svg"
                   alt=""
                   aria-hidden="true"
                   width={64}
                   height={64}
-                  className="h-16 w-16 shrink-0 brightness-0 invert"
+                  className="h-10 w-10 shrink-0 brightness-0 invert md:h-16 md:w-16"
                 />
-                <p className="text-lg font-light text-white leading-snug">
+                <p className="text-sm font-light text-white leading-snug md:text-lg">
                   Segurança
                   <br />
                   na entrega
                 </p>
               </div>
               {/* Stat 2 */}
-              <div className="flex items-center justify-center gap-3 px-4 py-2">
+              <div className="flex items-center justify-center gap-2 px-2 py-1 md:gap-3 md:px-4 md:py-2">
                 <Image
                   src="/images/icons/icon-atendimento.svg"
                   alt=""
                   aria-hidden="true"
                   width={64}
                   height={64}
-                  className="h-16 w-16 shrink-0 brightness-0 invert"
+                  className="h-10 w-10 shrink-0 brightness-0 invert md:h-16 md:w-16"
                 />
-                <p className="text-lg font-light text-white leading-snug">
+                <p className="text-sm font-light text-white leading-snug md:text-lg">
                   Atendimento
                   <br />
                   especializado

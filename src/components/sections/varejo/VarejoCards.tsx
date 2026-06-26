@@ -55,17 +55,29 @@ export function VarejoLocal() {
                 </strong>{" "}
                 tem para as comunidades e para o desenvolvimento regional. Por
                 isso, contamos com rotas programadas, controle rigoroso de
-                qualidade e uma equipe preparada para auxiliar na construção
-                de um mix adequado ao perfil de cada negócio. Tudo isso aliado
-                ao acesso a grandes marcas do mercado por meio de negociações
+                qualidade e uma equipe preparada para auxiliar na construção de
+                um mix adequado ao perfil de cada negócio. Tudo isso aliado ao
+                acesso a grandes marcas do mercado por meio de negociações
                 acessíveis, permitindo que pequenos varejistas ampliem suas
                 oportunidades de venda e fortaleçam sua competitividade.
               </p>
               <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                <CardIcon src="/images/icons/icon-rotas.svg" label="Rotas programadas" />
-                <CardIcon src="/images/icons/icon-qualidade.svg" label="Controle rigoroso de qualidade" />
-                <CardIcon src="/images/icons/icon-equipe.svg" label="Equipe preparada" />
-                <CardIcon src="/images/icons/icon-mix.svg" label="Apoio na definição de mix" />
+                <CardIcon
+                  src="/images/icons/icon-rotas.svg"
+                  label="Rotas programadas"
+                />
+                <CardIcon
+                  src="/images/icons/icon-qualidade.svg"
+                  label="Controle rigoroso de qualidade"
+                />
+                <CardIcon
+                  src="/images/icons/icon-equipe.svg"
+                  label="Equipe preparada"
+                />
+                <CardIcon
+                  src="/images/icons/icon-mix.svg"
+                  label="Apoio na definição de mix"
+                />
               </div>
               <Link
                 href="#contato"
@@ -84,7 +96,7 @@ export function VarejoLocal() {
 // ── Médio & Grande Varejo ─────────────────────────────────────────────────────
 export function VarejoMedioGrande() {
   return (
-    <section className="bg-[#FFFFFF] pt-0 pb-6 md:pt-10">
+    <section className="bg-[#FFFFFF] pt-4 pb-6 md:pt-10">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div
           className="relative overflow-hidden rounded-[20px]"
@@ -110,18 +122,30 @@ export function VarejoMedioGrande() {
               </h3>
               <p className="text-sm leading-relaxed text-white/80">
                 Para redes e operações de maior porte, disponibilizamos um
-                atendimento especializado conduzido por profissionais
-                dedicados ao relacionamento com grandes contas. Nossa equipe
-                de Key Accounts atua de forma estratégica no planejamento de
+                atendimento especializado conduzido por profissionais dedicados
+                ao relacionamento com grandes contas. Nossa equipe de Key
+                Accounts atua de forma estratégica no planejamento de
                 abastecimento, gestão de oportunidades e desenvolvimento
                 comercial, garantindo eficiência operacional e soluções
                 adequadas às necessidades de cada empreendimento.
               </p>
               <div className="grid grid-cols-2 gap-x-6 gap-y-3">
-                <CardIcon src="/images/icons/icon-atendimento.svg" label="Atendimento especializado" />
-                <CardIcon src="/images/icons/icon-planejamento.svg" label="Planejamento de abastecimento" />
-                <CardIcon src="/images/icons/icon-gestao.svg" label="Gestão de oportunidades" />
-                <CardIcon src="/images/icons/icon-desenvolvimento.svg" label="Desenvolvimento comercial" />
+                <CardIcon
+                  src="/images/icons/icon-atendimento.svg"
+                  label="Atendimento especializado"
+                />
+                <CardIcon
+                  src="/images/icons/icon-planejamento.svg"
+                  label="Planejamento de abastecimento"
+                />
+                <CardIcon
+                  src="/images/icons/icon-gestao.svg"
+                  label="Gestão de oportunidades"
+                />
+                <CardIcon
+                  src="/images/icons/icon-desenvolvimento.svg"
+                  label="Desenvolvimento comercial"
+                />
               </div>
               <Link
                 href="#contato"

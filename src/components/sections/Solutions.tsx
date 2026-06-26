@@ -47,11 +47,10 @@ export function Solutions() {
             // Mobile — carrossel
             "flex gap-4 overflow-x-auto scroll-smooth",
             "snap-x snap-mandatory",
-            "px-5 pb-5", // padding lateral expõe próximo card
-            "-webkit-overflow-scrolling: touch", // momentum scroll iOS
-            "scrollbar-hide", // esconde scrollbar (ver nota abaixo)
+            "px-5 pb-5 scroll-pl-5", // padding + scroll-padding alinhados
+            "scrollbar-hide",
             // Desktop — grid
-            "md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-6 md:pb-0",
+            "md:grid md:grid-cols-3 md:gap-6 md:overflow-visible md:px-6 md:pb-0 md:scroll-pl-0",
           ].join(" ")}
         >
           {SOLUTIONS.map((item) => (

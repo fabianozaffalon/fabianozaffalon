@@ -48,36 +48,33 @@ export function IndustriaApresentacao() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             </div>
-            {/* Barra azul com 2 stats — altura 108px */}
-            <div
-              className="grid grid-cols-2 bg-[#006EB7] px-4 items-center"
-              style={{ height: "108px" }}
-            >
-              <div className="flex items-center justify-center gap-3 px-4">
+            {/* Barra azul com 2 stats */}
+            <div className="grid grid-cols-2 bg-[#006EB7] px-3 py-4 items-center md:px-4 md:py-0 md:h-[108px]">
+              <div className="flex items-center justify-center gap-2 px-2 py-1 md:gap-3 md:px-4">
                 <Image
                   src="/images/icons/icon-calendario.svg"
                   alt=""
                   aria-hidden="true"
                   width={86}
                   height={86}
-                  className="h-[86px] w-[86px] shrink-0 brightness-0 invert"
+                  className="h-10 w-10 shrink-0 brightness-0 invert md:h-[86px] md:w-[86px]"
                 />
-                <p className="text-xl font-light text-white leading-snug">
+                <p className="text-sm font-light text-white leading-snug md:text-xl">
                   30 anos de
                   <br />
                   atuação
                 </p>
               </div>
-              <div className="flex items-center justify-center gap-3 px-4">
+              <div className="flex items-center justify-center gap-2 px-2 py-1 md:gap-3 md:px-4">
                 <Image
                   src="/images/icons/icon-rs.svg"
                   alt=""
                   aria-hidden="true"
                   width={66}
                   height={66}
-                  className="h-[66px] w-[66px] shrink-0 brightness-0 invert"
+                  className="h-10 w-10 shrink-0 brightness-0 invert md:h-[66px] md:w-[66px]"
                 />
-                <p className="text-xl font-light text-white leading-snug">
+                <p className="text-sm font-light text-white leading-snug md:text-xl">
                   Presente em
                   <br />
                   todo RS
