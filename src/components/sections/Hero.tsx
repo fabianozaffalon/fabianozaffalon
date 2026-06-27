@@ -8,6 +8,7 @@ const SLIDES = [
   {
     id: 1,
     image: "/images/hero/slide-1.png",
+    imageMobile: "/images/hero/slide-1-mobile.png",
     title: "Distribuir é assumir desafios",
     subtitle:
       "Do varejo à indústria, você precisa de um parceiro comprometido com o seu resultado.",
@@ -16,6 +17,7 @@ const SLIDES = [
   {
     id: 2,
     image: "/images/hero/slide-2.png",
+    imageMobile: "/images/hero/slide-2-mobile.png",
     title: "INDÚSTRIA: Seu objetivo é ser líder no seu segmento?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
     cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
@@ -23,6 +25,7 @@ const SLIDES = [
   {
     id: 3,
     image: "/images/hero/slide-3.png",
+    imageMobile: "/images/hero/slide-3-mobile.png",
     title: "VAREJO: Precisa um parceiro que respeita o seu espaço?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
     cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
@@ -30,6 +33,7 @@ const SLIDES = [
   {
     id: 4,
     image: "/images/hero/slide-4.png",
+    imageMobile: "/images/hero/slide-4-mobile.png",
     title: "FOOD SERVICE: Precisa das melhores marcas no tempo certo?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
     cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
@@ -37,6 +41,7 @@ const SLIDES = [
   {
     id: 5,
     image: "/images/hero/slide-5.png",
+    imageMobile: "/images/hero/slide-5-mobile.png",
     title: "Saiba como fazemos a diferença.",
     subtitle: "Processos, tecnologia e uma cultura de confiança e respeito.",
     cta: { label: "CONHEÇA A FABIANO ZAFFALON", href: "/empresa" },
@@ -114,15 +119,12 @@ export function Hero() {
     <section
       id="hero"
       className="relative w-full overflow-hidden"
-      // Proporção exata 1920×700 no desktop (36.46vw)
-      // Mobile: altura fixa para acomodar conteúdo sem comprimir
       style={{ height: "clamp(420px, 36.46vw, 700px)" }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-label="Carrossel principal"
       aria-roledescription="carousel"
     >
-      {/* ── Slides ── */}
       {SLIDES.map((slide, i) => (
         <div
           key={slide.id}
@@ -133,49 +135,70 @@ export function Hero() {
               : "opacity-0 z-0 pointer-events-none")
           }
         >
-          {/* 
-            Mobile: object-right — o conteúdo relevante está na metade direita
-            Desktop: object-center — imagem full-width, centro fica equilibrado
-          */}
+          {/* Imagem mobile — portrait 750x900, só em telas pequenas */}
+          <Image
+            src={slide.imageMobile}
+            alt={slide.title}
+            fill
+            priority={i === 0}
+            loading="eager"
+            className="object-cover object-top md:hidden"
+            sizes="100vw"
+          />
+
+          {/* Imagem desktop — landscape 1920x700, só em telas md+ */}
           <Image
             src={slide.image}
             alt={slide.title}
             fill
             priority={i === 0}
             loading="eager"
-            className="object-cover object-right md:object-center"
+            className="hidden object-cover object-center md:block"
             sizes="100vw"
           />
 
-          {/* 
-            Overlay:
-            - Mobile: gradiente da direita para esquerda, mais intenso à esquerda
-              para criar legibilidade do texto que fica sobre a parte escura
-            - Desktop: mesmo comportamento original
-          */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/5 md:from-black/55 md:via-black/25 md:to-transparent" />
+          {/* Overlay mobile — gradiente top-to-bottom para texto no topo */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-transparent md:hidden" />
+
+          {/* Overlay desktop — gradiente lateral original */}
+          <div className="absolute inset-0 hidden bg-gradient-to-r from-black/55 via-black/25 to-transparent md:block" />
 
           {/* Conteúdo */}
-          <div className="absolute inset-0 flex items-center">
+          <div className="absolute inset-0 flex md:items-center">
             <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-              <div className="max-w-[75%] md:max-w-[520px]">
+              {/* Mobile — texto no topo dentro dos 250px livres */}
+              <div className="pt-6 md:hidden">
+                <h1
+                  className="font-black text-white leading-tight"
+                  style={{ fontSize: "clamp(1.25rem, 5vw, 1.75rem)" }}
+                >
+                  {slide.title}
+                </h1>
+                <Link
+                  href={slide.cta.href}
+                  className="mt-4 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
+                >
+                  {slide.cta.label}
+                </Link>
+              </div>
+
+              {/* Desktop — layout original */}
+              <div className="hidden md:block max-w-[520px]">
                 <h1
                   className="font-black text-white leading-tight"
                   style={{ fontSize: "clamp(1.25rem, 4vw, 2.75rem)" }}
                 >
                   {slide.title}
                 </h1>
-
                 <p
-                  className="mt-3 font-normal text-white/90 leading-relaxed hidden sm:block"
+                  className="mt-3 font-normal text-white/90 leading-relaxed"
                   style={{ fontSize: "clamp(0.8rem, 1.2vw, 1rem)" }}
                 >
                   {slide.subtitle}
                 </p>
-
                 <Link
                   href={slide.cta.href}
-                  className="mt-5 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto sm:px-7 sm:py-3"
+                  className="mt-5 inline-flex items-center justify-center rounded-[8px] bg-[#006EB7] px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {slide.cta.label}
                 </Link>
@@ -185,28 +208,49 @@ export function Hero() {
         </div>
       ))}
 
-      {/* ── Setas ── */}
+      {/* Setas — só desktop */}
       <button
         onClick={prev}
         aria-label="Slide anterior"
         className="absolute left-3 top-1/2 z-20 -translate-y-1/2 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40 md:left-5 md:h-12 md:w-12"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2.5}
+          stroke="currentColor"
+          className="h-5 w-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 19.5 8.25 12l7.5-7.5"
+          />
         </svg>
       </button>
-
       <button
         onClick={next}
         aria-label="Próximo slide"
         className="absolute right-3 top-1/2 z-20 -translate-y-1/2 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40 md:right-5 md:h-12 md:w-12"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2.5}
+          stroke="currentColor"
+          className="h-5 w-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+          />
         </svg>
       </button>
 
-      {/* ── Dots — área de toque 44×44px, visual pequeno ── */}
+      {/* Dots */}
       <div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 flex items-center gap-3">
         {SLIDES.map((_, i) => (
           <button
