@@ -7,13 +7,23 @@ export function FoodServiceHero() {
       className="relative w-full overflow-hidden"
       style={{ minHeight: "clamp(280px, 32vw, 420px)" }}
     >
-      {/* Imagem já tem sombreamento — sem overlay no código */}
+      {/* Imagem desktop (md+) */}
       <Image
         src="/images/foodservice/hero-foodservice.jpg"
         alt="Chef parceiro Fabiano Zaffalon"
         fill
         priority
-        className="object-cover object-center"
+        className="hidden md:block object-cover object-center"
+        sizes="100vw"
+      />
+
+      {/* Imagem mobile (< md) */}
+      <Image
+        src="/images/foodservice/hero-foodservice-mobile.jpg"
+        alt="Chef parceiro Fabiano Zaffalon"
+        fill
+        priority
+        className="block md:hidden object-cover object-right"
         sizes="100vw"
       />
 

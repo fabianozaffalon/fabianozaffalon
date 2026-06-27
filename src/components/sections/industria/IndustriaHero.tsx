@@ -7,13 +7,23 @@ export function IndustriaHero() {
       className="relative w-full overflow-hidden"
       style={{ minHeight: "clamp(280px, 32vw, 420px)" }}
     >
-      {/* Imagem já tem sombra e transparência — sem overlay no código */}
+      {/* Imagem desktop (md+) */}
       <Image
         src="/images/industria/hero-industria.jpg"
         alt="Executivo parceiro Fabiano Zaffalon"
         fill
         priority
-        className="object-cover object-center"
+        className="hidden md:block object-cover object-center"
+        sizes="100vw"
+      />
+
+      {/* Imagem mobile (< md) */}
+      <Image
+        src="/images/industria/hero-industria-mobile.jpg"
+        alt="Executivo parceiro Fabiano Zaffalon"
+        fill
+        priority
+        className="block md:hidden object-cover object-right"
         sizes="100vw"
       />
 

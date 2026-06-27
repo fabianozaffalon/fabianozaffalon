@@ -7,15 +7,25 @@ export function VarejoHero() {
       className="relative w-full overflow-hidden"
       style={{ minHeight: "clamp(280px, 32vw, 420px)" }}
     >
+      {/* Imagem desktop (md+) */}
       <Image
         src="/images/varejo/hero-varejo.jpg"
         alt="Entrega Fabiano Zaffalon em supermercado"
         fill
         priority
-        className="object-cover object-center"
+        className="hidden md:block object-cover object-center"
         sizes="100vw"
       />
 
+      {/* Imagem mobile (< md) */}
+      <Image
+        src="/images/varejo/hero-varejo-mobile.jpg"
+        alt="Entrega Fabiano Zaffalon em supermercado"
+        fill
+        priority
+        className="block md:hidden object-cover object-right"
+        sizes="100vw"
+      />
 
       <div className="relative mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div
