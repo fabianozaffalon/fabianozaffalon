@@ -46,8 +46,6 @@ const SLIDES = [
 const AUTOPLAY_MS = 5000;
 
 // ─── WhatsApp flutuante ───────────────────────────────────────────────────────
-// Renderize <WhatsAppButton /> no page.tsx, FORA do <Hero />, para o
-// position:fixed funcionar corretamente em mobile.
 export function WhatsAppButton() {
   return (
     <>
@@ -79,7 +77,6 @@ export function WhatsAppButton() {
             className="object-contain"
             aria-hidden="true"
           />
-
           <Image
             src="/images/ui/whats.svg"
             alt=""
@@ -117,9 +114,9 @@ export function Hero() {
     <section
       id="hero"
       className="relative w-full overflow-hidden"
-      // Mobile: altura fixa generosa para caber conteúdo
-      // Desktop: proporção exata do Figma 1440×672
-      style={{ height: "clamp(480px, 46.667vw, 672px)" }}
+      // Proporção exata 1920×700 no desktop (36.46vw)
+      // Mobile: altura fixa para acomodar conteúdo sem comprimir
+      style={{ height: "clamp(420px, 36.46vw, 700px)" }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-label="Carrossel principal"
@@ -136,33 +133,39 @@ export function Hero() {
               : "opacity-0 z-0 pointer-events-none")
           }
         >
-          {/* Imagem de fundo */}
+          {/* 
+            Mobile: object-right — o conteúdo relevante está na metade direita
+            Desktop: object-center — imagem full-width, centro fica equilibrado
+          */}
           <Image
             src={slide.image}
             alt={slide.title}
             fill
             priority={i === 0}
-            loading={i === 0 ? "eager" : "eager"}
-            className="object-cover object-center"
+            loading="eager"
+            className="object-cover object-right md:object-center"
             sizes="100vw"
           />
 
-          {/* Overlay — mais escuro em mobile para legibilidade */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/10 md:from-black/55 md:via-black/25 md:to-transparent" />
+          {/* 
+            Overlay:
+            - Mobile: gradiente da direita para esquerda, mais intenso à esquerda
+              para criar legibilidade do texto que fica sobre a parte escura
+            - Desktop: mesmo comportamento original
+          */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-black/5 md:from-black/55 md:via-black/25 md:to-transparent" />
 
           {/* Conteúdo */}
           <div className="absolute inset-0 flex items-center">
             <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-              <div className="max-w-[90%] md:max-w-[520px]">
-                {/* Título — menor em mobile, cresce no desktop */}
+              <div className="max-w-[75%] md:max-w-[520px]">
                 <h1
                   className="font-black text-white leading-tight"
-                  style={{ fontSize: "clamp(1.35rem, 4vw, 2.75rem)" }}
+                  style={{ fontSize: "clamp(1.25rem, 4vw, 2.75rem)" }}
                 >
                   {slide.title}
                 </h1>
 
-                {/* Subtítulo — oculto em telas muito pequenas para não poluir */}
                 <p
                   className="mt-3 font-normal text-white/90 leading-relaxed hidden sm:block"
                   style={{ fontSize: "clamp(0.8rem, 1.2vw, 1rem)" }}
@@ -170,10 +173,9 @@ export function Hero() {
                   {slide.subtitle}
                 </p>
 
-                {/* CTA — full-width em mobile, auto em desktop */}
                 <Link
                   href={slide.cta.href}
-                  className="mt-5 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto sm:rounded-[8px] sm:px-7 sm:py-3"
+                  className="mt-5 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:w-auto sm:px-7 sm:py-3"
                 >
                   {slide.cta.label}
                 </Link>
@@ -183,25 +185,14 @@ export function Hero() {
         </div>
       ))}
 
-      {/* ── Setas — ocultas em mobile (swipe seria ideal, dots bastam) ── */}
+      {/* ── Setas ── */}
       <button
         onClick={prev}
         aria-label="Slide anterior"
         className="absolute left-3 top-1/2 z-20 -translate-y-1/2 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40 md:left-5 md:h-12 md:w-12"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2.5}
-          stroke="currentColor"
-          className="h-5 w-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
         </svg>
       </button>
 
@@ -210,23 +201,12 @@ export function Hero() {
         aria-label="Próximo slide"
         className="absolute right-3 top-1/2 z-20 -translate-y-1/2 hidden sm:flex h-10 w-10 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40 md:right-5 md:h-12 md:w-12"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={2.5}
-          stroke="currentColor"
-          className="h-5 w-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
       </button>
 
-      {/* ── Dots — maiores em mobile para facilitar toque (44px de área) ── */}
+      {/* ── Dots — área de toque 44×44px, visual pequeno ── */}
       <div className="absolute bottom-5 left-1/2 z-20 -translate-x-1/2 flex items-center gap-3">
         {SLIDES.map((_, i) => (
           <button
