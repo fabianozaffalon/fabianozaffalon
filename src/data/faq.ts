@@ -159,4 +159,82 @@ export const FAQ_DATA: FaqCategory[] = [
       },
     ],
   },
+  {
+    id: "atendimento",
+    label: "Atendimento",
+    items: [
+      {
+        id: 21,
+        question: "Como faço para me cadastrar e começar a comprar?",
+        answer:
+          "Você pode se cadastrar diretamente com um de nossos vendedores ou via WhatsApp de atendimento. É necessário ter um CNPJ ativo no ramo do comércio. Após o envio dos dados, nossa equipe valida o cadastro em até 48 horas úteis.",
+      },
+      {
+        id: 22,
+        question: "Vocês atendem pessoas físicas (CPF)?",
+        answer:
+          "Não. Nosso foco é exclusivamente o atendimento ao varejo B2B. Vendemos apenas para empresas com CNPJ ativo.",
+      },
+      {
+        id: 23,
+        question: "Existe um valor de pedido mínimo?",
+        answer:
+          "Sim. O valor mínimo para faturamento é de R$ 200,00 em mercadorias. Esse valor garante a sustentabilidade da operação logística e preços competitivos.",
+      },
+      {
+        id: 24,
+        question: "Como faço para reimprimir um boleto ou nota fiscal?",
+        answer:
+          "Você pode solicitar os documentos rapidamente ao nosso assistente no WhatsApp.",
+      },
+      {
+        id: 25,
+        question: "Como funciona o frete? O frete é gratuito?",
+        answer:
+          "Trabalhamos com o modelo CIF (frete por nossa conta) para todos os pedidos.",
+      },
+      {
+        id: 26,
+        question: "Posso retirar o meu pedido diretamente no centro de distribuição?",
+        answer:
+          "Não. Não são permitidas retiradas de pedidos em nossos CDs.",
+      },
+      {
+        id: 27,
+        question: "Como funciona a liberação de prazo no boleto (boleto faturado)?",
+        answer:
+          "A liberação de crédito a prazo está sujeita a análise. O prazo padrão concedido após aprovação é de 28 dias.",
+      },
+      {
+        id: 28,
+        question: "Meu CNPJ é novo. Consigo comprar a prazo?",
+        answer:
+          "Para CNPJs com menos de 6 meses de abertura, as primeiras compras devem ser feitas via depósito antecipado. A análise de crédito a prazo pode ser solicitada após esse período.",
+      },
+      {
+        id: 29,
+        question: "Recebi um produto quebrado ou violado. O que devo fazer?",
+        answer:
+          "Recuse a mercadoria no ato da entrega e escreva o motivo no verso da Nota Fiscal (Danfe).",
+      },
+      {
+        id: 30,
+        question: "Posso trocar um produto que não está vendendo por outro?",
+        answer:
+          "Não realizamos trocas por falta de giro de estoque do lojista. Trocamos apenas produtos com defeito de fabricação ou avarias de transporte.",
+      },
+      {
+        id: 31,
+        question: "Como faço para receber a visita de um representante comercial?",
+        answer:
+          "Você pode solicitar uma visita ligando para a nossa central ou preenchendo o formulário de contato no site. Informaremos o representante responsável pela sua região.",
+      },
+      {
+        id: 32,
+        question: "Vocês oferecem material de ponto de venda (PDV) ou displays?",
+        answer:
+          "Sim. Possuímos materiais de merchandising de diversas marcas parceiras. Comunique o seu vendedor para verificar a disponibilidade de displays e cartazes para a sua loja.",
+      },
+    ],
+  },
 ];

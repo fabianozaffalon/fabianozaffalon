@@ -95,51 +95,122 @@ function AccordionItem({
   );
 }
 
-// ── Card lateral ──────────────────────────────────────────────────────────────
-function FaqSideCard() {
+// ── Sidebar vertical de categorias ───────────────────────────────────────────
+function CategorySidebar({
+  activeCategory,
+  onSelect,
+}: {
+  activeCategory: string;
+  onSelect: (id: string) => void;
+}) {
   return (
-    <div className="sticky top-28 flex flex-col items-center">
-      {/* Bola — no topo, na mesma altura do início do accordion */}
-      <div className="flex h-28 w-28 items-center justify-center rounded-full bg-[#006EB7] z-10 relative">
-        <Image
-          src="/images/icons/icon-faq.svg"
-          alt=""
-          aria-hidden="true"
-          width={56}
-          height={56}
-          className="h-14 w-14 brightness-0 invert"
-        />
+    <nav aria-label="Categorias do FAQ">
+      {/* Mobile: scroll horizontal em chips */}
+      <div className="md:hidden flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory scrollbar-none -mx-5 px-5">
+        {FAQ_DATA.map((category) => {
+          const isActive = activeCategory === category.id;
+          return (
+            <button
+              key={category.id}
+              onClick={() => onSelect(category.id)}
+              className={
+                "snap-start shrink-0 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wider transition-colors whitespace-nowrap " +
+                (isActive
+                  ? "bg-[#00497F] text-white"
+                  : "bg-[#EFEFEF] text-[#00497F] hover:bg-[#E0E0E0]")
+              }
+            >
+              {category.label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Card cinza — sobe para cobrir a metade inferior da bola */}
-      <div className="flex w-full flex-col items-start rounded-[20px] bg-[#EFEFEF] px-8 pb-10 pt-16 -mt-14">
-        {/* Título */}
-        <h3
-          className="font-black leading-tight text-[#00497F]"
-          style={{ fontSize: "clamp(1.25rem, 2vw, 1.6rem)" }}
-        >
-          Não encontrou
-          <br />
-          sua resposta?
-        </h3>
+      {/* Desktop: lista vertical sticky */}
+      <div className="hidden md:flex flex-col gap-1 sticky top-28">
+        {FAQ_DATA.map((category) => {
+          const isActive = activeCategory === category.id;
+          return (
+            <button
+              key={category.id}
+              onClick={() => onSelect(category.id)}
+              className={
+                "group flex items-center gap-3 rounded-[8px] px-4 py-3 text-left text-sm font-semibold transition-all duration-150 " +
+                (isActive
+                  ? "bg-[#00497F] text-white"
+                  : "text-[#00497F] hover:bg-[#EFEFEF]")
+              }
+            >
+              {/* Borda indicadora ativa */}
+              <span
+                className={
+                  "h-4 w-[3px] rounded-full shrink-0 transition-colors duration-150 " +
+                  (isActive
+                    ? "bg-[#0084E5]"
+                    : "bg-transparent group-hover:bg-[#0084E5]/40")
+                }
+                aria-hidden="true"
+              />
+              {category.label}
+            </button>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
 
-        {/* Divisor — #0084E5 */}
-        <div
-          className="my-4 rounded-full bg-[#0084E5]"
-          style={{ width: "44px", height: "6px" }}
-        />
+// ── Card horizontal inferior ──────────────────────────────────────────────────
+function FaqBottomCard() {
+  return (
+    <div className="mt-6">
+      {/* Mobile: bola centralizada, metade fora do card */}
+      <div className="flex justify-center sm:hidden">
+        <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full bg-[#006EB7]">
+          <Image
+            src="/images/icons/icon-faq.svg"
+            alt=""
+            aria-hidden="true"
+            width={48}
+            height={48}
+            className="h-12 w-12 brightness-0 invert"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4 rounded-[16px] bg-[#EFEFEF] -mt-12 px-6 pb-6 pt-16 sm:mt-0 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
+        {/* Ícone inline — só desktop */}
+        <div className="hidden sm:flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-[#006EB7]">
+          <Image
+            src="/images/icons/icon-faq.svg"
+            alt=""
+            aria-hidden="true"
+            width={28}
+            height={28}
+            className="h-10 w-10 brightness-0 invert"
+          />
+        </div>
 
         {/* Texto */}
-        <p className="mb-8 text-sm leading-relaxed text-[#00497F]">
-          Nossa equipe esta pronta
-          <br />
-          para te ajudar.
-        </p>
+        <div className="flex flex-col gap-0.5 flex-1 min-w-0 text-center sm:text-left">
+          <p className="text-sm font-black text-[#00497F]">
+            Não encontrou sua resposta?
+          </p>
+          <p className="text-xs leading-relaxed text-[#00497F]/70">
+            Nossa equipe está pronta para te ajudar.
+          </p>
+        </div>
+
+        {/* Divisor vertical — só desktop */}
+        <div
+          className="hidden sm:block shrink-0 self-stretch w-px bg-[#00497F]/10"
+          aria-hidden="true"
+        />
 
         {/* Botão */}
         <Link
           href="#contato"
-          className="w-full rounded-[8px] bg-[#0084E5] px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#006EB7]"
+          className="shrink-0 rounded-[8px] bg-[#0084E5] px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#006EB7] whitespace-nowrap"
         >
           Converse com um consultor
         </Link>
@@ -169,32 +240,19 @@ export function FaqSection() {
   return (
     <section className="bg-white py-8 md:py-12">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_320px] md:gap-14 md:items-start">
-          {/* Coluna esquerda — tabs + accordion */}
-          <div className="flex flex-col gap-4">
-            {/* Tabs — fullwidth, #00497F ativo */}
-            <div
-              className="grid w-full overflow-hidden rounded-[8px]"
-              style={{ gridTemplateColumns: `repeat(${FAQ_DATA.length}, 1fr)` }}
-            >
-              {FAQ_DATA.map((category, index) => (
-                <button
-                  key={category.id}
-                  onClick={() => handleTabChange(category.id)}
-                  className={
-                    "py-3.5 text-xs font-bold uppercase tracking-wider transition-colors " +
-                    (activeCategory === category.id
-                      ? "bg-[#00497F] text-white"
-                      : "bg-[#EFEFEF] text-[#00497F] hover:bg-[#E0E0E0]") +
-                    (index < FAQ_DATA.length - 1
-                      ? " border-r border-white/20"
-                      : "")
-                  }
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-[200px_1fr] md:gap-10 md:items-start">
+          {/* ── Coluna esquerda — sidebar de categorias ── */}
+          <CategorySidebar
+            activeCategory={activeCategory}
+            onSelect={handleTabChange}
+          />
+
+          {/* ── Coluna direita — accordion + card ── */}
+          <div className="flex flex-col gap-2">
+            {/* Título da categoria ativa */}
+            <p className="mb-2 text-xs font-bold uppercase tracking-widest text-[#0084E5]">
+              {currentCategory.label}
+            </p>
 
             {/* Accordion */}
             <div
@@ -212,10 +270,10 @@ export function FaqSection() {
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* Coluna direita — card fixo */}
-          <FaqSideCard />
+            {/* Card horizontal no rodapé */}
+            <FaqBottomCard />
+          </div>
         </div>
       </div>
     </section>
