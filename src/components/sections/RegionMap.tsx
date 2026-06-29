@@ -89,7 +89,7 @@ export function RegionMap() {
                   "flex min-h-[44px] w-full items-center justify-center rounded-[8px] border-2 px-3 py-3 text-sm font-medium transition-colors duration-200 " +
                   (isActive
                     ? "border-[#006EB7] bg-[#006EB7] text-white"
-                    : "border-[#BCBABA] bg-[#BCBABA] text-white hover:border-[#006EB7] hover:bg-[#006EB7]")
+                    : "border-[#6E6E6E] bg-[#6E6E6E] text-white hover:border-[#006EB7] hover:bg-[#006EB7]")
                 }
               >
                 {region.label}
@@ -143,19 +143,19 @@ export function RegionMap() {
                 href={`https://wa.me/${activeRegion.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#BCBABA] bg-[#BCBABA] px-3 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#006EB7] hover:bg-[#006EB7]"
+                className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#6E6E6E] bg-[#6E6E6E] px-3 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#006EB7] hover:bg-[#006EB7]"
               >
                 <IconWhatsApp /> WhatsApp
               </a>
               <a
                 href={`tel:${activeRegion.phone}`}
-                className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#BCBABA] bg-[#BCBABA] px-3 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#006EB7] hover:bg-[#006EB7]"
+                className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#6E6E6E] bg-[#6E6E6E] px-3 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#006EB7] hover:bg-[#006EB7]"
               >
                 <IconPhone /> Telefone
               </a>
               <a
                 href={activeRegion.orderLink}
-                className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#BCBABA] bg-[#BCBABA] px-3 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#006EB7] hover:bg-[#006EB7]"
+                className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#6E6E6E] bg-[#6E6E6E] px-3 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#006EB7] hover:bg-[#006EB7]"
               >
                 <IconCart /> Fazer pedido
               </a>

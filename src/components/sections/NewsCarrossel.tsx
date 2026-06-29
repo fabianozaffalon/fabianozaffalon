@@ -97,6 +97,7 @@ export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; ins
                             </h3>
                             <Link
                               href={item.href}
+                              aria-label={`Ver notícia completa: ${item.title}`}
                               className="mt-2 inline-block text-xs font-semibold text-white underline underline-offset-2 transition-opacity hover:opacity-80"
                             >
                               Saiba mais

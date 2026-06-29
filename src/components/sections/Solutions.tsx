@@ -87,6 +87,7 @@ export function Solutions() {
                   </p>
                   <Link
                     href={item.href}
+                    aria-label={`Ver detalhes da solução para ${item.title}`}
                     className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-white underline underline-offset-2 opacity-80 transition-opacity hover:opacity-100"
                   >
                     Saiba mais
