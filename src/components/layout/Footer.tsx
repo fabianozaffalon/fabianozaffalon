@@ -140,7 +140,7 @@ export function Footer() {
               src="/images/logo-white.svg"
               alt="Fabiano Zaffalon Distribuidora"
               width={180}
-              height={64}
+              height={111}
               className="w-[180px] h-auto"
             />
           </Link>
@@ -179,7 +179,7 @@ export function Footer() {
                 src="/images/logo-white.svg"
                 alt="Fabiano Zaffalon Distribuidora"
                 width={240}
-                height={80}
+                height={149}
                 className="h-auto w-[180px] md:w-[240px]"
               />
             </Link>

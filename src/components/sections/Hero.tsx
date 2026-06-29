@@ -143,7 +143,7 @@ export function Hero() {
             priority={i === 0}
             loading="eager"
             className="object-cover object-top md:hidden"
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, 0px"
           />
 
           {/* Imagem desktop — landscape 1920x700, só em telas md+ */}
@@ -154,7 +154,7 @@ export function Hero() {
             priority={i === 0}
             loading="eager"
             className="hidden object-cover object-center md:block"
-            sizes="100vw"
+            sizes="(min-width: 768px) 100vw, 0px"
           />
 
           {/* Overlay mobile — gradiente top-to-bottom para texto no topo */}

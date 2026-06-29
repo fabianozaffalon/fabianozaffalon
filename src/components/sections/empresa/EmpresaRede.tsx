@@ -41,7 +41,7 @@ export function EmpresaRede() {
       </div>
 
       {/* ── Desktop — imagem fullwidth com texto sobreposto ── */}
-      <div className="hidden md:block" style={{ minHeight: "clamp(360px, 40vw, 500px)" }}>
+      <div className="relative hidden md:block" style={{ minHeight: "clamp(360px, 40vw, 500px)" }}>
         <Image
           src="/images/empresa/rede-atendimento.jpg"
           alt="Equipe Fabiano Zaffalon — Rede de Atendimento"

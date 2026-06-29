@@ -14,7 +14,7 @@ export function FoodServiceHero() {
         fill
         priority
         className="hidden md:block object-cover object-center"
-        sizes="100vw"
+        sizes="(min-width: 768px) 100vw, 0px"
       />
 
       {/* Imagem mobile (< md) */}
@@ -24,7 +24,7 @@ export function FoodServiceHero() {
         fill
         priority
         className="block md:hidden object-cover object-right"
-        sizes="100vw"
+        sizes="(max-width: 768px) 100vw, 0px"
       />
 
       <div className="relative mx-auto w-full max-w-[1280px] px-5 md:px-12">

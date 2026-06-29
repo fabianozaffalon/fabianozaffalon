@@ -63,7 +63,7 @@ export function VarejoCampanha() {
         <Image
           src={BANNERS[index].src}
           alt={BANNERS[index].alt}
-          width={1440}
+          width={1920}
           height={480}
           className="w-full h-auto"
           sizes="100vw"

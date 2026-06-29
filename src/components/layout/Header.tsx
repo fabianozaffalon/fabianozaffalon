@@ -125,7 +125,7 @@ export function Header() {
               src="/images/logo.png"
               alt="Fabiano Zaffalon Distribuidora"
               width={230}
-              height={80}
+              height={55}
               priority
               className={
                 "transition-all duration-300 " +
@@ -312,7 +312,7 @@ export function Header() {
             src="/images/logo-white.svg"
             alt="Fabiano Zaffalon Distribuidora"
             width={150}
-            height={54}
+            height={93}
             className="h-auto w-[150px]"
           />
         </div>
