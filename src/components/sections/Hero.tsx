@@ -128,6 +128,8 @@ export function Hero() {
       {SLIDES.map((slide, i) => (
         <div
           key={slide.id}
+          aria-hidden={i !== current}
+          inert={i !== current ? true : undefined}
           className={
             "absolute inset-0 transition-opacity duration-700 " +
             (i === current

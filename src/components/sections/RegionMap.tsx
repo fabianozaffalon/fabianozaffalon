@@ -71,7 +71,7 @@ export function RegionMap() {
 
         {/* Título */}
         <h2
-          className="font-semibold leading-tight text-[#737373]"
+          className="font-semibold leading-tight text-[#595959]"
           style={{ fontSize: "clamp(1.1rem, 2vw, 1.5rem)" }}
         >
           Onde Estamos

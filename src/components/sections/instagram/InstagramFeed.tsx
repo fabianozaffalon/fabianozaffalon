@@ -43,7 +43,6 @@ export async function InstagramFeed({ limit = 2 }: { limit?: number }) {
             href={post.permalink}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Ver no Instagram: ${truncarLegenda(post.caption, 60) || "publicação sem legenda"}`}
             className="group relative block overflow-hidden rounded-xl"
           >
             <div className="relative w-full aspect-square">

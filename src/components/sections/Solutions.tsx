@@ -87,7 +87,7 @@ export function Solutions() {
                   </p>
                   <Link
                     href={item.href}
-                    aria-label={`Ver detalhes da solução para ${item.title}`}
+                    aria-label={`Saiba mais sobre a solução para ${item.title}`}
                     className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-white underline underline-offset-2 opacity-80 transition-opacity hover:opacity-100"
                   >
                     Saiba mais
@@ -116,7 +116,7 @@ export function Solutions() {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="h-4 w-4 text-gray-400"
+            className="h-4 w-4 text-gray-500"
           >
             <path
               strokeLinecap="round"
@@ -124,14 +124,14 @@ export function Solutions() {
               d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
             />
           </svg>
-          <span className="text-xs text-gray-400">Deslize para ver mais</span>
+          <span className="text-xs text-gray-500">Deslize para ver mais</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="h-4 w-4 text-gray-400"
+            className="h-4 w-4 text-gray-500"
           >
             <path
               strokeLinecap="round"

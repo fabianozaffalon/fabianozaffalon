@@ -248,7 +248,7 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
               {/* Link ver todas as ofertas */}
               <Link
                 href="/ofertas"
-                className="flex items-center gap-1.5 text-sm font-medium text-white/80 transition-colors hover:text-white"
+                className="flex items-center gap-1.5 text-sm font-medium text-white transition-colors hover:text-white/80"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
