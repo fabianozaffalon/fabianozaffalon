@@ -19,7 +19,7 @@ export default function IndustriaPage() {
       <IndustriaHero />
       <IndustriaApresentacao />
       <IndustriaCards />
-      <IndústariaCases />
+      <EmpresaCases />
       <CtaBannerSimples />
     </>
   );
