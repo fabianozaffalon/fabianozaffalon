@@ -1,37 +1,42 @@
 import { NextResponse } from "next/server";
-import { put } from "@vercel/blob";
+import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
+
+// IMPORTANTE: o arquivo NÃO passa mais por esta function.
+// O client faz upload direto para o Blob storage usando um token assinado
+// gerado aqui. Isso contorna o limite de 4.5MB de body em Serverless Functions
+// da Vercel, que não é configurável via código.
 
 export async function POST(req: Request) {
-  const formData = await req.formData();
-  const file = formData.get("file") as File;
-
-  if (!file) {
-    return NextResponse.json({ error: "Nenhum arquivo enviado" }, { status: 400 });
-  }
-
-  if (!file.type.includes("pdf")) {
-    return NextResponse.json({ error: "Apenas arquivos PDF são permitidos." }, { status: 400 });
-  }
-
-  // Limite generoso — Vercel Blob suporta arquivos grandes
-  const MAX_SIZE = 50 * 1024 * 1024; // 50MB
-  if (file.size > MAX_SIZE) {
-    return NextResponse.json(
-      { error: `Arquivo muito grande (${(file.size / 1024 / 1024).toFixed(1)}MB). Máximo permitido: 50MB.` },
-      { status: 400 }
-    );
-  }
+  const body = (await req.json()) as HandleUploadBody;
 
   try {
-    const blob = await put(`catalogos/${Date.now()}-${file.name}`, file, {
-      access: "public",
+    const jsonResponse = await handleUpload({
+      body,
+      request: req,
+      onBeforeGenerateToken: async (pathname) => {
+        // Validação ainda acontece aqui, antes de autorizar o upload
+        if (!pathname.toLowerCase().endsWith(".pdf")) {
+          throw new Error("Apenas arquivos PDF são permitidos.");
+        }
+
+        return {
+          allowedContentTypes: ["application/pdf"],
+          addRandomSuffix: true,
+          maximumSizeInBytes: 50 * 1024 * 1024, // 50MB
+        };
+      },
+      onUploadCompleted: async ({ blob }) => {
+        // Hook opcional: rodar depois que o upload terminar
+        // (ex: salvar referência no banco, se necessário)
+        console.log("Upload concluído:", blob.url);
+      },
     });
 
-    return NextResponse.json({ url: blob.url });
+    return NextResponse.json(jsonResponse);
   } catch (error: any) {
     return NextResponse.json(
       { error: error?.message ?? "Erro no upload" },
-      { status: 500 }
+      { status: 400 }
     );
   }
 }

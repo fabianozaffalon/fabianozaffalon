@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { upload } from "@vercel/blob/client";
 
 const UNIDADES = [
   { id: "sul",     label: "Região Sul"     },
@@ -78,19 +79,19 @@ export default function EditarMarcaPage() {
         logoUrl = url;
       }
 
-      // Novo PDF — Vercel Blob
+      // Novo PDF — Vercel Blob, direto do client (não passa pela function)
       if (pdfFile) {
-        const pdfData = new FormData();
-        pdfData.append("file", pdfFile);
-        const res = await fetch("/api/upload-pdf", { method: "POST", body: pdfData });
-        if (!res.ok) {
-          const err = await res.json();
-          alert(err.error ?? "Erro ao enviar o PDF.");
+        try {
+          const blob = await upload(pdfFile.name, pdfFile, {
+            access: "public",
+            handleUploadUrl: "/api/upload-pdf",
+          });
+          pdfUrl = blob.url;
+        } catch (err: any) {
+          alert(err?.message ?? "Erro ao enviar o PDF.");
           setSalvando(false);
           return;
         }
-        const { url } = await res.json();
-        pdfUrl = url;
       }
 
       await fetch(`/api/marcas/${id}`, {

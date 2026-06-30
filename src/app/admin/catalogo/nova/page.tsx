@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { upload } from "@vercel/blob/client";
 
 const UNIDADES = [
   { id: "sul",     label: "Região Sul"     },
@@ -52,7 +53,7 @@ export default function NovaMarcaPage() {
     setLoading(true);
 
     try {
-      // Upload logo — Cloudinary
+      // Upload logo — Cloudinary (continua igual, arquivo pequeno)
       const logoData = new FormData();
       logoData.append("file", logoFile);
       logoData.append("pasta", "catalogo/logos");
@@ -65,20 +66,20 @@ export default function NovaMarcaPage() {
       }
       const { url: logoUrl } = await logoRes.json();
 
-      // Upload PDF — Vercel Blob
-      let pdfUrl = null;
+      // Upload PDF — Vercel Blob, direto do client (não passa pela function)
+      let pdfUrl: string | null = null;
       if (pdfFile) {
-        const pdfData = new FormData();
-        pdfData.append("file", pdfFile);
-        const pdfRes = await fetch("/api/upload-pdf", { method: "POST", body: pdfData });
-        if (!pdfRes.ok) {
-          const err = await pdfRes.json();
-          alert(err.error ?? "Erro ao enviar o PDF.");
+        try {
+          const blob = await upload(pdfFile.name, pdfFile, {
+            access: "public",
+            handleUploadUrl: "/api/upload-pdf",
+          });
+          pdfUrl = blob.url;
+        } catch (err: any) {
+          alert(err?.message ?? "Erro ao enviar o PDF.");
           setLoading(false);
           return;
         }
-        const { url } = await pdfRes.json();
-        pdfUrl = url;
       }
 
       await fetch("/api/marcas", {
