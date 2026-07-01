@@ -68,7 +68,7 @@ export function WhatsAppButton() {
         .wa-ring { animation: wa-pulse 2.4s ease-out infinite; border-radius: 9999px; }
       `}</style>
       <a
-        href="https://wa.me/5551999999999"
+        href="https://wa.me/555332734110"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Fale conosco pelo WhatsApp"
