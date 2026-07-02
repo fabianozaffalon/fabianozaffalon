@@ -10,15 +10,19 @@ export function BrokerStarB() {
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-16">
-          {/* Esquerda — logo + texto */}
+          {/* Conteúdo textual */}
           <div className="flex flex-col gap-5">
-            <Image
-              src="/images/broker/starb-logo.png"
-              alt="Star B Nestlé — Programa de Excelência 20 anos"
-              width={220}
-              height={80}
-              className="h-auto w-[180px] md:w-[220px] object-contain mx-auto md:mx-0"
-            />
+            <div className="relative mx-auto md:mx-0 w-[180px] md:w-[220px] h-auto">
+              <Image
+                src="/images/broker/starb-logo.png"
+                alt="Star B Nestlé — Programa de Excelência 20 anos"
+                width={220}
+                height={80}
+                className="h-auto w-full object-contain"
+                style={{ width: "100%", height: "auto" }}
+                priority
+              />
+            </div>
             <p className="text-sm leading-relaxed text-[#595959]">
               O Star B é uma importante premiação nacional promovida pela Nestlé
               para reconhecer os brokers que mais se destacam em desempenho,
@@ -32,7 +36,7 @@ export function BrokerStarB() {
             </p>
           </div>
 
-          {/* Direita — vídeo Star B */}
+          {/* Vídeo */}
           <div
             className="relative w-full overflow-hidden rounded-[16px]"
             style={{ aspectRatio: "16/9" }}
@@ -45,11 +49,12 @@ export function BrokerStarB() {
                   fill
                   className="object-cover object-center"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
                 <button
                   onClick={() => setPlaying(true)}
                   aria-label="Reproduzir vídeo Star B"
-                  className="absolute inset-0 flex items-center justify-center"
+                  className="absolute inset-0 flex items-center justify-center transition-transform hover:scale-105"
                 >
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 shadow-lg transition-transform hover:scale-110">
                     <svg

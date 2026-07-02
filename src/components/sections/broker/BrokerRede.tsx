@@ -44,6 +44,7 @@ export function BrokerRede() {
           width={1920}
           height={640}
           className="w-full h-auto"
+          style={{ width: "100%", height: "auto" }}
           sizes="100vw"
         />
         <div className="absolute inset-0 flex items-center">

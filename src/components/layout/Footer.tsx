@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { UNIDADES } from "@/lib/unidades";
+import { UnidadesButton } from "@/components/sections/UnidadesModal";
 
 const EMPRESA = [
   { label: "A Empresa", href: "/empresa" },
@@ -18,15 +20,8 @@ const SOLUCOES = [
   { label: "Indústria", href: "/industria" },
 ];
 
-const UNIDADES = [
-  {
-    label: "Pelotas",
-  },
-  {
-    label: "Rio Pardo",
-    descricao: "Localização estratégica para atender todo o RS",
-  },
-];
+// Footer agora mostra as 3 unidades (Pelotas, Rio Pardo e Broker Nestlé)
+const UNIDADES_FOOTER = UNIDADES;
 
 // ── Acordeão — só ativo em mobile ────────────────────────────────────────────
 function AccordionSection({
@@ -114,16 +109,16 @@ function SocialIcon({
   );
 }
 
-function ContactIcon({ name }: { name: string }) {
+function ContactIcon({ name, size = 20 }: { name: string; size?: number }) {
   return (
     <Image
       src={`/images/icons/${name}.svg`}
       alt=""
       aria-hidden="true"
-      width={20}
-      height={20}
-      className="h-5 w-5 shrink-0"
-      style={{ filter: "brightness(0) invert(1)" }}
+      width={size}
+      height={size}
+      className="shrink-0"
+      style={{ width: size, height: size, filter: "brightness(0) invert(1)" }}
     />
   );
 }
@@ -255,14 +250,44 @@ export function Footer() {
           <div className="md:flex-1 md:px-6">
             <AccordionSection title="Unidades">
               <ul className="flex flex-col gap-4">
-                {UNIDADES.map((u) => (
-                  <li key={u.label} className="flex flex-col gap-2">
-                    <span className="text-sm font-normal text-white">
+                {UNIDADES_FOOTER.map((u) => (
+                  <li key={u.id} className="flex flex-col gap-1.5">
+                    <span className="text-sm font-semibold text-white">
                       {u.label}
                     </span>
-                    <span className="text-sm font-normal text-white/70 leading-snug">
-                      {u.descricao}
-                    </span>
+
+                    {/* Desktop — número único, dois ícones, aponta pro WhatsApp
+                        (tel: não faz nada útil na maioria dos desktops) */}
+                    <a
+                      href={u.whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hidden md:flex items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
+                    >
+                      <span className="flex items-center gap-1">
+                        <ContactIcon name="icon-phone" size={14} />
+                        <ContactIcon name="icon-whatsapp" size={14} />
+                      </span>
+                      {u.telefone}
+                    </a>
+
+                    {/* Mobile — dois links separados, cada um com sua ação real */}
+                    <a
+                      href={`tel:${u.telefone.replace(/\D/g, "")}`}
+                      className="flex md:hidden items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
+                    >
+                      <ContactIcon name="icon-phone" size={14} />
+                      {u.telefone}
+                    </a>
+                    <a
+                      href={u.whatsappHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex md:hidden items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
+                    >
+                      <ContactIcon name="icon-whatsapp" size={14} />
+                      {u.whatsapp}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -283,35 +308,26 @@ export function Footer() {
             <AccordionSection title="Contato Rápido">
               <ul className="flex flex-col gap-3">
                 <li className="flex items-center gap-2.5">
-                  <ContactIcon name="icon-phone" />
-                  <a
-                    href="tel:5137313426"
-                    className="text-sm font-normal text-white/70 hover:text-white transition-colors"
-                  >
-                    (51) 3731 3426
-                  </a>
-                </li>
-                <li className="flex items-center gap-2.5">
-                  <ContactIcon name="icon-whatsapp" />
-                  <a
-                    href="https://wa.me/555137313426"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-normal text-white/70 hover:text-white transition-colors"
-                  >
-                    (51) 3731 3426
-                  </a>
-                </li>
-                <li className="flex items-center gap-2.5">
                   <ContactIcon name="icon-clock" />
                   <span className="text-sm font-normal text-white/70 whitespace-nowrap">
                     Seg. a Sex. 8h às 18h
                   </span>
                 </li>
               </ul>
+              <UnidadesButton className="group mt-4 flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#006EB7] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]">
+                <Image
+                  src="/images/icons/icon-whatsapp.svg"
+                  alt=""
+                  aria-hidden="true"
+                  width={16}
+                  height={16}
+                  className="h-4 w-4 shrink-0 brightness-0 invert transition-all duration-200 group-hover:invert-0 group-hover:brightness-100"
+                />
+                Fale com uma unidade
+              </UnidadesButton>
               <Link
                 href="#cliente"
-                className="mt-4 inline-block rounded-[8px] bg-[#006EB7] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
+                className="mt-3 flex w-full items-center justify-center rounded-[8px] border border-white/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#00497F]"
               >
                 Área do Cliente
               </Link>

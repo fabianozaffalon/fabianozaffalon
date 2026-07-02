@@ -5,7 +5,7 @@ export function BrokerOndeEstamos() {
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center md:gap-16">
-          {/* Esquerda — mapa */}
+          {/* Mapa */}
           <div className="flex items-center justify-center">
             <div className="relative h-[320px] w-full md:h-[400px]">
               <Image
@@ -18,7 +18,7 @@ export function BrokerOndeEstamos() {
             </div>
           </div>
 
-          {/* Direita — dados */}
+          {/* Informações de contato */}
           <div className="flex flex-col gap-6">
             <div>
               <h2
@@ -54,6 +54,7 @@ export function BrokerOndeEstamos() {
                   Brasil
                 </span>
               </li>
+
               <li className="flex items-center gap-3">
                 <Image
                   src="/images/icons/icon-phone.svg"
@@ -70,6 +71,7 @@ export function BrokerOndeEstamos() {
                   (51) 3731 3426
                 </a>
               </li>
+
               <li className="flex items-center gap-3">
                 <Image
                   src="/images/icons/icon-whatsapp.svg"
@@ -88,6 +90,7 @@ export function BrokerOndeEstamos() {
                   (51) 3731 3426
                 </a>
               </li>
+
               <li className="flex items-center gap-3">
                 <Image
                   src="/images/icons/icon-email.svg"
@@ -102,6 +105,26 @@ export function BrokerOndeEstamos() {
                   className="text-sm text-[#595959] transition-colors hover:text-[#006EB7]"
                 >
                   starb@fzltda.com.br
+                </a>
+              </li>
+
+              <li className="flex items-center gap-3">
+                <div className="relative h-[20px] w-[20px] shrink-0">
+                  <Image
+                    src="/images/icons/icon-instagram-b.svg"
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                <a
+                  href="https://www.instagram.com/brokerfabianozaffalon/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-[#595959] transition-colors hover:text-[#006EB7]"
+                >
+                  @brokerfabianozaffalon
                 </a>
               </li>
             </ul>
