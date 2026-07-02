@@ -50,7 +50,8 @@ export function BrokerOndeEstamos() {
                   className="h-5 w-5 shrink-0 mt-0.5"
                 />
                 <span className="text-sm leading-snug text-[#595959]">
-                  BR 471, km 158 — nº 900 — Rio Pardo – RS, Brasil
+                  BR 471, km 156 nº 711 – Distrito Industrial – Rio Pardo/RS,
+                  Brasil
                 </span>
               </li>
               <li className="flex items-center gap-3">
@@ -79,12 +80,12 @@ export function BrokerOndeEstamos() {
                   className="h-5 w-5 shrink-0"
                 />
                 <a
-                  href="https://wa.me/5551983431014"
+                  href="https://wa.me/555137313426"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-[#595959] transition-colors hover:text-[#006EB7]"
                 >
-                  (51) 98343 1014
+                  (51) 3731 3426
                 </a>
               </li>
               <li className="flex items-center gap-3">
@@ -97,10 +98,10 @@ export function BrokerOndeEstamos() {
                   className="h-5 w-5 shrink-0"
                 />
                 <a
-                  href="mailto:contatorp@fzltda.com.br"
+                  href="mailto:starb@fzltda.com.br"
                   className="text-sm text-[#595959] transition-colors hover:text-[#006EB7]"
                 >
-                  contatorp@fzltda.com.br
+                  starb@fzltda.com.br
                 </a>
               </li>
             </ul>

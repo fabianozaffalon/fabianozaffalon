@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FAQ_DATA, type FaqCategory, type FaqItem } from "@/data/faq";
+import { UnidadesButton } from "@/components/sections/UnidadesModal";
 
 // ── Accordion item ────────────────────────────────────────────────────────────
 function AccordionItem({
@@ -207,13 +208,10 @@ function FaqBottomCard() {
           aria-hidden="true"
         />
 
-        {/* Botão */}
-        <Link
-          href="#contato"
-          className="shrink-0 rounded-[8px] bg-[#0084E5] px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#006EB7] whitespace-nowrap"
-        >
+        {/* ✅ Botão CONVERSE COM UM CONSULTOR → abre o modal com as 3 sedes */}
+        <UnidadesButton className="shrink-0 rounded-[8px] bg-[#0084E5] px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#006EB7] whitespace-nowrap">
           Converse com um consultor
-        </Link>
+        </UnidadesButton>
       </div>
     </div>
   );

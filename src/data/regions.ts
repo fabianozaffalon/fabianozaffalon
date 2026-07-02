@@ -61,9 +61,9 @@ export const REGIONS = [
     ],
     description:
       "Atendemos toda a região Sul do estado com uma estrutura logística robusta, garantindo entregas pontuais e um atendimento consultivo de excelência.",
-    whatsapp: "5551999999999",
-    phone: "+5551999999999",
-    orderLink: "#contato",
+    whatsapp: "555332734110",
+    phone: "+555332734110",
+    orderLink: "https://wa.me/555332734110",
   },
   {
     id: "central",
@@ -194,9 +194,9 @@ export const REGIONS = [
     ],
     description:
       "Nossa cobertura na região Central conecta os principais polos comerciais e industriais, assegurando presença constante e suporte ágil.",
-    whatsapp: "5551988888888",
-    phone: "+5551988888888",
-    orderLink: "#contato",
+    whatsapp: "555137313426",
+    phone: "+555137313426",
+    orderLink: "https://wa.me/555137313426",
   },
   {
     id: "broker",
@@ -302,10 +302,10 @@ export const REGIONS = [
     ],
     description:
       "Como Broker oficial Nestlé, operamos na Grande Porto Alegre levando as melhores marcas, produtos e lançamentos diretamente ao ponto de venda.",
-    whatsapp: "5551977777777",
-    phone: "+5551977777777",
-    orderLink: "#contato",
+    whatsapp: "555137313426",
+    phone: "+555137313426",
+    orderLink: "https://wa.me/555137313426",
   },
 ];
 
-export type Region = typeof REGIONS[0];
+export type Region = (typeof REGIONS)[0];

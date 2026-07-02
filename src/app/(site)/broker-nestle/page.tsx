@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { BrokerHero }        from "@/components/sections/broker/BrokerHero";
+import { BrokerHero } from "@/components/sections/broker/BrokerHero";
 import { BrokerApresentacao } from "@/components/sections/broker/BrokerApresentacao";
-import { BrokerVideo }        from "@/components/sections/broker/BrokerVideo";
-import { BrokerCultura }      from "@/components/sections/broker/BrokerCultura";
-import { BrokerRede }         from "@/components/sections/broker/BrokerRede";
-import { BrokerStarB }        from "@/components/sections/broker/BrokerStarB";
-import { BrokerBanner }       from "@/components/sections/broker/BrokerBanner";
-import { CtaBannerSimples }   from "@/components/sections/CtaBannerSimples";
-import { BrokerOndeEstamos }  from "@/components/sections/broker/BrokerOndeEstamos";
+import { BrokerVideo } from "@/components/sections/broker/BrokerVideo";
+import { BrokerCultura } from "@/components/sections/broker/BrokerCultura";
+import { BrokerRede } from "@/components/sections/broker/BrokerRede";
+import { BrokerStarB } from "@/components/sections/broker/BrokerStarB";
+import { BrokerBanner } from "@/components/sections/broker/BrokerBanner";
+import { CtaBannerBroker } from "@/components/sections/broker/CtaBannerBroker";
+import { BrokerOndeEstamos } from "@/components/sections/broker/BrokerOndeEstamos";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = buildMetadata({
@@ -27,7 +27,7 @@ export default function BrokerNestlePage() {
       <BrokerRede />
       <BrokerStarB />
       <BrokerBanner />
-      <CtaBannerSimples />
+      <CtaBannerBroker />
       <BrokerOndeEstamos />
     </>
   );

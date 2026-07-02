@@ -3,6 +3,10 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  ConsultorButton,
+  useConsultorModal,
+} from "@/components/sections/ConsultorModal";
 
 const SLIDES = [
   {
@@ -12,7 +16,10 @@ const SLIDES = [
     title: "Distribuir é assumir desafios",
     subtitle:
       "Do varejo à indústria, você precisa de um parceiro comprometido com o seu resultado.",
-    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+    cta: {
+      label: "QUERO FALAR COM UM CONSULTOR",
+      type: "modal", // Slide 1 - Modal
+    },
   },
   {
     id: 2,
@@ -20,7 +27,10 @@ const SLIDES = [
     imageMobile: "/images/hero/slide-2-mobile.png",
     title: "INDÚSTRIA: Seu objetivo é ser líder no seu segmento?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
-    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+    cta: {
+      label: "QUERO FALAR COM UM CONSULTOR",
+      type: "modal", // Slide 2 - Modal
+    },
   },
   {
     id: 3,
@@ -28,7 +38,10 @@ const SLIDES = [
     imageMobile: "/images/hero/slide-3-mobile.png",
     title: "VAREJO: Precisa um parceiro que respeita o seu espaço?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
-    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+    cta: {
+      label: "QUERO FALAR COM UM CONSULTOR",
+      type: "modal", // Slide 3 - Modal
+    },
   },
   {
     id: 4,
@@ -36,7 +49,10 @@ const SLIDES = [
     imageMobile: "/images/hero/slide-4-mobile.png",
     title: "FOOD SERVICE: Precisa das melhores marcas no tempo certo?",
     subtitle: "SOMOS MOVIDOS PELOS SEUS DESAFIOS.",
-    cta: { label: "QUERO FALAR COM UM CONSULTOR", href: "#contato" },
+    cta: {
+      label: "QUERO FALAR COM UM CONSULTOR",
+      type: "modal", // Slide 4 - Modal
+    },
   },
   {
     id: 5,
@@ -44,11 +60,40 @@ const SLIDES = [
     imageMobile: "/images/hero/slide-5-mobile.png",
     title: "Saiba como fazemos a diferença.",
     subtitle: "Processos, tecnologia e uma cultura de confiança e respeito.",
-    cta: { label: "CONHEÇA A FABIANO ZAFFALON", href: "/empresa" },
+    cta: {
+      label: "CONHEÇA A FABIANO ZAFFALON",
+      href: "/empresa", // Slide 5 - Link normal
+      type: "link",
+    },
   },
 ];
 
 const AUTOPLAY_MS = 5000;
+
+// ─── Componente CTA Renderer ────────────────────────────────────────────────
+function CTARenderer({ slide }: { slide: (typeof SLIDES)[0] }) {
+  const { abrir } = useConsultorModal();
+
+  // Estilos comuns para ambos os casos
+  const baseStyles =
+    "mt-4 inline-flex w-full md:w-auto items-center justify-center rounded-[8px] bg-[#006EB7] px-6 md:px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
+
+  // Se for modal (slides 1-4)
+  if (slide.cta.type === "modal") {
+    return (
+      <button onClick={abrir} className={baseStyles}>
+        {slide.cta.label}
+      </button>
+    );
+  }
+
+  // Se for link (slide 5)
+  return (
+    <Link href={slide.cta.href!} className={baseStyles}>
+      {slide.cta.label}
+    </Link>
+  );
+}
 
 // ─── WhatsApp flutuante ───────────────────────────────────────────────────────
 export function WhatsAppButton() {
@@ -176,12 +221,7 @@ export function Hero() {
                 >
                   {slide.title}
                 </h1>
-                <Link
-                  href={slide.cta.href}
-                  className="mt-4 inline-flex w-full items-center justify-center rounded-[8px] bg-[#006EB7] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
-                >
-                  {slide.cta.label}
-                </Link>
+                <CTARenderer slide={slide} />
               </div>
 
               {/* Desktop — layout original */}
@@ -198,12 +238,7 @@ export function Hero() {
                 >
                   {slide.subtitle}
                 </p>
-                <Link
-                  href={slide.cta.href}
-                  className="mt-5 inline-flex items-center justify-center rounded-[8px] bg-[#006EB7] px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  {slide.cta.label}
-                </Link>
+                <CTARenderer slide={slide} />
               </div>
             </div>
           </div>

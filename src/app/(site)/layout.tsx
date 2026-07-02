@@ -2,6 +2,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@/components/layout/Analytics";
 import { WhatsAppButton } from "@/components/sections/Hero";
+import { ConsultorModalProvider } from "@/components/sections/ConsultorModal";
+import { UnidadesModalProvider } from "@/components/sections/UnidadesModal";
 
 export default function SiteLayout({
   children,
@@ -18,10 +20,14 @@ export default function SiteLayout({
       >
         Ir ao conteúdo principal
       </a>
-      <Header />
-      <main id="main-content">{children}</main>
-      <Footer />
-      <WhatsAppButton />
+      <ConsultorModalProvider>
+        <UnidadesModalProvider>
+          <Header />
+          <main id="main-content">{children}</main>
+          <Footer />
+          <WhatsAppButton />
+        </UnidadesModalProvider>
+      </ConsultorModalProvider>
     </>
   );
 }

@@ -294,12 +294,12 @@ export function Footer() {
                 <li className="flex items-center gap-2.5">
                   <ContactIcon name="icon-whatsapp" />
                   <a
-                    href="https://wa.me/5551983431014"
+                    href="https://wa.me/555137313426"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-normal text-white/70 hover:text-white transition-colors"
                   >
-                    (51) 98343 1014
+                    (51) 3731 3426
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5">
