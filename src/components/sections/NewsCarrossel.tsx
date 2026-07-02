@@ -13,10 +13,16 @@ type NewsItem = {
 
 const VISIBLE_DESKTOP = 2;
 
-export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; instagramSlot?: ReactNode }) {
+export function NewsCarrossel({
+  items,
+  instagramSlot,
+}: {
+  items: NewsItem[];
+  instagramSlot?: ReactNode;
+}) {
   const [index, setIndex] = useState(0);
 
-  const total      = items.length;
+  const total = items.length;
   const maxDesktop = Math.max(0, total - VISIBLE_DESKTOP);
 
   const prev = () => setIndex((i) => Math.max(0, i - 1));
@@ -30,8 +36,12 @@ export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; ins
   return (
     <section id="noticias" className="bg-white py-12 md:py-16">
       <div className="mx-auto max-w-[1280px] px-5 md:px-12">
-        <div className={"grid grid-cols-1 gap-10 " + (instagramSlot ? "lg:grid-cols-2 lg:gap-12" : "")}>
-
+        <div
+          className={
+            "grid grid-cols-1 gap-10 " +
+            (instagramSlot ? "lg:grid-cols-2 lg:gap-12" : "")
+          }
+        >
           {/* ── Coluna esquerda — Últimas notícias ── */}
           {total > 0 && (
             <div>
@@ -48,11 +58,24 @@ export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; ins
                       aria-label="Notícias anteriores"
                       className={
                         "absolute -left-4 top-1/2 z-10 -translate-y-1/2 hidden md:flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md border border-gray-100 text-[#006EB7] transition-all " +
-                        (canPrev ? "opacity-100 hover:bg-[#006EB7] hover:text-white hover:border-[#006EB7]" : "opacity-30 cursor-not-allowed")
+                        (canPrev
+                          ? "opacity-100 hover:bg-[#006EB7] hover:text-white hover:border-[#006EB7]"
+                          : "opacity-30 cursor-not-allowed")
                       }
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.5}
+                        stroke="currentColor"
+                        className="h-5 w-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 19.5 8.25 12l7.5-7.5"
+                        />
                       </svg>
                     </button>
                     <button
@@ -61,11 +84,24 @@ export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; ins
                       aria-label="Próximas notícias"
                       className={
                         "absolute -right-4 top-1/2 z-10 -translate-y-1/2 hidden md:flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md border border-gray-100 text-[#006EB7] transition-all " +
-                        (canNext ? "opacity-100 hover:bg-[#006EB7] hover:text-white hover:border-[#006EB7]" : "opacity-30 cursor-not-allowed")
+                        (canNext
+                          ? "opacity-100 hover:bg-[#006EB7] hover:text-white hover:border-[#006EB7]"
+                          : "opacity-30 cursor-not-allowed")
                       }
                     >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="h-5 w-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2.5}
+                        stroke="currentColor"
+                        className="h-5 w-5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                        />
                       </svg>
                     </button>
                   </>
@@ -74,13 +110,19 @@ export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; ins
                 <div className="overflow-hidden">
                   <div
                     className="flex gap-4 transition-transform duration-500 ease-in-out"
-                    style={{ transform: `translateX(calc(-${index} * (100% / ${VISIBLE_DESKTOP}) - ${index} * (16px / ${VISIBLE_DESKTOP})))` }}
+                    style={{
+                      transform: `translateX(calc(-${index} * (100% / ${VISIBLE_DESKTOP}) - ${index} * (16px / ${VISIBLE_DESKTOP})))`,
+                    }}
                   >
-                    {items.map((item) => (
+                    {items.map((item, idx) => (
                       <article
                         key={item.id}
                         className="group relative shrink-0 overflow-hidden rounded-xl"
-                        style={{ width: `calc(100% / ${VISIBLE_DESKTOP} - ${(16 * (VISIBLE_DESKTOP - 1)) / VISIBLE_DESKTOP}px)` }}
+                        style={{
+                          width: `calc(100% / ${VISIBLE_DESKTOP} - ${
+                            (16 * (VISIBLE_DESKTOP - 1)) / VISIBLE_DESKTOP
+                          }px)`,
+                        }}
                       >
                         <div className="relative w-full aspect-square">
                           <Image
@@ -89,6 +131,9 @@ export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; ins
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
                             sizes="(max-width: 768px) 100vw, 280px"
+                            loading={idx < 2 ? "eager" : "lazy"}
+                            priority={idx === 0}
+                            fetchPriority={idx === 0 ? "high" : "auto"}
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                           <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -138,7 +183,6 @@ export function NewsCarrossel({ items, instagramSlot }: { items: NewsItem[]; ins
               </div>
             </div>
           )}
-
         </div>
       </div>
     </section>
