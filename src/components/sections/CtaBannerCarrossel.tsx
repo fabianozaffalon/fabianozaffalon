@@ -194,19 +194,23 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
 
               {/* Dots */}
               {ofertas.length > 1 && (
-                <div className="mt-3 flex items-center justify-center gap-2">
+                <div className="mt-3 flex items-center justify-center">
                   {ofertas.map((_, i) => (
                     <button
                       key={i}
                       onClick={() => goTo(i)}
                       aria-label={`Oferta ${i + 1}`}
-                      className={
-                        "rounded-full transition-all duration-300 " +
-                        (i === index
-                          ? "w-5 h-1.5 bg-white"
-                          : "w-1.5 h-1.5 bg-white/40 hover:bg-white/70")
-                      }
-                    />
+                      className="group flex items-center justify-center p-2.5"
+                    >
+                      <span
+                        className={
+                          "block rounded-full transition-all duration-300 " +
+                          (i === index
+                            ? "w-5 h-1.5 bg-white"
+                            : "w-1.5 h-1.5 bg-white/40 group-hover:bg-white/70")
+                        }
+                      />
+                    </button>
                   ))}
                 </div>
               )}

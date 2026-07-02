@@ -37,7 +37,7 @@ export function About() {
                 href="/empresa"
                 className="mt-5 self-start rounded-[8px] border-2 border-[#006EB7] bg-[#006EB7] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
               >
-                Saiba mais sobre nós
+                Saiba mais sobre a empresa
               </Link>
             </div>
 
@@ -91,7 +91,7 @@ export function About() {
                 href="/broker-nestle"
                 className="mt-5 self-start rounded-[8px] border-2 border-[#006EB7] bg-[#006EB7] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
               >
-                Saiba mais sobre nós
+                Saiba mais sobre o Broker Nestlé
               </Link>
             </div>
           </div>
