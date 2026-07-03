@@ -11,7 +11,7 @@ export type InstagramPost = {
 };
 
 // Cache de 1 hora — evita exceder rate limit da Meta
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export async function GET() {
   const token = process.env.INSTAGRAM_ACCESS_TOKEN;
@@ -26,7 +26,7 @@ export async function GET() {
     const fields = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp";
     const url = `https://graph.facebook.com/v21.0/${businessId}/media?fields=${fields}&limit=9&access_token=${token}`;
 
-    const res = await fetch(url, { next: { revalidate: 3600 } });
+    const res = await fetch(url, { next: { revalidate: 300, tags: ["instagram"] } });
 
     if (!res.ok) {
       // Token expirado ou erro da API — não quebra o site

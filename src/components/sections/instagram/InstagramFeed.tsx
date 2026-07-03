@@ -13,7 +13,7 @@ type InstagramPost = {
 async function getInstagramPosts(limit: number): Promise<InstagramPost[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/instagram`, { next: { revalidate: 3600 } });
+    const res = await fetch(`${baseUrl}/api/instagram`, { next: { revalidate: 300, tags: ["instagram"] } });
     if (!res.ok) return [];
     const data = await res.json();
     return (data.posts ?? []).slice(0, limit);

@@ -14,7 +14,7 @@ async function getInstagramPosts(): Promise<InstagramPost[]> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const res = await fetch(`${baseUrl}/api/instagram`, {
-      next: { revalidate: 3600 },
+      next: { revalidate: 300, tags: ["instagram"] },
     });
     if (!res.ok) return [];
     const data = await res.json();
