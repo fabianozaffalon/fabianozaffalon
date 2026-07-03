@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
+
+type FotoNova = { file: File; preview: string };
 
 export default function EditarNoticiaPage() {
   const router = useRouter();
@@ -15,12 +17,18 @@ export default function EditarNoticiaPage() {
     conteudo: "",
     publicada: true,
     capa: "",
-    fotos: [] as string[],
   });
+
+  // Foto capa
   const [capaFile, setCapaFile] = useState<File | null>(null);
   const [capaPreview, setCapaPreview] = useState("");
-  const [fotosFiles, setFotosFiles] = useState<File[]>([]);
-  const [fotosPreviews, setFotosPreviews] = useState<string[]>([]);
+
+  // Fotos extras: URLs já salvas no BD + novos arquivos locais (separados)
+  const [fotosExistentes, setFotosExistentes] = useState<string[]>([]);
+  const [fotosNovas, setFotosNovas] = useState<FotoNova[]>([]);
+  const fotosInputRef = useRef<HTMLInputElement>(null);
+
+  const totalFotos = fotosExistentes.length + fotosNovas.length;
 
   useEffect(() => {
     fetch(`/api/noticias/${id}`)
@@ -34,10 +42,9 @@ export default function EditarNoticiaPage() {
           conteudo:  data.conteudo,
           publicada: data.publicada,
           capa:      data.capa,
-          fotos:     data.fotos ?? [],
         });
         setCapaPreview(data.capa);
-        setFotosPreviews(data.fotos ?? []);
+        setFotosExistentes(data.fotos ?? []);
       });
   }, [id]);
 
@@ -50,9 +57,29 @@ export default function EditarNoticiaPage() {
   };
 
   const handleFotos = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []).slice(0, 8);
-    setFotosFiles(files);
-    setFotosPreviews(files.map((f) => URL.createObjectURL(f)));
+    const arquivos = Array.from(e.target.files ?? []);
+    e.target.value = ""; // reset para re-seleção
+    if (arquivos.length === 0) return;
+
+    const slotsLivres = 8 - fotosExistentes.length - fotosNovas.length;
+    if (slotsLivres <= 0) return;
+
+    const toAdd = arquivos
+      .slice(0, slotsLivres)
+      .map((f) => ({ file: f, preview: URL.createObjectURL(f) }));
+
+    setFotosNovas((prev) => [...prev, ...toAdd]);
+  };
+
+  const removerExistente = (index: number) => {
+    setFotosExistentes((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removerNova = (index: number) => {
+    setFotosNovas((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   const uploadImagem = async (file: File, pasta: string): Promise<string> => {
@@ -69,16 +96,14 @@ export default function EditarNoticiaPage() {
     setSalvando(true);
     try {
       let capaUrl = form.capa;
-      let fotosUrls = form.fotos;
-
       if (capaFile) capaUrl = await uploadImagem(capaFile, "noticias/capas");
 
-      if (fotosFiles.length > 0) {
-        fotosUrls = [];
-        for (const foto of fotosFiles) {
-          fotosUrls.push(await uploadImagem(foto, "noticias/fotos"));
-        }
+      // Mantém fotos existentes + faz upload das novas
+      const fotosNovasUrls: string[] = [];
+      for (const entrada of fotosNovas) {
+        fotosNovasUrls.push(await uploadImagem(entrada.file, "noticias/fotos"));
       }
+      const fotosUrls = [...fotosExistentes, ...fotosNovasUrls];
 
       await fetch(`/api/noticias/${id}`, {
         method: "PUT",
@@ -187,27 +212,73 @@ export default function EditarNoticiaPage() {
           {/* Fotos extras */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">
-              Fotos extras <span className="font-normal text-[#BCBABA]">(até 8 — substituirá as atuais)</span>
+              Fotos extras{" "}
+              <span className="font-normal text-[#BCBABA]">
+                ({totalFotos}/8 — remova ou adicione individualmente)
+              </span>
             </label>
-            {fotosPreviews.length > 0 && (
+
+            {totalFotos > 0 && (
               <div className="flex flex-wrap gap-3">
-                {fotosPreviews.map((src, i) => (
-                  <div key={i} className="relative h-20 w-32 overflow-hidden rounded-[8px]">
-                    <img src={src} alt={`Foto ${i + 1}`} className="h-full w-full object-cover" />
+                {/* Fotos já salvas no BD */}
+                {fotosExistentes.map((url, i) => (
+                  <div key={`existente-${i}`} className="relative h-20 w-32 overflow-hidden rounded-[8px]">
+                    <img src={url} alt={`Foto salva ${i + 1}`} className="h-full w-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => removerExistente(i)}
+                      title="Remover foto"
+                      className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+                        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+
+                {/* Novas fotos ainda não enviadas */}
+                {fotosNovas.map((entry, i) => (
+                  <div key={`nova-${i}`} className="relative h-20 w-32 overflow-hidden rounded-[8px] ring-2 ring-[#006EB7]/40">
+                    <img src={entry.preview} alt={`Nova foto ${i + 1}`} className="h-full w-full object-cover" />
+                    <span className="absolute bottom-1 left-1 rounded bg-[#006EB7] px-1 py-0.5 text-[9px] font-semibold text-white leading-none">
+                      nova
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removerNova(i)}
+                      title="Remover foto"
+                      className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+                        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                      </svg>
+                    </button>
                   </div>
                 ))}
               </div>
             )}
-            <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
-              {fotosPreviews.length > 0 ? "Substituir fotos" : "Adicionar fotos"}
-              <input type="file" accept=".png,.jpg,.jpeg" multiple onChange={handleFotos} className="hidden" />
-            </label>
+
+            {totalFotos < 8 && (
+              <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+                {totalFotos === 0 ? "Adicionar fotos" : "Adicionar mais fotos"}
+                <input
+                  ref={fotosInputRef}
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  multiple
+                  onChange={handleFotos}
+                  className="hidden"
+                />
+              </label>
+            )}
           </div>
 
           {/* Status */}
           <div className="flex items-center gap-3">
             <label className="text-sm font-semibold text-[#595959]">Publicada</label>
             <button
+              type="button"
               onClick={() => setForm((p) => ({ ...p, publicada: !p.publicada }))}
               className={"relative h-6 w-11 rounded-full transition-colors " + (form.publicada ? "bg-[#006EB7]" : "bg-gray-300")}
             >

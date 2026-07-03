@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ConsultorButton } from "@/components/sections/ConsultorModal";
 
 function CardIcon({ src, label }: { src: string; label: string }) {
   return (
@@ -80,10 +79,14 @@ export function VarejoLocal() {
                   label="Apoio na definição de mix"
                 />
               </div>
-              {/* ✅ CONVERSE COM UM CONSULTOR → abre o modal */}
-              <ConsultorButton className="self-start rounded-[8px] bg-[#00497F] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#00497F]">
+              <a
+                href="https://wa.me/555332734110"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start rounded-[8px] bg-[#00497F] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#00497F]"
+              >
                 CONVERSE COM UM CONSULTOR
-              </ConsultorButton>
+              </a>
             </div>
           </div>
         </div>
@@ -146,10 +149,14 @@ export function VarejoMedioGrande() {
                   label="Desenvolvimento comercial"
                 />
               </div>
-              {/* ✅ CONVERSE COM UM CONSULTOR → abre o modal */}
-              <ConsultorButton className="self-start rounded-[8px] bg-[#0084E5] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0084E5]">
+              <a
+                href="https://wa.me/555332734110"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="self-start rounded-[8px] bg-[#0084E5] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0084E5]"
+              >
                 CONVERSE COM UM CONSULTOR
-              </ConsultorButton>
+              </a>
             </div>
           </div>
         </div>

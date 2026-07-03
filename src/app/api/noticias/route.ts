@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
 // GET — lista notícias publicadas, mais nova primeiro
@@ -34,5 +35,8 @@ export async function POST(req: Request) {
       publicada: body.publicada ?? true,
     },
   });
+  revalidatePath("/noticias");
+  revalidatePath(`/noticias/${noticia.slug}`);
+  revalidatePath("/");
   return NextResponse.json(noticia, { status: 201 });
 }

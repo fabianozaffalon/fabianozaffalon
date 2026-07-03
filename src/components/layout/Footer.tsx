@@ -4,7 +4,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { UNIDADES } from "@/lib/unidades";
-import { UnidadesButton } from "@/components/sections/UnidadesModal";
 
 const EMPRESA = [
   { label: "A Empresa", href: "/empresa" },
@@ -314,7 +313,12 @@ export function Footer() {
                   </span>
                 </li>
               </ul>
-              <UnidadesButton className="group mt-4 flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#006EB7] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]">
+              <a
+                href="https://wa.me/555332734110"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-4 flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#006EB7] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
+              >
                 <Image
                   src="/images/icons/icon-whatsapp.svg"
                   alt=""
@@ -324,7 +328,7 @@ export function Footer() {
                   className="h-4 w-4 shrink-0 brightness-0 invert transition-all duration-200 group-hover:invert-0 group-hover:brightness-100"
                 />
                 Fale com uma unidade
-              </UnidadesButton>
+              </a>
               <Link
                 href="#cliente"
                 className="mt-3 flex w-full items-center justify-center rounded-[8px] border border-white/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#00497F]"

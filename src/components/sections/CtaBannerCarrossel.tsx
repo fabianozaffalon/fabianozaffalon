@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ConsultorButton } from "@/components/sections/ConsultorModal";
 
 type Oferta = {
   id: string;
@@ -77,15 +76,23 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
                 Temos sempre uma grande oportunidade para o seu negócio.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
-                {/* ✅ SUBSTITUÍDO: Quero Comprar → abre o modal */}
-                <ConsultorButton className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] bg-white text-sm font-semibold text-[#006EB7] transition-colors hover:bg-[#005a96] hover:text-white">
+                <a
+                  href="https://wa.me/555332734110"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] bg-white text-sm font-semibold text-[#006EB7] transition-colors hover:bg-[#005a96] hover:text-white"
+                >
                   Quero Comprar
-                </ConsultorButton>
+                </a>
 
-                {/* ✅ SUBSTITUÍDO: Quero Representação → abre o modal */}
-                <ConsultorButton className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] border-2 border-white text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]">
+                <a
+                  href="https://wa.me/555332734110"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] border-2 border-white text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]"
+                >
                   Quero Representação
-                </ConsultorButton>
+                </a>
               </div>
             </div>
           </div>
@@ -239,15 +246,23 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row">
-                {/* ✅ SUBSTITUÍDO: Quero Comprar → abre o modal */}
-                <ConsultorButton className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] bg-white text-sm font-semibold text-[#006EB7] transition-colors hover:bg-[#005a96] hover:text-white">
+                <a
+                  href="https://wa.me/555332734110"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] bg-white text-sm font-semibold text-[#006EB7] transition-colors hover:bg-[#005a96] hover:text-white"
+                >
                   Quero Comprar
-                </ConsultorButton>
+                </a>
 
-                {/* ✅ SUBSTITUÍDO: Quero Representação → abre o modal */}
-                <ConsultorButton className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] border-2 border-white text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]">
+                <a
+                  href="https://wa.me/555332734110"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] border-2 border-white text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]"
+                >
                   Quero Representação
-                </ConsultorButton>
+                </a>
               </div>
 
               {/* Link ver todas as ofertas */}

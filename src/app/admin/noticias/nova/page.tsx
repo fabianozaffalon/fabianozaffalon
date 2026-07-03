@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+
+type FotoEntry = { file: File; preview: string };
 
 export default function NovaNoticiaPage() {
   const router = useRouter();
@@ -16,13 +18,13 @@ export default function NovaNoticiaPage() {
   });
   const [capaFile, setCapaFile] = useState<File | null>(null);
   const [capaPreview, setCapaPreview] = useState("");
-  const [fotosFiles, setFotosFiles] = useState<File[]>([]);
-  const [fotosPreviews, setFotosPreviews] = useState<string[]>([]);
+  const [fotosEntries, setFotosEntries] = useState<FotoEntry[]>([]);
+  const fotosInputRef = useRef<HTMLInputElement>(null);
 
   const gerarSlug = (titulo: string) =>
     titulo
       .toLowerCase()
-      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[^a-z0-9\s-]/g, "")
       .trim()
       .replace(/\s+/g, "-");
@@ -41,9 +43,25 @@ export default function NovaNoticiaPage() {
   };
 
   const handleFotos = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []).slice(0, 8);
-    setFotosFiles(files);
-    setFotosPreviews(files.map((f) => URL.createObjectURL(f)));
+    const novosArquivos = Array.from(e.target.files ?? []);
+    e.target.value = ""; // reset para permitir re-seleção do mesmo arquivo
+    if (novosArquivos.length === 0) return;
+
+    setFotosEntries((prev) => {
+      const slotsLivres = 8 - prev.length;
+      if (slotsLivres <= 0) return prev;
+      const toAdd = novosArquivos
+        .slice(0, slotsLivres)
+        .map((f) => ({ file: f, preview: URL.createObjectURL(f) }));
+      return [...prev, ...toAdd];
+    });
+  };
+
+  const removerFoto = (index: number) => {
+    setFotosEntries((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   const uploadImagem = async (file: File, pasta: string): Promise<string> => {
@@ -64,24 +82,17 @@ export default function NovaNoticiaPage() {
 
     setLoading(true);
     try {
-      // Upload capa
       const capaUrl = await uploadImagem(capaFile, "noticias/capas");
 
-      // Upload fotos extras
       const fotosUrls: string[] = [];
-      for (const foto of fotosFiles) {
-        const url = await uploadImagem(foto, "noticias/fotos");
-        fotosUrls.push(url);
+      for (const entry of fotosEntries) {
+        fotosUrls.push(await uploadImagem(entry.file, "noticias/fotos"));
       }
 
       await fetch("/api/noticias", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          capa: capaUrl,
-          fotos: fotosUrls,
-        }),
+        body: JSON.stringify({ ...form, capa: capaUrl, fotos: fotosUrls }),
       });
 
       router.push("/admin/noticias");
@@ -182,16 +193,16 @@ export default function NovaNoticiaPage() {
               value={form.conteudo}
               onChange={(e) => setForm((p) => ({ ...p, conteudo: e.target.value }))}
               rows={10}
-              placeholder="Texto completo da notícia...
-
-Novo parágrafo aqui..."
+              placeholder={"Texto completo da notícia...\n\nNovo parágrafo aqui..."}
               className="resize-y rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]"
             />
           </div>
 
           {/* Foto capa */}
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold text-[#595959]">Foto capa* <span className="font-normal text-[#BCBABA]">(PNG ou JPG)</span></label>
+            <label className="text-sm font-semibold text-[#595959]">
+              Foto capa* <span className="font-normal text-[#BCBABA]">(PNG ou JPG)</span>
+            </label>
             <div className="flex items-center gap-4">
               <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
                 Selecionar foto
@@ -209,20 +220,48 @@ Novo parágrafo aqui..."
           {/* Fotos extras */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">
-              Fotos extras <span className="font-normal text-[#BCBABA]">(opcional, até 8 fotos)</span>
+              Fotos extras{" "}
+              <span className="font-normal text-[#BCBABA]">
+                (opcional — {fotosEntries.length}/8 selecionadas)
+              </span>
             </label>
-            <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
-              Selecionar fotos
-              <input type="file" accept=".png,.jpg,.jpeg" multiple onChange={handleFotos} className="hidden" />
-            </label>
-            {fotosPreviews.length > 0 && (
-              <div className="flex flex-wrap gap-3 mt-2">
-                {fotosPreviews.map((src, i) => (
+
+            {fotosEntries.length > 0 && (
+              <div className="flex flex-wrap gap-3">
+                {fotosEntries.map((entry, i) => (
                   <div key={i} className="relative h-20 w-32 overflow-hidden rounded-[8px]">
-                    <img src={src} alt={`Foto ${i + 1}`} className="h-full w-full object-cover" />
+                    <img
+                      src={entry.preview}
+                      alt={`Foto ${i + 1}`}
+                      className="h-full w-full object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removerFoto(i)}
+                      title="Remover foto"
+                      className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+                        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                      </svg>
+                    </button>
                   </div>
                 ))}
               </div>
+            )}
+
+            {fotosEntries.length < 8 && (
+              <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+                {fotosEntries.length === 0 ? "Selecionar fotos" : "Adicionar mais fotos"}
+                <input
+                  ref={fotosInputRef}
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  multiple
+                  onChange={handleFotos}
+                  className="hidden"
+                />
+              </label>
             )}
           </div>
 
@@ -230,6 +269,7 @@ Novo parágrafo aqui..."
           <div className="flex items-center gap-3">
             <label className="text-sm font-semibold text-[#595959]">Publicar imediatamente</label>
             <button
+              type="button"
               onClick={() => setForm((p) => ({ ...p, publicada: !p.publicada }))}
               className={
                 "relative h-6 w-11 rounded-full transition-colors " +

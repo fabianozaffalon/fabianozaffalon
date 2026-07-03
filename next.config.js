@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "**.fbcdn.net",
       },
+      {
+        protocol: "https",
+        hostname: "*.public.blob.vercel-storage.com",
+      },
     ],
   },
   // Habilita headers de segurança e cache

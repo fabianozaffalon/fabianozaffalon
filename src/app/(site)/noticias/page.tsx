@@ -14,6 +14,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/noticias",
 });
 
+export const revalidate = 60;
+
 export default function NoticiasPage() {
   return (
     <>

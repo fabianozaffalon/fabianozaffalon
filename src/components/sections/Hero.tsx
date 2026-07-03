@@ -3,10 +3,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ConsultorButton,
-  useConsultorModal,
-} from "@/components/sections/ConsultorModal";
 
 const SLIDES = [
   {
@@ -72,22 +68,22 @@ const AUTOPLAY_MS = 5000;
 
 // ─── Componente CTA Renderer ────────────────────────────────────────────────
 function CTARenderer({ slide }: { slide: (typeof SLIDES)[0] }) {
-  const { abrir } = useConsultorModal();
-
-  // Estilos comuns para ambos os casos
   const baseStyles =
     "mt-4 inline-flex w-full md:w-auto items-center justify-center rounded-[8px] bg-[#006EB7] px-6 md:px-7 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 
-  // Se for modal (slides 1-4)
   if (slide.cta.type === "modal") {
     return (
-      <button onClick={abrir} className={baseStyles}>
+      <a
+        href="https://wa.me/555332734110"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={baseStyles}
+      >
         {slide.cta.label}
-      </button>
+      </a>
     );
   }
 
-  // Se for link (slide 5)
   return (
     <Link href={slide.cta.href!} className={baseStyles}>
       {slide.cta.label}

@@ -4,7 +4,10 @@
       "Bash(node -e ' *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(cat next.config.ts)",
+      "Bash(cat next.config.js)",
+      "Bash(cat vercel.json)"
     ]
   }
 }
