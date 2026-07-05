@@ -82,12 +82,12 @@ export function BrokerOndeEstamos() {
                   className="h-5 w-5 shrink-0"
                 />
                 <a
-                  href="https://wa.me/555137313426"
+                  href="https://wa.me/555332734110"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-[#595959] transition-colors hover:text-[#006EB7]"
                 >
-                  (51) 3731 3426
+                  (53) 3273 4110
                 </a>
               </li>
 

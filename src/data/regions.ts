@@ -195,7 +195,7 @@ export const REGIONS = [
     description:
       "Nossa cobertura na região Central conecta os principais polos comerciais e industriais, assegurando presença constante e suporte ágil.",
     whatsapp: "555332734110",
-    phone: "+555332734110",
+    phone: "+555137313426",
     orderLink: "https://wa.me/555332734110",
   },
   {
@@ -303,7 +303,7 @@ export const REGIONS = [
     description:
       "Como Broker oficial Nestlé, operamos na Grande Porto Alegre levando as melhores marcas, produtos e lançamentos diretamente ao ponto de venda.",
     whatsapp: "555332734110",
-    phone: "+555332734110",
+    phone: "+555137313426",
     orderLink: "https://wa.me/555332734110",
   },
 ];

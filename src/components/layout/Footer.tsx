@@ -126,7 +126,7 @@ export function Footer() {
   return (
     <footer className="bg-[#00497F] text-white">
       {/* ── Corpo principal ── */}
-      <div className="mx-auto w-full max-w-[1280px] px-5 py-10 md:px-12 md:py-16">
+      <div className="mx-auto w-full max-w-[1280px] px-5 py-8 md:px-12 md:py-10">
         {/* Logo + descrição + redes — centralizado em mobile */}
         <div className="mb-8 flex flex-col items-center gap-5 text-center md:hidden">
           <Link href="/">
@@ -167,17 +167,17 @@ export function Footer() {
         {/* ── Mobile: acordeão | Desktop: flex row com divisores ── */}
         <div className="flex flex-col md:flex-row md:items-start md:gap-0">
           {/* Col 1 — Logo (desktop only) */}
-          <div className="hidden flex-col gap-6 md:flex md:w-[220px] md:shrink-0">
+          <div className="hidden flex-col gap-3 md:flex md:w-[200px] md:shrink-0">
             <Link href="/">
               <Image
                 src="/images/logo-white.svg"
                 alt="Fabiano Zaffalon Distribuidora"
                 width={240}
                 height={149}
-                className="h-auto w-[180px] md:w-[240px]"
+                className="h-auto w-[140px]"
               />
             </Link>
-            <p className="text-sm font-normal leading-relaxed text-white/75">
+            <p className="text-xs font-normal leading-relaxed text-white/70">
               Se interessa por distribuição, logística e mercado? Siga nossas
               redes:
             </p>
@@ -204,7 +204,7 @@ export function Footer() {
           <div className="hidden lg:block w-px self-stretch bg-white/20 mx-6" />
 
           {/* Col 2 — Empresa */}
-          <div className="md:flex-1 md:px-6">
+          <div className="md:w-[160px] md:shrink-0 md:px-6">
             <AccordionSection title="Empresa">
               <ul className="flex flex-col gap-3">
                 {EMPRESA.map((item) => (
@@ -246,7 +246,7 @@ export function Footer() {
           <div className="hidden lg:block w-px self-stretch bg-white/20 mx-6" />
 
           {/* Col 4 — Unidades */}
-          <div className="md:flex-1 md:px-6">
+          <div className="md:w-[175px] md:shrink-0 md:px-6">
             <AccordionSection title="Unidades">
               <ul className="flex flex-col gap-4">
                 {UNIDADES_FOOTER.map((u) => (
