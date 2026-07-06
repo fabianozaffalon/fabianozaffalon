@@ -22,6 +22,11 @@ const SOLUCOES = [
 // Footer agora mostra as 3 unidades (Pelotas, Rio Pardo e Broker Nestlé)
 const UNIDADES_FOOTER = UNIDADES;
 
+// WhatsApp agora é único para as 3 unidades — usamos o primeiro registro como fonte
+const WHATSAPP_UNICO_HREF = UNIDADES_FOOTER[0]?.whatsappHref ?? "";
+const WHATSAPP_UNICO_LABEL = UNIDADES_FOOTER[0]?.whatsapp ?? "";
+const TELEFONE_UNICO = UNIDADES_FOOTER[0]?.telefone ?? "";
+
 // ── Acordeão — só ativo em mobile ────────────────────────────────────────────
 function AccordionSection({
   title,
@@ -167,14 +172,14 @@ export function Footer() {
         {/* ── Mobile: acordeão | Desktop: flex row com divisores ── */}
         <div className="flex flex-col md:flex-row md:items-start md:gap-0">
           {/* Col 1 — Logo (desktop only) */}
-          <div className="hidden flex-col gap-3 md:flex md:w-[200px] md:shrink-0">
+          <div className="hidden flex-col gap-3 md:flex md:w-[220px] md:shrink-0">
             <Link href="/">
               <Image
                 src="/images/logo-white.svg"
                 alt="Fabiano Zaffalon Distribuidora"
                 width={240}
                 height={149}
-                className="h-auto w-[140px]"
+                className="h-auto w-[175px]"
               />
             </Link>
             <p className="text-xs font-normal leading-relaxed text-white/70">
@@ -204,14 +209,14 @@ export function Footer() {
           <div className="hidden lg:block w-px self-stretch bg-white/20 mx-6" />
 
           {/* Col 2 — Empresa */}
-          <div className="md:w-[160px] md:shrink-0 md:px-6">
+          <div className="md:w-[190px] md:shrink-0 md:px-6">
             <AccordionSection title="Empresa">
               <ul className="flex flex-col gap-3">
                 {EMPRESA.map((item) => (
                   <li key={item.label}>
                     <Link
                       href={item.href}
-                      className="text-sm font-normal text-white/70 transition-colors hover:text-white"
+                      className="text-sm font-normal text-white/70 transition-colors hover:text-white whitespace-nowrap"
                     >
                       {item.label}
                     </Link>
@@ -224,8 +229,8 @@ export function Footer() {
           {/* Divisor vertical desktop */}
           <div className="hidden lg:block w-px self-stretch bg-white/20 mx-6" />
 
-          {/* Col 3 — Soluções */}
-          <div className="md:flex-1 md:px-6">
+          {/* Col 3 — Soluções + Broker Nestlé */}
+          <div className="md:w-[150px] md:shrink-0 md:px-6">
             <AccordionSection title="Atuação">
               <ul className="flex flex-col gap-3">
                 {SOLUCOES.map((item) => (
@@ -238,6 +243,11 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+                <li className="mt-1 border-t border-white/10 pt-3">
+                  <span className="text-sm font-semibold text-white">
+                    Broker Nestlé
+                  </span>
+                </li>
               </ul>
             </AccordionSection>
           </div>
@@ -245,51 +255,54 @@ export function Footer() {
           {/* Divisor vertical desktop */}
           <div className="hidden lg:block w-px self-stretch bg-white/20 mx-6" />
 
-          {/* Col 4 — Unidades */}
+          {/* Col 4 — Unidades (WhatsApp único para as 3) */}
           <div className="md:w-[175px] md:shrink-0 md:px-6">
             <AccordionSection title="Unidades">
-              <ul className="flex flex-col gap-4">
+              <ul className="flex flex-col gap-2.5">
                 {UNIDADES_FOOTER.map((u) => (
-                  <li key={u.id} className="flex flex-col gap-1.5">
-                    <span className="text-sm font-semibold text-white">
+                  <li key={u.id}>
+                    <span className="text-sm font-normal text-white/70">
                       {u.label}
                     </span>
-
-                    {/* Desktop — número único, dois ícones, aponta pro WhatsApp
-                        (tel: não faz nada útil na maioria dos desktops) */}
-                    <a
-                      href={u.whatsappHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hidden md:flex items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
-                    >
-                      <span className="flex items-center gap-1">
-                        <ContactIcon name="icon-phone" size={14} />
-                        <ContactIcon name="icon-whatsapp" size={14} />
-                      </span>
-                      {u.telefone}
-                    </a>
-
-                    {/* Mobile — dois links separados, cada um com sua ação real */}
-                    <a
-                      href={`tel:${u.telefone.replace(/\D/g, "")}`}
-                      className="flex md:hidden items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
-                    >
-                      <ContactIcon name="icon-phone" size={14} />
-                      {u.telefone}
-                    </a>
-                    <a
-                      href={u.whatsappHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex md:hidden items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
-                    >
-                      <ContactIcon name="icon-whatsapp" size={14} />
-                      {u.whatsapp}
-                    </a>
                   </li>
                 ))}
               </ul>
+
+              {/* Contato único — mesmo número para as 3 unidades */}
+              <div className="mt-3 flex flex-col gap-2">
+                {/* Desktop — aponta pro WhatsApp */}
+                <a
+                  href={WHATSAPP_UNICO_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hidden md:flex items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white whitespace-nowrap"
+                >
+                  <span className="flex items-center gap-1">
+                    <ContactIcon name="icon-phone" size={14} />
+                    <ContactIcon name="icon-whatsapp" size={14} />
+                  </span>
+                  {TELEFONE_UNICO}
+                </a>
+
+                {/* Mobile — dois links separados, cada um com sua ação real */}
+                <a
+                  href={`tel:${TELEFONE_UNICO.replace(/\D/g, "")}`}
+                  className="flex md:hidden items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
+                >
+                  <ContactIcon name="icon-phone" size={14} />
+                  {TELEFONE_UNICO}
+                </a>
+                <a
+                  href={WHATSAPP_UNICO_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex md:hidden items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
+                >
+                  <ContactIcon name="icon-whatsapp" size={14} />
+                  {WHATSAPP_UNICO_LABEL}
+                </a>
+              </div>
+
               <Link
                 href="/contato"
                 className="mt-4 inline-block rounded-[8px] border border-white/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#00497F]"
@@ -305,14 +318,13 @@ export function Footer() {
           {/* Col 5 — Contato Rápido */}
           <div className="md:flex-1 md:pl-6">
             <AccordionSection title="Contato Rápido">
-              <ul className="flex flex-col gap-3">
-                <li className="flex items-center gap-2.5">
-                  <ContactIcon name="icon-clock" />
-                  <span className="text-sm font-normal text-white/70 whitespace-nowrap">
-                    Seg. a Sex. 8h às 18h
-                  </span>
-                </li>
-              </ul>
+              <div className="flex items-center gap-3">
+                <ContactIcon name="icon-clock" size={26} />
+                <span className="text-sm font-medium text-white whitespace-nowrap">
+                  Seg. a Sex. 8h às 18h
+                </span>
+              </div>
+
               <a
                 href="https://wa.me/555332734110"
                 target="_blank"
@@ -327,14 +339,38 @@ export function Footer() {
                   height={16}
                   className="h-4 w-4 shrink-0 brightness-0 invert transition-all duration-200 group-hover:invert-0 group-hover:brightness-100"
                 />
-                Fale com uma unidade
+                Fale com um consultor
               </a>
-              <Link
-                href="#cliente"
-                className="mt-3 flex w-full items-center justify-center rounded-[8px] border border-white/40 px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#00497F]"
-              >
-                Área do Cliente
-              </Link>
+
+              {/* Mini-stats reaproveitados da EmpresaAbout (exceto "2 Unidades") */}
+              <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <div className="flex items-center gap-1.5">
+                  <Image
+                    src="/images/icons/icon-entregas.svg"
+                    alt=""
+                    aria-hidden="true"
+                    width={16}
+                    height={16}
+                    className="h-4 w-4 shrink-0 brightness-0 invert opacity-70"
+                  />
+                  <span className="text-xs font-normal text-white/60">
+                    +70 mil entregas/ano
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Image
+                    src="/images/icons/icon-desde.svg"
+                    alt=""
+                    aria-hidden="true"
+                    width={16}
+                    height={16}
+                    className="h-4 w-4 shrink-0 brightness-0 invert opacity-70"
+                  />
+                  <span className="text-xs font-normal text-white/60">
+                    Desde 1997
+                  </span>
+                </div>
+              </div>
             </AccordionSection>
           </div>
         </div>
