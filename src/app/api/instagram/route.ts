@@ -17,8 +17,11 @@ export async function GET() {
   const token = process.env.INSTAGRAM_ACCESS_TOKEN;
   const businessId = process.env.INSTAGRAM_BUSINESS_ID;
 
-  // Sem credenciais configuradas — retorna vazio silenciosamente
+  // Sem credenciais configuradas — retorna vazio
   if (!token || !businessId) {
+    console.error(
+      "[api/instagram] variáveis de ambiente faltando (INSTAGRAM_ACCESS_TOKEN, INSTAGRAM_BUSINESS_ID) — retornando vazio"
+    );
     return NextResponse.json({ posts: [] });
   }
 
