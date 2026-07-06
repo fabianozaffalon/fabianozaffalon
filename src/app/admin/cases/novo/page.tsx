@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+
+type FotoEntry = { file: File; preview: string };
 
 export default function NovoCasePage() {
   const router = useRouter();
@@ -18,8 +20,8 @@ export default function NovoCasePage() {
   });
   const [capaFile, setCapaFile] = useState<File | null>(null);
   const [capaPreview, setCapaPreview] = useState("");
-  const [galeriaFiles, setGaleriaFiles] = useState<File[]>([]);
-  const [galeriaPreviews, setGaleriaPreviews] = useState<string[]>([]);
+  const [galeriaEntries, setGaleriaEntries] = useState<FotoEntry[]>([]);
+  const galeriaInputRef = useRef<HTMLInputElement>(null);
 
   const gerarSlug = (titulo: string) =>
     titulo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
@@ -36,9 +38,25 @@ export default function NovoCasePage() {
   };
 
   const handleGaleria = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []).slice(0, 8);
-    setGaleriaFiles(files);
-    setGaleriaPreviews(files.map((f) => URL.createObjectURL(f)));
+    const novosArquivos = Array.from(e.target.files ?? []);
+    e.target.value = ""; // reset para permitir re-seleção do mesmo arquivo
+    if (novosArquivos.length === 0) return;
+
+    setGaleriaEntries((prev) => {
+      const slotsLivres = 8 - prev.length;
+      if (slotsLivres <= 0) return prev;
+      const toAdd = novosArquivos
+        .slice(0, slotsLivres)
+        .map((f) => ({ file: f, preview: URL.createObjectURL(f) }));
+      return [...prev, ...toAdd];
+    });
+  };
+
+  const removerFoto = (index: number) => {
+    setGaleriaEntries((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   const uploadImagem = async (file: File, pasta: string): Promise<string> => {
@@ -60,8 +78,8 @@ export default function NovoCasePage() {
     try {
       const capaUrl = await uploadImagem(capaFile, "cases/capas");
       const galeriaUrls: string[] = [];
-      for (const foto of galeriaFiles) {
-        galeriaUrls.push(await uploadImagem(foto, "cases/galeria"));
+      for (const entry of galeriaEntries) {
+        galeriaUrls.push(await uploadImagem(entry.file, "cases/galeria"));
       }
       await fetch("/api/cases", {
         method: "POST",
@@ -167,21 +185,41 @@ export default function NovoCasePage() {
           {/* Galeria */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">
-              Galeria <span className="font-normal text-[#BCBABA]">(opcional, até 8 fotos)</span>
+              Galeria <span className="font-normal text-[#BCBABA]">(opcional — {galeriaEntries.length}/8 selecionadas)</span>
             </label>
-            <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
-              Selecionar fotos
-              <input type="file" accept=".png,.jpg,.jpeg" multiple onChange={handleGaleria} className="hidden" />
-            </label>
-            {galeriaPreviews.length > 0 && (
-              <div className="mt-2 grid grid-cols-4 gap-3">
-                {galeriaPreviews.map((src, i) => (
+
+            {galeriaEntries.length > 0 && (
+              <div className="grid grid-cols-4 gap-3">
+                {galeriaEntries.map((entry, i) => (
                   <div key={i} className="relative aspect-video overflow-hidden rounded-[8px]">
-                    <img src={src} alt={`Foto ${i + 1}`} className="h-full w-full object-cover" />
-                    <span className="absolute bottom-1 right-1 rounded bg-black/50 px-1.5 py-0.5 text-xs text-white">{i + 1}</span>
+                    <img src={entry.preview} alt={`Foto ${i + 1}`} className="h-full w-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => removerFoto(i)}
+                      title="Remover foto"
+                      className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+                        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                      </svg>
+                    </button>
                   </div>
                 ))}
               </div>
+            )}
+
+            {galeriaEntries.length < 8 && (
+              <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+                {galeriaEntries.length === 0 ? "Selecionar fotos" : "Adicionar mais fotos"}
+                <input
+                  ref={galeriaInputRef}
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  multiple
+                  onChange={handleGaleria}
+                  className="hidden"
+                />
+              </label>
             )}
           </div>
 

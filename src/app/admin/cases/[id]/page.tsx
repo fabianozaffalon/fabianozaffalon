@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
+
+type FotoNova = { file: File; preview: string };
 
 export default function EditarCasePage() {
   const router = useRouter();
@@ -14,8 +16,13 @@ export default function EditarCasePage() {
   });
   const [capaFile, setCapaFile] = useState<File | null>(null);
   const [capaPreview, setCapaPreview] = useState("");
-  const [galeriaFiles, setGaleriaFiles] = useState<File[]>([]);
-  const [galeriaPreviews, setGaleriaPreviews] = useState<string[]>([]);
+
+  // Galeria: URLs já salvas no BD + novos arquivos locais (separados)
+  const [galeriaExistente, setGaleriaExistente] = useState<string[]>([]);
+  const [galeriaNovas, setGaleriaNovas] = useState<FotoNova[]>([]);
+  const galeriaInputRef = useRef<HTMLInputElement>(null);
+
+  const totalGaleria = galeriaExistente.length + galeriaNovas.length;
 
   useEffect(() => {
     fetch(`/api/cases/${id}`)
@@ -28,7 +35,7 @@ export default function EditarCasePage() {
           capa: data.capa, galeria: data.galeria ?? [],
         });
         setCapaPreview(data.capa);
-        setGaleriaPreviews(data.galeria ?? []);
+        setGaleriaExistente(data.galeria ?? []);
       });
   }, [id]);
 
@@ -38,9 +45,29 @@ export default function EditarCasePage() {
   };
 
   const handleGaleria = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []).slice(0, 8);
-    setGaleriaFiles(files);
-    setGaleriaPreviews(files.map((f) => URL.createObjectURL(f)));
+    const arquivos = Array.from(e.target.files ?? []);
+    e.target.value = ""; // reset para re-seleção
+    if (arquivos.length === 0) return;
+
+    const slotsLivres = 8 - galeriaExistente.length - galeriaNovas.length;
+    if (slotsLivres <= 0) return;
+
+    const toAdd = arquivos
+      .slice(0, slotsLivres)
+      .map((f) => ({ file: f, preview: URL.createObjectURL(f) }));
+
+    setGaleriaNovas((prev) => [...prev, ...toAdd]);
+  };
+
+  const removerGaleriaExistente = (index: number) => {
+    setGaleriaExistente((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removerGaleriaNova = (index: number) => {
+    setGaleriaNovas((prev) => {
+      URL.revokeObjectURL(prev[index].preview);
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   const uploadImagem = async (file: File, pasta: string): Promise<string> => {
@@ -57,15 +84,14 @@ export default function EditarCasePage() {
     setSalvando(true);
     try {
       let capaUrl = form.capa;
-      let galeriaUrls = form.galeria;
-
       if (capaFile) capaUrl = await uploadImagem(capaFile, "cases/capas");
-      if (galeriaFiles.length > 0) {
-        galeriaUrls = [];
-        for (const foto of galeriaFiles) {
-          galeriaUrls.push(await uploadImagem(foto, "cases/galeria"));
-        }
+
+      // Mantém fotos existentes + faz upload das novas
+      const galeriaNovasUrls: string[] = [];
+      for (const entrada of galeriaNovas) {
+        galeriaNovasUrls.push(await uploadImagem(entrada.file, "cases/galeria"));
       }
+      const galeriaUrls = [...galeriaExistente, ...galeriaNovasUrls];
 
       await fetch(`/api/cases/${id}`, {
         method: "PUT",
@@ -173,22 +199,66 @@ export default function EditarCasePage() {
           {/* Galeria */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-semibold text-[#595959]">
-              Galeria <span className="font-normal text-[#BCBABA]">(até 8 fotos — substituirá as atuais)</span>
+              Galeria{" "}
+              <span className="font-normal text-[#BCBABA]">
+                ({totalGaleria}/8 — remova ou adicione individualmente)
+              </span>
             </label>
-            {galeriaPreviews.length > 0 && (
+
+            {totalGaleria > 0 && (
               <div className="grid grid-cols-4 gap-3">
-                {galeriaPreviews.map((src, i) => (
-                  <div key={i} className="relative aspect-video overflow-hidden rounded-[8px]">
-                    <img src={src} alt={`Foto ${i + 1}`} className="h-full w-full object-cover" />
-                    <span className="absolute bottom-1 right-1 rounded bg-black/50 px-1.5 py-0.5 text-xs text-white">{i + 1}</span>
+                {/* Fotos já salvas no BD */}
+                {galeriaExistente.map((url, i) => (
+                  <div key={`existente-${i}`} className="relative aspect-video overflow-hidden rounded-[8px]">
+                    <img src={url} alt={`Foto salva ${i + 1}`} className="h-full w-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => removerGaleriaExistente(i)}
+                      title="Remover foto"
+                      className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+                        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+
+                {/* Novas fotos ainda não enviadas */}
+                {galeriaNovas.map((entry, i) => (
+                  <div key={`nova-${i}`} className="relative aspect-video overflow-hidden rounded-[8px] ring-2 ring-[#006EB7]/40">
+                    <img src={entry.preview} alt={`Nova foto ${i + 1}`} className="h-full w-full object-cover" />
+                    <span className="absolute bottom-1 left-1 rounded bg-[#006EB7] px-1 py-0.5 text-[9px] font-semibold text-white leading-none">
+                      nova
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removerGaleriaNova(i)}
+                      title="Remover foto"
+                      className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/60 text-white transition-colors hover:bg-red-500"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="h-3 w-3">
+                        <path d="M5.28 4.22a.75.75 0 0 0-1.06 1.06L6.94 8l-2.72 2.72a.75.75 0 1 0 1.06 1.06L8 9.06l2.72 2.72a.75.75 0 1 0 1.06-1.06L9.06 8l2.72-2.72a.75.75 0 0 0-1.06-1.06L8 6.94 5.28 4.22Z" />
+                      </svg>
+                    </button>
                   </div>
                 ))}
               </div>
             )}
-            <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
-              {galeriaPreviews.length > 0 ? "Substituir galeria" : "Adicionar fotos"}
-              <input type="file" accept=".png,.jpg,.jpeg" multiple onChange={handleGaleria} className="hidden" />
-            </label>
+
+            {totalGaleria < 8 && (
+              <label className="w-fit cursor-pointer rounded-[8px] border-2 border-dashed border-[#D1D1D1] px-6 py-3 text-sm text-[#595959] transition-colors hover:border-[#006EB7] hover:text-[#006EB7]">
+                {totalGaleria === 0 ? "Adicionar fotos" : "Adicionar mais fotos"}
+                <input
+                  ref={galeriaInputRef}
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  multiple
+                  onChange={handleGaleria}
+                  className="hidden"
+                />
+              </label>
+            )}
           </div>
 
           {/* Ordem + Data */}
