@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -12,11 +13,23 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const { id } = await params;
   const body = await req.json();
   const case_ = await prisma.case.update({ where: { id }, data: body });
+
+  revalidatePath("/cases");
+  revalidatePath(`/cases/${case_.slug}`);
+  revalidatePath("/empresa");
+  revalidatePath("/industria");
+
   return NextResponse.json(case_);
 }
 
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  await prisma.case.delete({ where: { id } });
+  const case_ = await prisma.case.delete({ where: { id } });
+
+  revalidatePath("/cases");
+  revalidatePath(`/cases/${case_.slug}`);
+  revalidatePath("/empresa");
+  revalidatePath("/industria");
+
   return NextResponse.json({ ok: true });
 }
