@@ -76,10 +76,43 @@ export default function PoliticaPrivacidadePage() {
           <div>
             <h2 className="mb-3 text-lg font-bold text-[#00497F]">5. Cookies</h2>
             <p className="text-sm leading-relaxed text-[#595959]">
-              Nosso site pode utilizar cookies para melhorar sua experiência de navegação e para
-              fins de análise estatística. Você pode desativar os cookies nas configurações do
-              seu navegador a qualquer momento, embora isso possa afetar algumas funcionalidades
-              do site.
+              Utilizamos cookies para garantir o funcionamento adequado do site e, mediante seu
+              consentimento, para fins de análise de audiência. Classificamos os cookies
+              utilizados nas seguintes categorias:
+            </p>
+
+            <h3 className="mt-5 mb-2 text-sm font-bold text-[#00497F]">5.1. Cookies Necessários</h3>
+            <p className="text-sm leading-relaxed text-[#595959]">
+              Essenciais para o funcionamento básico do site e para a prestação dos serviços
+              solicitados por você, como manter sua sessão ativa ao acessar o painel
+              administrativo. Esses cookies não podem ser desativados, pois sua ausência
+              compromete o funcionamento do site, e seu tratamento se baseia na execução do
+              serviço solicitado (art. 7º, V, da LGPD).
+            </p>
+
+            <h3 className="mt-5 mb-2 text-sm font-bold text-[#00497F]">5.2. Cookies Analíticos</h3>
+            <p className="text-sm leading-relaxed text-[#595959]">
+              Utilizados para compreender como os visitantes interagem com o site (páginas mais
+              acessadas, tempo de navegação, origem do tráfego, dispositivo utilizado), por meio
+              de ferramentas de análise de audiência como Google Analytics, Google Tag Manager,
+              Microsoft Clarity, Meta Pixel, Hotjar, ou outras ferramentas de métricas
+              equivalentes. Esses cookies somente são ativados mediante seu consentimento
+              prévio, concedido através do banner de cookies exibido em sua primeira visita.
+            </p>
+
+            <h3 className="mt-5 mb-2 text-sm font-bold text-[#00497F]">5.3. Gerenciamento de Preferências</h3>
+            <p className="text-sm leading-relaxed text-[#595959]">
+              Você pode aceitar, recusar ou personalizar o uso de cookies analíticos a qualquer
+              momento através do link &ldquo;Preferências de Cookies&rdquo;, disponível no
+              rodapé do site. Sua escolha pode ser alterada ou revogada a qualquer momento, sem
+              prejuízo ao acesso às funcionalidades essenciais do site.
+            </p>
+
+            <h3 className="mt-5 mb-2 text-sm font-bold text-[#00497F]">5.4. Período de Retenção</h3>
+            <p className="text-sm leading-relaxed text-[#595959]">
+              As preferências de cookies ficam armazenadas em seu navegador por até 3 meses,
+              após os quais será solicitado um novo consentimento. Cookies de sessão são
+              automaticamente descartados ao fechar o navegador.
             </p>
           </div>
 

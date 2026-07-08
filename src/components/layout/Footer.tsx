@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { UNIDADES } from "@/lib/unidades";
+import { openCookiePreferences } from "@/lib/cookieConsent";
 
 const EMPRESA = [
   { label: "A Empresa", href: "/empresa" },
@@ -404,6 +405,14 @@ export function Footer() {
             >
               Política de Privacidade
             </Link>
+            <span className="text-gray-300">|</span>
+            <button
+              type="button"
+              onClick={openCookiePreferences}
+              className="text-xs font-normal text-gray-600 transition-colors hover:text-gray-900"
+            >
+              Preferências de Cookies
+            </button>
           </div>
         </div>
       </div>

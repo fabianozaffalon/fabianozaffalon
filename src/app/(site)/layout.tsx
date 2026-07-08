@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@/components/layout/Analytics";
 import { WhatsAppButton } from "@/components/sections/Hero";
+import { CookieConsentBanner } from "@/components/cookies/CookieConsentBanner";
 export default function SiteLayout({
   children,
 }: {
@@ -10,6 +11,7 @@ export default function SiteLayout({
   return (
     <>
       <Analytics />
+      <CookieConsentBanner />
       {/* Skip to main content — acessibilidade */}
       <a
         href="#main-content"

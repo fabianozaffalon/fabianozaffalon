@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Analytics.tsx
  * Centraliza todos os scripts de rastreamento.
@@ -5,13 +7,32 @@
  *
  * GTM_ID   → ex: "GTM-XXXXXXX"
  * GA4_ID   → ex: "G-XXXXXXXXXX"
+ *
+ * Só carrega os scripts se o usuário tiver consentido com cookies
+ * analíticos (banner de cookies) — ver src/lib/cookieConsent.ts.
  */
+
+import { useEffect, useState } from "react";
+import { COOKIE_CONSENT_UPDATED_EVENT, readCookieConsent } from "@/lib/cookieConsent";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "";
 const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID ?? "";
 
 export function Analytics() {
-  if (!GTM_ID && !GA4_ID) return null;
+  const [analyticsAllowed, setAnalyticsAllowed] = useState(false);
+
+  useEffect(() => {
+    setAnalyticsAllowed(readCookieConsent()?.analytics ?? false);
+
+    function handleUpdate() {
+      setAnalyticsAllowed(readCookieConsent()?.analytics ?? false);
+    }
+
+    window.addEventListener(COOKIE_CONSENT_UPDATED_EVENT, handleUpdate);
+    return () => window.removeEventListener(COOKIE_CONSENT_UPDATED_EVENT, handleUpdate);
+  }, []);
+
+  if ((!GTM_ID && !GA4_ID) || !analyticsAllowed) return null;
 
   return (
     <>
