@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 
-// TODO: trocar para "https://www.fabianozaffalon.com.br" quando o domínio entrar no ar.
-export const SITE_URL = "https://fabianozaffalon.vercel.app";
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.fabianozaffalon.com.br";
 
 // Imagem estática em src/app/opengraph-image.png (convenção de arquivo do Next.js).
 // Precisa ser referenciada explicitamente aqui porque o merge de metadata do Next.js é raso:
