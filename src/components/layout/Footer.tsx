@@ -354,7 +354,7 @@ export function Footer() {
                     height={16}
                     className="h-4 w-4 shrink-0 brightness-0 invert opacity-70"
                   />
-                  <span className="text-xs font-normal text-white/60">
+                  <span className="text-xs font-normal text-white/70">
                     +70 mil entregas/ano
                   </span>
                 </div>
@@ -367,7 +367,7 @@ export function Footer() {
                     height={16}
                     className="h-4 w-4 shrink-0 brightness-0 invert opacity-70"
                   />
-                  <span className="text-xs font-normal text-white/60">
+                  <span className="text-xs font-normal text-white/70">
                     Desde 1997
                   </span>
                 </div>
