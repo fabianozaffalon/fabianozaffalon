@@ -13,6 +13,7 @@
  */
 
 import { useEffect, useState } from "react";
+import Script from "next/script";
 import { COOKIE_CONSENT_UPDATED_EVENT, readCookieConsent } from "@/lib/cookieConsent";
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "";
@@ -40,9 +41,9 @@ export function Analytics() {
       {GTM_ID && (
         <>
           {/* GTM <head> snippet */}
-          {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-          <script
+          <Script
             id="gtm-script"
+            strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -58,12 +59,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       {/* ── Google Analytics 4 (standalone, sem GTM) ── */}
       {GA4_ID && !GTM_ID && (
         <>
-          <script
+          <Script
             async
+            strategy="afterInteractive"
             src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
           />
-          <script
+          <Script
             id="ga4-script"
+            strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA4_ID}');`,
             }}
