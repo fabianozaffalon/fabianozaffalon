@@ -8,6 +8,8 @@ type FotoEntry = { file: File; preview: string };
 export default function NovaNoticiaPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const hoje = new Date().toISOString().split("T")[0];
+
   const [form, setForm] = useState({
     titulo: "",
     slug: "",
@@ -15,6 +17,8 @@ export default function NovaNoticiaPage() {
     resumo: "",
     conteudo: "",
     publicada: true,
+    publishedAt: hoje,
+    ordem: 0,
   });
   const [capaFile, setCapaFile] = useState<File | null>(null);
   const [capaPreview, setCapaPreview] = useState("");
@@ -263,6 +267,28 @@ export default function NovaNoticiaPage() {
                 />
               </label>
             )}
+          </div>
+
+          {/* Ordem + Data de publicação */}
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-[#595959]">Ordem de exibição</label>
+              <input
+                type="number"
+                value={form.ordem}
+                onChange={(e) => setForm((p) => ({ ...p, ordem: Number(e.target.value) }))}
+                className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-[#595959]">Data de publicação</label>
+              <input
+                type="date"
+                value={form.publishedAt}
+                onChange={(e) => setForm((p) => ({ ...p, publishedAt: e.target.value }))}
+                className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]"
+              />
+            </div>
           </div>
 
           {/* Status */}

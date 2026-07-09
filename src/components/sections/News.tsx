@@ -5,7 +5,7 @@ import { InstagramFeed } from "@/components/sections/instagram/InstagramFeed";
 export async function News() {
   const noticias = await prisma.noticia.findMany({
     where: { publicada: true },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ ordem: "asc" }, { publishedAt: "desc" }],
     take: 6,
     select: {
       id: true,

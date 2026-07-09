@@ -13,7 +13,7 @@ function formatarData(date: Date): string {
 export async function NoticiasList() {
   const noticias = await prisma.noticia.findMany({
     where: { publicada: true },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ ordem: "asc" }, { publishedAt: "desc" }],
     select: {
       id: true,
       slug: true,

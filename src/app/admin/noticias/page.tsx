@@ -16,7 +16,7 @@ export default async function AdminNoticiasPage() {
   if (!session) redirect("/admin/login");
 
   const noticias = await prisma.noticia.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ ordem: "asc" }, { publishedAt: "desc" }],
   });
 
   return (
@@ -92,7 +92,7 @@ export default async function AdminNoticiasPage() {
                       <p className="line-clamp-2">{n.titulo}</p>
                     </td>
                     <td className="px-6 py-4 text-sm text-[#595959]">{n.categoria}</td>
-                    <td className="px-6 py-4 text-sm text-[#BCBABA] whitespace-nowrap">{formatarData(n.createdAt)}</td>
+                    <td className="px-6 py-4 text-sm text-[#BCBABA] whitespace-nowrap">{formatarData(n.publishedAt)}</td>
                     <td className="px-6 py-4">
                       <span className={
                         "rounded-full px-3 py-1 text-xs font-medium " +

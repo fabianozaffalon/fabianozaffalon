@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
-// GET — lista notícias publicadas, mais nova primeiro
+// GET — lista notícias publicadas, ordem manual + mais nova primeiro
 export async function GET() {
   const noticias = await prisma.noticia.findMany({
     where: { publicada: true },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ ordem: "asc" }, { publishedAt: "desc" }],
     select: {
       id: true,
       slug: true,
@@ -14,7 +14,8 @@ export async function GET() {
       titulo: true,
       resumo: true,
       capa: true,
-      createdAt: true,
+      publishedAt: true,
+      ordem: true,
     },
   });
   return NextResponse.json(noticias);
@@ -23,6 +24,17 @@ export async function GET() {
 // POST — cria nova notícia
 export async function POST(req: Request) {
   const body = await req.json();
+
+  // "Data de publicação" vem do form como "YYYY-MM-DD" — grava ao meio-dia UTC
+  // para nunca cruzar fronteira de dia em nenhum fuso horário na exibição.
+  let publishedAt: Date | undefined;
+  if (typeof body.publishedAt === "string" && body.publishedAt) {
+    const raw = body.publishedAt as string;
+    const dateStr = raw.includes("T") ? raw.split("T")[0] : raw;
+    const [y, m, d] = dateStr.split("-").map(Number);
+    publishedAt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+  }
+
   const noticia = await prisma.noticia.create({
     data: {
       slug:      body.slug,
@@ -33,6 +45,8 @@ export async function POST(req: Request) {
       capa:      body.capa,
       fotos:     body.fotos ?? [],
       publicada: body.publicada ?? true,
+      ordem:     body.ordem ?? 0,
+      ...(publishedAt ? { publishedAt } : {}),
     },
   });
   revalidatePath("/noticias");

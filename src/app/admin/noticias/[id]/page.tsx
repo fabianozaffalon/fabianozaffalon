@@ -17,6 +17,8 @@ export default function EditarNoticiaPage() {
     conteudo: "",
     publicada: true,
     capa: "",
+    publishedAt: "",
+    ordem: 0,
   });
 
   // Foto capa
@@ -35,13 +37,15 @@ export default function EditarNoticiaPage() {
       .then((r) => r.json())
       .then((data) => {
         setForm({
-          titulo:    data.titulo,
-          slug:      data.slug,
-          categoria: data.categoria,
-          resumo:    data.resumo,
-          conteudo:  data.conteudo,
-          publicada: data.publicada,
-          capa:      data.capa,
+          titulo:      data.titulo,
+          slug:        data.slug,
+          categoria:   data.categoria,
+          resumo:      data.resumo,
+          conteudo:    data.conteudo,
+          publicada:   data.publicada,
+          capa:        data.capa,
+          publishedAt: new Date(data.publishedAt).toISOString().split("T")[0],
+          ordem:       data.ordem,
         });
         setCapaPreview(data.capa);
         setFotosExistentes(data.fotos ?? []);
@@ -272,6 +276,22 @@ export default function EditarNoticiaPage() {
                 />
               </label>
             )}
+          </div>
+
+          {/* Ordem + Data de publicação */}
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-[#595959]">Ordem de exibição</label>
+              <input type="number" value={form.ordem}
+                onChange={(e) => setForm((p) => ({ ...p, ordem: Number(e.target.value) }))}
+                className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-[#595959]">Data de publicação</label>
+              <input type="date" value={form.publishedAt}
+                onChange={(e) => setForm((p) => ({ ...p, publishedAt: e.target.value }))}
+                className="rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
+            </div>
           </div>
 
           {/* Status */}

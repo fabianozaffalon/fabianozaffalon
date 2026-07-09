@@ -58,7 +58,7 @@ export default async function NoticiaPage({
   // Busca todas as publicadas ordenadas por data (mais nova primeiro)
   const todas = await prisma.noticia.findMany({
     where: { publicada: true },
-    orderBy: { createdAt: "desc" },
+    orderBy: [{ ordem: "asc" }, { publishedAt: "desc" }],
     select: {
       id: true,
       slug: true,
@@ -118,7 +118,7 @@ export default async function NoticiaPage({
 
               {/* Data */}
               <p className="mt-2 text-xs text-[#BCBABA]">
-                {formatarData(noticia.createdAt)}
+                {formatarData(noticia.publishedAt)}
               </p>
 
               {/* Foto capa */}
