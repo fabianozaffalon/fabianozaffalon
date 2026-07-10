@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 // Substitua pela URL real do vídeo (YouTube embed ou arquivo direto)
-const VIDEO_URL = "https://www.youtube.com/embed/NGbc2uirCmw?autoplay=1";
+const VIDEO_URL = "https://www.youtube.com/embed/aPckAK35JS8?autoplay=1";
 
 export function EmpresaVideo() {
   const [playing, setPlaying] = useState(false);
