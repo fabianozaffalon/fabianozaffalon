@@ -8,7 +8,8 @@ type FotoEntry = { file: File; preview: string };
 export default function NovaNoticiaPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const hoje = new Date().toISOString().split("T")[0];
+  const agora = new Date();
+  const hoje = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}-${String(agora.getDate()).padStart(2, "0")}`;
 
   const [form, setForm] = useState({
     titulo: "",
