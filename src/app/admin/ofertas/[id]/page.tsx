@@ -69,7 +69,8 @@ export default function EditarOfertaPage() {
     router.push("/admin/ofertas");
   };
 
-  const hoje = new Date().toISOString().split("T")[0];
+  const agora = new Date();
+  const hoje = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, "0")}-${String(agora.getDate()).padStart(2, "0")}`;
 
   return (
     <div className="min-h-screen bg-[#F6F6F6]">
@@ -136,7 +137,7 @@ export default function EditarOfertaPage() {
               Data de validade <span className="font-normal text-[#BCBABA]">(opcional — sem data = sempre visível)</span>
             </label>
             <div className="flex items-center gap-3">
-              <input type="date" value={form.validade}
+              <input type="date" value={form.validade} min={hoje}
                 onChange={(e) => setForm((p) => ({ ...p, validade: e.target.value }))}
                 className="w-48 rounded-[8px] border border-[#D1D1D1] px-4 py-2.5 text-sm outline-none transition-colors focus:border-[#006EB7]" />
               {form.validade && (
