@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { requireAdminSession } from "@/lib/auth-guard";
 
 export async function GET() {
   const ofertas = await prisma.oferta.findMany({
@@ -11,6 +12,9 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
+  const { response } = await requireAdminSession();
+  if (response) return response;
+
   const body = await req.json();
 
   let validade: Date | null = null;

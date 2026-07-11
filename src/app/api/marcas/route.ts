@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { requireAdminSession } from "@/lib/auth-guard";
 
 // GET — lista marcas, opcionalmente filtradas por unidade
 export async function GET(req: Request) {
@@ -19,6 +20,9 @@ export async function GET(req: Request) {
 
 // POST — cria nova marca
 export async function POST(req: Request) {
+  const { response } = await requireAdminSession();
+  if (response) return response;
+
   const body = await req.json();
   const marca = await prisma.marca.create({
     data: {

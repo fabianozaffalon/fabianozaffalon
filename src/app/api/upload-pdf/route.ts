@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
+import { requireAdminSession } from "@/lib/auth-guard";
 
 // IMPORTANTE: o arquivo NÃO passa mais por esta function.
 // O client faz upload direto para o Blob storage usando um token assinado
@@ -7,6 +8,9 @@ import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 // da Vercel, que não é configurável via código.
 
 export async function POST(req: Request) {
+  const { response } = await requireAdminSession();
+  if (response) return response;
+
   const body = (await req.json()) as HandleUploadBody;
 
   try {

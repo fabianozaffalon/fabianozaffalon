@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { requireAdminSession } from "@/lib/auth-guard";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -10,6 +11,9 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
 }
 
 export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { response } = await requireAdminSession();
+  if (response) return response;
+
   const { id } = await params;
   const body = await req.json();
 
@@ -32,6 +36,9 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
 }
 
 export async function DELETE(_: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { response } = await requireAdminSession();
+  if (response) return response;
+
   const { id } = await params;
   const noticia = await prisma.noticia.findUnique({ where: { id }, select: { slug: true } });
   await prisma.noticia.delete({ where: { id } });

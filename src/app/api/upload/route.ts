@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { cloudinary } from "@/lib/cloudinary";
+import { requireAdminSession } from "@/lib/auth-guard";
 
 export async function POST(req: Request) {
+  const { response } = await requireAdminSession();
+  if (response) return response;
+
   const formData = await req.formData();
   const file = formData.get("file") as File;
   const pasta = formData.get("pasta") as string ?? "catalogo";

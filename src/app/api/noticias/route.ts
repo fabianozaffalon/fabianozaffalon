@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { requireAdminSession } from "@/lib/auth-guard";
 
 // GET — lista notícias publicadas, ordem manual + mais nova primeiro
 export async function GET() {
@@ -23,6 +24,9 @@ export async function GET() {
 
 // POST — cria nova notícia
 export async function POST(req: Request) {
+  const { response } = await requireAdminSession();
+  if (response) return response;
+
   const body = await req.json();
 
   // "Data de publicação" vem do form como "YYYY-MM-DD" — grava ao meio-dia UTC
