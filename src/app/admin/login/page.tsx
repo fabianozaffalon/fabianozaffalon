@@ -1,6 +1,12 @@
 import { signIn } from "@/auth";
 
-export default function LoginPage() {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#00497F]">
       <div className="flex flex-col items-center gap-8 rounded-[20px] bg-white p-12 shadow-xl">
@@ -15,6 +21,12 @@ export default function LoginPage() {
             Acesso restrito a usuários autorizados
           </p>
         </div>
+
+        {error === "AccessDenied" && (
+          <div className="w-full max-w-xs rounded-[8px] bg-red-50 px-4 py-3 text-center text-sm text-red-600">
+            Seu e-mail não tem acesso a este painel. Entre em contato com o administrador.
+          </div>
+        )}
 
         {/* Botão Google */}
         <form
