@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { UNIDADES, type UnidadeId } from "@/lib/unidades";
+import { trackEvent } from "@/lib/analytics";
 
 function Icon({ name }: { name: string }) {
   return (
@@ -59,6 +60,7 @@ export function Contact() {
       }
 
       setStatus("success");
+      trackEvent("generate_lead", { form_type: "contato" });
       setForm({ nome: "", email: "", assunto: "", mensagem: "" });
     } catch (err: any) {
       setErro(err.message);
@@ -244,6 +246,7 @@ export function Contact() {
                     href={atual.whatsappHref}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trackEvent("click_whatsapp", { local: "contact_page" })}
                     className="text-sm text-[#595959] hover:text-[#006EB7] transition-colors"
                   >
                     {atual.whatsapp}
@@ -264,6 +267,7 @@ export function Contact() {
                   href={atual.whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("click_whatsapp", { local: "contact_page" })}
                   className="flex flex-1 items-center justify-center gap-2 rounded-[8px] bg-[#006EB7] py-3 text-sm font-medium text-white"
                 >
                   WhatsApp

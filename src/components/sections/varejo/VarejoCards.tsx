@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { TrackedAnchor } from "@/components/analytics/TrackedAnchor";
 
 function CardIcon({ src, label }: { src: string; label: string }) {
   return (
@@ -79,14 +80,16 @@ export function VarejoLocal() {
                   label="Apoio na definição de mix"
                 />
               </div>
-              <a
+              <TrackedAnchor
+                event="click_whatsapp"
+                params={{ local: "varejo_cards" }}
                 href="https://wa.me/555332734110"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="self-start rounded-[8px] bg-[#00497F] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#00497F]"
               >
                 CONVERSE COM UM CONSULTOR
-              </a>
+              </TrackedAnchor>
             </div>
           </div>
         </div>
@@ -149,14 +152,16 @@ export function VarejoMedioGrande() {
                   label="Desenvolvimento comercial"
                 />
               </div>
-              <a
+              <TrackedAnchor
+                event="click_whatsapp"
+                params={{ local: "varejo_cards" }}
                 href="https://wa.me/555332734110"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="self-start rounded-[8px] bg-[#0084E5] px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#0084E5]"
               >
                 CONVERSE COM UM CONSULTOR
-              </a>
+              </TrackedAnchor>
             </div>
           </div>
         </div>

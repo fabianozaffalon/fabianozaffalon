@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 export function NewsletterBanner() {
   const [email, setEmail] = useState("");
@@ -25,6 +26,7 @@ export function NewsletterBanner() {
       }
 
       setStatus("success");
+      trackEvent("newsletter_signup", { form_type: "newsletter" });
       setEmail("");
     } catch (err: any) {
       setErro(err.message);

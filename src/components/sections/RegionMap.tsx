@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { REGIONS, type Region } from "@/data/regions";
+import { trackEvent } from "@/lib/analytics";
 
 // ── Ícones inline ─────────────────────────────────────────────────────────────
 const IconWhatsApp = () => (
@@ -176,6 +177,7 @@ export function RegionMap() {
                 href={`https://wa.me/${activeRegion.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("click_whatsapp", { local: "region_map" })}
                 className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-[#6E6E6E] bg-[#6E6E6E] px-3 py-2.5 text-sm font-medium text-white transition-colors hover:border-[#006EB7] hover:bg-[#006EB7]"
               >
                 <IconWhatsApp /> WhatsApp

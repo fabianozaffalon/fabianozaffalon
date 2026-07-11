@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { UNIDADES, type UnidadeId } from "@/lib/unidades";
+import { trackEvent } from "@/lib/analytics";
 
 const VALORES = [
   {
@@ -83,6 +84,7 @@ function FaleComAGente() {
       }
 
       setStatus("success");
+      trackEvent("generate_lead", { form_type: "contato" });
       setForm({ nome: "", email: "", assunto: "", mensagem: "" });
     } catch (err: any) {
       setErro(err.message);
@@ -276,6 +278,7 @@ function FaleComAGente() {
                 href={atual.whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("click_whatsapp", { local: "contato_fale" })}
                 className="text-sm text-[#595959] hover:text-[#006EB7] transition-colors"
               >
                 {atual.whatsapp}
@@ -300,6 +303,7 @@ function FaleComAGente() {
               href={atual.whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("click_whatsapp", { local: "contato_fale" })}
               className="flex items-center justify-center gap-1.5 rounded-[8px] border-2 border-[#006EB7] py-3 text-xs font-semibold text-[#006EB7] hover:bg-[#006EB7] hover:text-white transition-colors"
             >
               <Icon name="icon-whatsapp" /> WhatsApp
@@ -392,6 +396,7 @@ function TrabalheConosco() {
       }
 
       setStatus("success");
+      trackEvent("generate_lead", { form_type: "curriculo" });
       setForm({
         nome: "",
         email: "",
@@ -653,6 +658,7 @@ function TrabalheConosco() {
               href="https://wa.me/555332734110"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("click_whatsapp", { local: "contato_trabalhe_rh" })}
               className="flex items-center gap-2 hover:text-[#006EB7] transition-colors"
             >
               <Icon name="icon-phone" /> (53) 3273 4110

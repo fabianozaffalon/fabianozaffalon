@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 
 const SLIDES = [
   {
@@ -77,6 +78,7 @@ function CTARenderer({ slide }: { slide: (typeof SLIDES)[0] }) {
         href="https://wa.me/555332734110"
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackEvent("click_whatsapp", { local: "hero_slide" })}
         className={baseStyles}
       >
         {slide.cta.label}
@@ -113,6 +115,7 @@ export function WhatsAppButton() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Fale conosco pelo WhatsApp"
+        onClick={() => trackEvent("click_whatsapp", { local: "hero_floating" })}
         className="fixed bottom-6 right-4 z-50 md:right-6"
       >
         <div className="wa-ring wa-btn relative flex h-14 w-14 items-center justify-center">

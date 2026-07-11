@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 
 type Oferta = {
   id: string;
@@ -80,6 +81,7 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
                   href="https://wa.me/555332734110"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("click_whatsapp", { local: "cta_banner_carrossel" })}
                   className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] bg-white text-sm font-semibold text-[#006EB7] transition-colors hover:bg-[#005a96] hover:text-white"
                 >
                   Quero Comprar
@@ -89,6 +91,7 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
                   href="https://wa.me/555332734110"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("click_whatsapp", { local: "cta_banner_carrossel" })}
                   className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] border-2 border-white text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]"
                 >
                   Quero Representação
@@ -250,6 +253,7 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
                   href="https://wa.me/555332734110"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("click_whatsapp", { local: "cta_banner_carrossel" })}
                   className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] bg-white text-sm font-semibold text-[#006EB7] transition-colors hover:bg-[#005a96] hover:text-white"
                 >
                   Quero Comprar
@@ -259,6 +263,7 @@ export function CtaBannerCarrossel({ ofertas }: { ofertas: Oferta[] }) {
                   href="https://wa.me/555332734110"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("click_whatsapp", { local: "cta_banner_carrossel" })}
                   className="flex h-[48px] flex-1 items-center justify-center rounded-[10px] border-2 border-white text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7]"
                 >
                   Quero Representação

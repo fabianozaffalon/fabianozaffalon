@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { trackEvent } from "@/lib/analytics";
 
 const ATUACAO_LINKS = [
   { label: "Varejo", href: "/varejo" },
@@ -235,6 +236,7 @@ export function Header() {
               href="https://wa.me/555332734110"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackEvent("click_whatsapp", { local: "header" })}
               className="flex items-center gap-1.5 rounded-[8px] border-2 border-[#006EB7] bg-[#006EB7] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
             >
               <svg
@@ -403,7 +405,10 @@ export function Header() {
             href="https://wa.me/555332734110"
             target="_blank"
             rel="noopener noreferrer"
-            onClick={close}
+            onClick={() => {
+              trackEvent("click_whatsapp", { local: "header" });
+              close();
+            }}
             className="flex items-center justify-center gap-2 rounded-[8px] border-2 border-white/20 bg-white/10 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#00497F]"
           >
             <svg

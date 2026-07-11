@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { TrackedAnchor } from "@/components/analytics/TrackedAnchor";
 
 type InstagramPost = {
   id: string;
@@ -49,14 +50,16 @@ export async function InstagramGrid() {
             <p className="text-sm text-[#BCBABA]">
               Não foi possível carregar as publicações do Instagram no momento.
             </p>
-            <a
+            <TrackedAnchor
+              event="click_instagram"
+              params={{ conta: "principal", local: "instagram_grid" }}
               href="https://www.instagram.com/fabianozaffalon.cia/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm font-semibold text-[#006EB7] underline underline-offset-2"
             >
               Visitar nosso Instagram
-            </a>
+            </TrackedAnchor>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -142,7 +145,9 @@ export async function InstagramGrid() {
         {/* Botão para visitar o Instagram completo */}
         {posts.length > 0 && (
           <div className="mt-10 flex justify-center">
-            <a
+            <TrackedAnchor
+              event="click_instagram"
+              params={{ conta: "principal", local: "instagram_grid" }}
               href="https://www.instagram.com/fabianozaffalon.cia"
               target="_blank"
               rel="noopener noreferrer"
@@ -173,7 +178,7 @@ export async function InstagramGrid() {
                 <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
               </svg>
               Ver perfil completo no Instagram
-            </a>
+            </TrackedAnchor>
           </div>
         )}
       </div>

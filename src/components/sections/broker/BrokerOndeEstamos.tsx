@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { TrackedAnchor } from "@/components/analytics/TrackedAnchor";
 
 export function BrokerOndeEstamos() {
   return (
@@ -81,14 +82,16 @@ export function BrokerOndeEstamos() {
                   height={20}
                   className="h-5 w-5 shrink-0"
                 />
-                <a
+                <TrackedAnchor
+                  event="click_whatsapp"
+                  params={{ local: "broker_onde_estamos" }}
                   href="https://wa.me/555332734110"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-[#595959] transition-colors hover:text-[#006EB7]"
                 >
                   (53) 3273 4110
-                </a>
+                </TrackedAnchor>
               </li>
 
               <li className="flex items-center gap-3">
@@ -118,14 +121,16 @@ export function BrokerOndeEstamos() {
                     className="object-contain"
                   />
                 </div>
-                <a
+                <TrackedAnchor
+                  event="click_instagram"
+                  params={{ conta: "broker", local: "broker_onde_estamos" }}
                   href="https://www.instagram.com/brokerfabianozaffalon/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-[#595959] transition-colors hover:text-[#006EB7]"
                 >
                   @brokerfabianozaffalon
-                </a>
+                </TrackedAnchor>
               </li>
             </ul>
           </div>

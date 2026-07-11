@@ -1,3 +1,4 @@
+import { TrackedAnchor } from "@/components/analytics/TrackedAnchor";
 
 export function CtaBannerSimples() {
   return (
@@ -24,23 +25,27 @@ export function CtaBannerSimples() {
 
             {/* Botões — direita */}
             <div className="flex w-full flex-col gap-3 sm:flex-row md:w-auto md:shrink-0">
-              <a
+              <TrackedAnchor
+                event="click_whatsapp"
+                params={{ local: "cta_banner_simples" }}
                 href="https://wa.me/555332734110"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center rounded-[8px] bg-white px-8 py-3.5 text-sm font-semibold text-[#006EB7] transition-colors hover:bg-[#005a96] hover:text-white h-[53px] md:w-[220px] whitespace-nowrap"
               >
                 Quero Comprar
-              </a>
+              </TrackedAnchor>
 
-              <a
+              <TrackedAnchor
+                event="click_whatsapp"
+                params={{ local: "cta_banner_simples" }}
                 href="https://wa.me/555332734110"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center rounded-[8px] border-2 border-white px-8 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#006EB7] h-[53px] md:w-[220px] whitespace-nowrap"
               >
                 Quero Representação
-              </a>
+              </TrackedAnchor>
             </div>
           </div>
         </div>

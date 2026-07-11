@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FAQ_DATA, type FaqCategory, type FaqItem } from "@/data/faq";
+import { trackEvent } from "@/lib/analytics";
 
 // ── Accordion item ────────────────────────────────────────────────────────────
 function AccordionItem({
@@ -211,6 +212,7 @@ function FaqBottomCard() {
           href="https://wa.me/555332734110"
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackEvent("click_whatsapp", { local: "faq" })}
           className="shrink-0 rounded-[8px] bg-[#0084E5] px-6 py-3 text-center text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-[#006EB7] whitespace-nowrap"
         >
           Converse com um consultor
