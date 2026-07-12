@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -191,6 +191,11 @@ async function apagarOfertasVencidas(): Promise<string> {
         erros++;
         console.error(`[cron] Erro ao apagar oferta ${oferta.id}:`, err);
       }
+    }
+
+    if (apagadas > 0) {
+      revalidatePath("/ofertas");
+      revalidatePath("/");
     }
 
     return `Ofertas: ${apagadas} apagadas, ${erros} erros`;

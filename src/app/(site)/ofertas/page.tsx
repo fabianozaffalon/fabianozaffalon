@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { OfertasViewer } from "@/components/sections/ofertas/OfertasViewer";
 import { buildMetadata } from "@/lib/seo";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "Ofertas do Mês",
