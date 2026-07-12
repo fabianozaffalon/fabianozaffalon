@@ -8,7 +8,26 @@
       "Bash(cat next.config.ts)",
       "Bash(cat next.config.js)",
       "Bash(cat vercel.json)",
-      "Bash(git -C \"c:\\\\Users\\\\Leandro Malhon\\\\fabianozaffalon\" check-ignore -v .env .env.local)"
+      "Bash(git -C \"c:\\\\Users\\\\Leandro Malhon\\\\fabianozaffalon\" check-ignore -v .env .env.local)",
+      "Bash(curl -s http://localhost:3000/api/instagram)",
+      "Bash(curl -s http://localhost:3000/ -o /tmp/home.html -w \"GET / -> %{http_code}\\\\n\")",
+      "Bash(curl -s http://localhost:3000/noticias -o /tmp/noticias.html -w \"GET /noticias -> %{http_code}\\\\n\")",
+      "Bash(python3 -c ' *)",
+      "Bash(grep -oP 'py-14 md:py-20.{0,1500}' /tmp/noticias.html)",
+      "Bash(grep -oP 'bg-white py-14 md:py-20.{0,300}' /tmp/noticias.html)",
+      "Bash(python3 -)",
+      "Bash(cp /tmp/home.html ./home.html.tmp)",
+      "Bash(cp /tmp/noticias.html ./noticias.html.tmp)",
+      "Bash(rm -f ./home.html.tmp ./noticias.html.tmp)",
+      "Bash(rm -f ./home.html.tmp)",
+      "Bash(curl -s -H 'Cookie: __TRACKED_VAR__' -H 'Content-Type: application/json' -X POST -d '{\"titulo\":\"Teste Visual Home\",\"imagem\":\"https://example.com/x.png\"}' http://localhost:3000/api/ofertas)",
+      "Bash(curl -sv -H 'Cookie: __TRACKED_VAR__' -H 'Content-Type: application/json' -X POST -d '{\"titulo\":\"Teste Visual Home\",\"imagem\":\"https://example.com/x.png\"}' http://localhost:3000/api/ofertas)",
+      "Bash(curl -s http://localhost:3000/ -o /tmp/home2.html -w \"GET / -> %{http_code}, x-nextjs-cache: \")",
+      "Bash(cp /tmp/home2.html ./home2.html.tmp)",
+      "Bash(rm -f ./home2.html.tmp)",
+      "Bash(curl -s -o /dev/null -w 'DELETE oferta teste -> %{http_code}\\\\n' -H 'Cookie: __TRACKED_VAR__' -X DELETE http://localhost:3000/api/ofertas/cmrhxs50k0000w3wscclsgo0n)",
+      "Bash(taskkill //PID 18028 //F)",
+      "Bash(rm -f /tmp/home.html /tmp/noticias.html /tmp/home2.html /tmp/nextstart.log /tmp/nextstart2.log /tmp/nextdev.log)"
     ]
   }
 }

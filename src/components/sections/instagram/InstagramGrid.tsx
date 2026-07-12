@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { TrackedAnchor } from "@/components/analytics/TrackedAnchor";
 
@@ -10,20 +13,6 @@ type InstagramPost = {
   permalink: string;
   timestamp: string;
 };
-
-async function getInstagramPosts(): Promise<InstagramPost[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/instagram`, {
-      next: { revalidate: 300, tags: ["instagram"] },
-    });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return data.posts ?? [];
-  } catch {
-    return [];
-  }
-}
 
 function truncarLegenda(caption: string | null, max: number = 100): string {
   if (!caption) return "";
@@ -39,13 +28,39 @@ function formatarData(iso: string): string {
   });
 }
 
-export async function InstagramGrid() {
-  const posts = await getInstagramPosts();
+export function InstagramGrid() {
+  const [posts, setPosts] = useState<InstagramPost[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/instagram")
+      .then((res) => (res.ok ? res.json() : { posts: [] }))
+      .then((data) => {
+        if (!cancelled) setPosts(data.posts ?? []);
+      })
+      .catch(() => {
+        if (!cancelled) setPosts([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <section className="bg-white py-14 md:py-20">
       <div className="mx-auto w-full max-w-[1280px] px-5 md:px-12">
-        {posts.length === 0 ? (
+        {posts === null ? (
+          // Carregando — placeholder no tamanho final do grid, sem animação.
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div
+                key={i}
+                className="w-full rounded-[16px] bg-gray-200"
+                style={{ aspectRatio: "1/1" }}
+              />
+            ))}
+          </div>
+        ) : posts.length === 0 ? (
           <div className="flex flex-col items-center gap-3 py-16 text-center">
             <p className="text-sm text-[#BCBABA]">
               Não foi possível carregar as publicações do Instagram no momento.
@@ -143,7 +158,7 @@ export async function InstagramGrid() {
         )}
 
         {/* Botão para visitar o Instagram completo */}
-        {posts.length > 0 && (
+        {posts !== null && posts.length > 0 && (
           <div className="mt-10 flex justify-center">
             <TrackedAnchor
               event="click_instagram"

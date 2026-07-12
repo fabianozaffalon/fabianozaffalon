@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 type InstagramPost = {
@@ -10,26 +13,40 @@ type InstagramPost = {
   timestamp: string;
 };
 
-async function getInstagramPosts(limit: number): Promise<InstagramPost[]> {
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-    const res = await fetch(`${baseUrl}/api/instagram`, { next: { revalidate: 300, tags: ["instagram"] } });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return (data.posts ?? []).slice(0, limit);
-  } catch {
-    return [];
-  }
-}
-
 function truncarLegenda(caption: string | null, max: number = 90): string {
   if (!caption) return "";
   const limpo = caption.replace(/\n+/g, " ").trim();
   return limpo.length > max ? limpo.slice(0, max).trim() + "..." : limpo;
 }
 
-export async function InstagramFeed({ limit = 2 }: { limit?: number }) {
-  const posts = await getInstagramPosts(limit);
+export function InstagramFeed({ limit = 2 }: { limit?: number }) {
+  const [posts, setPosts] = useState<InstagramPost[] | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/instagram")
+      .then((res) => (res.ok ? res.json() : { posts: [] }))
+      .then((data) => {
+        if (!cancelled) setPosts((data.posts ?? []).slice(0, limit));
+      })
+      .catch(() => {
+        if (!cancelled) setPosts([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [limit]);
+
+  // Carregando — placeholder no tamanho final do grid, sem animação.
+  if (posts === null) {
+    return (
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {Array.from({ length: limit }).map((_, i) => (
+          <div key={i} className="aspect-square w-full rounded-xl bg-gray-200" />
+        ))}
+      </div>
+    );
+  }
 
   if (posts.length === 0) return null;
 
