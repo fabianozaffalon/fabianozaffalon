@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { requireAdminSession } from "@/lib/auth-guard";
 
 // GET — lista marcas, opcionalmente filtradas por unidade
@@ -33,5 +34,9 @@ export async function POST(req: Request) {
       ordem:       body.ordem ?? 0,
     },
   });
+
+  revalidatePath("/catalogo");
+  revalidatePath("/");
+
   return NextResponse.json(marca, { status: 201 });
 }

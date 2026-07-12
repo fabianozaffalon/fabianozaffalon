@@ -4,7 +4,7 @@ import { CatalogoSection } from "@/components/sections/catalogo/CatalogoSection"
 import { CtaBannerSimples } from "@/components/sections/CtaBannerSimples";
 import { buildMetadata } from "@/lib/seo";
 
-export const revalidate = 60;
+export const revalidate = 3600;
 
 export const metadata: Metadata = buildMetadata({
   title: "Catálogo de Marcas",

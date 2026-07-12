@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { requireAdminSession } from "@/lib/auth-guard";
 
 // GET — busca marca por ID
@@ -18,6 +19,10 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   const { id } = await params;
   const body = await req.json();
   const marca = await prisma.marca.update({ where: { id }, data: body });
+
+  revalidatePath("/catalogo");
+  revalidatePath("/");
+
   return NextResponse.json(marca);
 }
 
@@ -28,5 +33,9 @@ export async function DELETE(_: Request, { params }: { params: Promise<{ id: str
 
   const { id } = await params;
   await prisma.marca.delete({ where: { id } });
+
+  revalidatePath("/catalogo");
+  revalidatePath("/");
+
   return NextResponse.json({ ok: true });
 }
