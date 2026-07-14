@@ -27,7 +27,28 @@
       "Bash(rm -f ./home2.html.tmp)",
       "Bash(curl -s -o /dev/null -w 'DELETE oferta teste -> %{http_code}\\\\n' -H 'Cookie: __TRACKED_VAR__' -X DELETE http://localhost:3000/api/ofertas/cmrhxs50k0000w3wscclsgo0n)",
       "Bash(taskkill //PID 18028 //F)",
-      "Bash(rm -f /tmp/home.html /tmp/noticias.html /tmp/home2.html /tmp/nextstart.log /tmp/nextstart2.log /tmp/nextdev.log)"
+      "Bash(rm -f /tmp/home.html /tmp/noticias.html /tmp/home2.html /tmp/nextstart.log /tmp/nextstart2.log /tmp/nextdev.log)",
+      "Bash(awk '{print $5, $NF}')",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(curl -s http://localhost:3000/varejo)",
+      "Bash(tasklist //FI \"IMAGENAME eq node.exe\")",
+      "Bash(taskkill //PID 19232 //F)",
+      "Bash(curl -sf http://localhost:3000/varejo)",
+      "Bash(awk '{print $NF}')",
+      "Bash(taskkill //PID 14128 //F)",
+      "Bash(npx playwright *)",
+      "Bash(node \"C:\\\\Users\\\\LEANDR~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-Leandro-Malhon-fabianozaffalon\\\\af9c26fa-b930-4f0d-855d-6dbf2ef2cc6b\\\\scratchpad\\\\carousel-test.mjs\" /varejo varejo)",
+      "Bash(node \"C:\\\\Users\\\\LEANDR~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-Leandro-Malhon-fabianozaffalon\\\\af9c26fa-b930-4f0d-855d-6dbf2ef2cc6b\\\\scratchpad\\\\carousel-test.mjs\" /foodservice foodservice)",
+      "Bash(node scripts/_tmp-carousel-test.mjs /varejo varejo)",
+      "Bash(cp \"c:\\\\Users\\\\Leandro Malhon\\\\fabianozaffalon\\\\scripts\\\\_tmp-carousel-test.mjs\" \"c:\\\\Users\\\\Leandro Malhon\\\\fabianozaffalon\\\\scripts\\\\_tmp-carousel-test2.mjs\")",
+      "Bash(node scripts/_tmp-carousel-test.mjs /foodservice foodservice)",
+      "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-carousel-test.mjs /varejo varejo)",
+      "Bash(exit 0)",
+      "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-memory-test.mjs /varejo varejo)",
+      "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-memory-test.mjs /foodservice foodservice)",
+      "Bash(taskkill //PID 16764 //F)",
+      "Bash(npm uninstall *)"
     ]
   }
 }

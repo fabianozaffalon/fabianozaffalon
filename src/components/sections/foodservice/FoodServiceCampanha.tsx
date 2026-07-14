@@ -9,36 +9,71 @@ const BANNERS = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 const INTERVAL = 4000;
+const FADE_MS = 300;
 
 export function FoodServiceCampanha() {
-  const [index, setIndex] = useState(0);
-  const [opacity, setOpacity] = useState(1);
+  const [current, setCurrent] = useState(0);
+  const [incoming, setIncoming] = useState<number | null>(null);
+  const [incomingVisible, setIncomingVisible] = useState(false);
+
+  const currentRef = useRef(0);
+  const targetRef = useRef(0);
   const pausedRef = useRef(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const indexRef = useRef(0);
+  const promoteTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goTo = useCallback((next: number) => {
-    setOpacity(0);
-    setTimeout(() => {
-      setIndex(next);
-      indexRef.current = next;
-      setOpacity(1);
-    }, 300);
+    if (next === targetRef.current) return;
+    targetRef.current = next;
+    if (promoteTimerRef.current) clearTimeout(promoteTimerRef.current);
+
+    if (next === currentRef.current) {
+      // voltou pro slide já exibido antes da transição concluir
+      setIncoming(null);
+      setIncomingVisible(false);
+      return;
+    }
+
+    setIncomingVisible(false);
+    setIncoming(next);
+  }, []);
+
+  // só inicia o crossfade quando a imagem de entrada já estiver
+  // realmente decodificada — nunca troca "às cegas" via timer
+  const handleIncomingLoaded = useCallback((loadedIndex: number) => {
+    if (loadedIndex !== targetRef.current) return; // superada por um clique mais recente
+
+    requestAnimationFrame(() => setIncomingVisible(true));
+
+    promoteTimerRef.current = setTimeout(() => {
+      currentRef.current = targetRef.current;
+      setCurrent(targetRef.current);
+      setIncoming(null);
+      setIncomingVisible(false);
+    }, FADE_MS);
   }, []);
 
   const startTimer = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       if (!pausedRef.current) {
-        goTo((indexRef.current + 1) % BANNERS.length);
+        goTo((targetRef.current + 1) % BANNERS.length);
       }
     }, INTERVAL);
   }, [goTo]);
 
   useEffect(() => {
     startTimer();
-    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-  }, [index, startTimer]);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [current, startTimer]);
+
+  useEffect(() => {
+    return () => {
+      if (promoteTimerRef.current) clearTimeout(promoteTimerRef.current);
+    };
+  }, []);
 
   const handleMouseEnter = () => {
     pausedRef.current = true;
@@ -50,8 +85,12 @@ export function FoodServiceCampanha() {
     startTimer();
   };
 
-  const prev = () => goTo((indexRef.current - 1 + BANNERS.length) % BANNERS.length);
-  const next = () => goTo((indexRef.current + 1) % BANNERS.length);
+  const prev = () =>
+    goTo((targetRef.current - 1 + BANNERS.length) % BANNERS.length);
+  const next = () => goTo((targetRef.current + 1) % BANNERS.length);
+
+  const activeIndicator = incoming ?? current;
+  const nextBanner = BANNERS[(current + 1) % BANNERS.length];
 
   return (
     <section
@@ -59,15 +98,51 @@ export function FoodServiceCampanha() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div style={{ opacity, transition: "opacity 300ms ease-in-out" }}>
+      <div className="relative w-full">
         <Image
-          src={BANNERS[index].src}
-          alt={BANNERS[index].alt}
+          key={`base-${BANNERS[current].src}`}
+          src={BANNERS[current].src}
+          alt={BANNERS[current].alt}
           width={1920}
           height={480}
           className="w-full h-auto"
           sizes="100vw"
-          priority={index === 0}
+          priority={current === 0}
+        />
+
+        {incoming !== null && (
+          <div
+            className="absolute inset-0"
+            style={{
+              opacity: incomingVisible ? 1 : 0,
+              transition: `opacity ${FADE_MS}ms ease-in-out`,
+            }}
+          >
+            <Image
+              key={`incoming-${BANNERS[incoming].src}`}
+              src={BANNERS[incoming].src}
+              alt={BANNERS[incoming].alt}
+              width={1920}
+              height={480}
+              className="w-full h-auto"
+              sizes="100vw"
+              onLoad={() => handleIncomingLoaded(incoming)}
+            />
+          </div>
+        )}
+      </div>
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0"
+      >
+        <Image
+          key={nextBanner.src}
+          src={nextBanner.src}
+          alt=""
+          width={1920}
+          height={480}
+          sizes="100vw"
         />
       </div>
 
@@ -88,7 +163,7 @@ export function FoodServiceCampanha() {
       <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 flex items-center gap-2">
         {BANNERS.map((_, i) => (
           <button key={i} onClick={() => goTo(i)} aria-label={`Banner ${i + 1}`}
-            className={"rounded-full transition-all duration-300 " + (i === index ? "w-6 h-2 bg-white" : "w-2 h-2 bg-white/50 hover:bg-white/80")} />
+            className={"rounded-full transition-all duration-300 " + (i === activeIndicator ? "w-6 h-2 bg-white" : "w-2 h-2 bg-white/50 hover:bg-white/80")} />
         ))}
       </div>
     </section>
