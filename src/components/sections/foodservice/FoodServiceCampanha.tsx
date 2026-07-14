@@ -9,7 +9,8 @@ const BANNERS = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 const INTERVAL = 4000;
-const FADE_MS = 300;
+const FADE_MS = 700;
+const FADE_EASING = "cubic-bezier(0.4, 0, 0.2, 1)";
 
 export function FoodServiceCampanha() {
   const [current, setCurrent] = useState(0);
@@ -115,7 +116,8 @@ export function FoodServiceCampanha() {
             className="absolute inset-0"
             style={{
               opacity: incomingVisible ? 1 : 0,
-              transition: `opacity ${FADE_MS}ms ease-in-out`,
+              transform: incomingVisible ? "scale(1)" : "scale(1.02)",
+              transition: `opacity ${FADE_MS}ms ${FADE_EASING}, transform ${FADE_MS}ms ${FADE_EASING}`,
             }}
           >
             <Image
@@ -163,7 +165,7 @@ export function FoodServiceCampanha() {
       <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 flex items-center gap-2">
         {BANNERS.map((_, i) => (
           <button key={i} onClick={() => goTo(i)} aria-label={`Banner ${i + 1}`}
-            className={"rounded-full transition-all duration-300 " + (i === activeIndicator ? "w-6 h-2 bg-white" : "w-2 h-2 bg-white/50 hover:bg-white/80")} />
+            className={"rounded-full transition-all duration-150 " + (i === activeIndicator ? "w-6 h-2 bg-white" : "w-2 h-2 bg-white/50 hover:bg-white/80")} />
         ))}
       </div>
     </section>
