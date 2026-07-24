@@ -293,9 +293,11 @@ function FaleComAGente() {
                 {atual.email}
               </a>
             </li>
-            <li className="flex items-center gap-3">
+            <li className="flex items-start gap-3">
               <Icon name="icon-clock-azul" />
-              <span className="text-sm text-[#595959]">{atual.horario}</span>
+              <span className="whitespace-pre-line text-sm text-[#595959]">
+                {atual.horario}
+              </span>
             </li>
           </ul>
           <div className="grid grid-cols-2 gap-2">

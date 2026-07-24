@@ -28,6 +28,7 @@ const UNIDADES_FOOTER = UNIDADES;
 const WHATSAPP_UNICO_HREF = UNIDADES_FOOTER[0]?.whatsappHref ?? "";
 const WHATSAPP_UNICO_LABEL = UNIDADES_FOOTER[0]?.whatsapp ?? "";
 const TELEFONE_UNICO = UNIDADES_FOOTER[0]?.telefone ?? "";
+const HORARIO_UNICO = UNIDADES_FOOTER[0]?.horario ?? "";
 
 // ── Acordeão — só ativo em mobile ────────────────────────────────────────────
 function AccordionSection({
@@ -255,9 +256,12 @@ export function Footer() {
                   </li>
                 ))}
                 <li className="mt-1 border-t border-white/10 pt-3">
-                  <span className="text-sm font-semibold text-white">
+                  <Link
+                    href="/broker-nestle"
+                    className="text-sm font-normal text-white/70 transition-colors hover:text-white"
+                  >
                     Broker Nestlé
-                  </span>
+                  </Link>
                 </li>
               </ul>
             </AccordionSection>
@@ -333,8 +337,8 @@ export function Footer() {
             <AccordionSection title="Contato Rápido">
               <div className="flex items-center gap-3">
                 <ContactIcon name="icon-clock" size={26} />
-                <span className="text-sm font-medium text-white whitespace-nowrap">
-                  Seg. a Sex. 8h às 18h
+                <span className="whitespace-pre-line text-sm font-medium text-white">
+                  {HORARIO_UNICO}
                 </span>
               </div>
 

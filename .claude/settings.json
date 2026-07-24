@@ -48,7 +48,12 @@
       "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-memory-test.mjs /varejo varejo)",
       "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-memory-test.mjs /foodservice foodservice)",
       "Bash(taskkill //PID 16764 //F)",
-      "Bash(npm uninstall *)"
+      "Bash(npm uninstall *)",
+      "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-smoke-test.mjs /varejo varejo)",
+      "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-smoke-test.mjs /foodservice foodservice)",
+      "Bash(MSYS_NO_PATHCONV=1 node scripts/_tmp-smoke-test.mjs /foodservice foodservice2)",
+      "Bash(rm -f scripts/_tmp-smoke-test.mjs)",
+      "Bash(taskkill //PID 8312 //F)"
     ]
   }
 }
