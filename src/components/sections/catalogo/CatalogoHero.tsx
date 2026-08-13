@@ -33,14 +33,14 @@ export function CatalogoHero() {
               HOME
             </Link>
             <span className="text-white/40">›</span>
-            <span className="text-white font-semibold">CATÁLOGO</span>
+            <span className="text-white font-semibold">CATÁLOGOS</span>
           </nav>
 
           <h1
             className="font-black text-white"
             style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
           >
-            Catálogo
+            Catálogos
           </h1>
           <p className="mt-2 max-w-[380px] text-sm text-white/90">
             Conheça as marcas que distribuímos em cada região e unidade de

@@ -123,7 +123,7 @@ export function Brands() {
                 href="/catalogo"
                 className="inline-flex items-center gap-2 rounded-[8px] border-2 border-white px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-[#1A4FA0] whitespace-nowrap"
               >
-                Veja nosso catálogo
+                Veja nossos catálogos
               </a>
             </div>
           </div>

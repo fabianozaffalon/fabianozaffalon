@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { RegionMap } from "@/components/sections/RegionMap";
+import { SedeCrossfade } from "@/components/sections/SedeCrossfade";
 
 export function About() {
   return (
@@ -43,13 +44,7 @@ export function About() {
 
             {/* Foto sede — direita */}
             <div className="order-2 md:order-none relative h-44 w-full overflow-hidden rounded-2xl shadow-md md:h-[360px]">
-              <Image
-                src="/images/empresa/sede.jpg"
-                alt="Sede da Fabiano Zaffalon Distribuidora"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+              <SedeCrossfade />
             </div>
           </div>
         </div>
