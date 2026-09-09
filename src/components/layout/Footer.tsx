@@ -169,7 +169,10 @@ export function Footer() {
               href="https://www.instagram.com/fabianozaffalon.cia/"
               label="Instagram"
               onClick={() =>
-                trackEvent("click_instagram", { conta: "principal", local: "footer_mobile" })
+                trackEvent("click_instagram", {
+                  conta: "principal",
+                  local: "footer_mobile",
+                })
               }
             />
           </div>
@@ -211,7 +214,10 @@ export function Footer() {
                 href="https://www.instagram.com/fabianozaffalon.cia/"
                 label="Instagram"
                 onClick={() =>
-                  trackEvent("click_instagram", { conta: "principal", local: "footer_desktop" })
+                  trackEvent("click_instagram", {
+                    conta: "principal",
+                    local: "footer_desktop",
+                  })
                 }
               />
             </div>
@@ -290,7 +296,9 @@ export function Footer() {
                   href={WHATSAPP_UNICO_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("click_whatsapp", { local: "footer" })}
+                  onClick={() =>
+                    trackEvent("click_whatsapp", { local: "footer" })
+                  }
                   className="hidden md:flex items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white whitespace-nowrap"
                 >
                   <span className="flex items-center gap-1">
@@ -312,7 +320,9 @@ export function Footer() {
                   href={WHATSAPP_UNICO_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("click_whatsapp", { local: "footer" })}
+                  onClick={() =>
+                    trackEvent("click_whatsapp", { local: "footer" })
+                  }
                   className="flex md:hidden items-center gap-2 text-sm font-normal text-white/70 transition-colors hover:text-white"
                 >
                   <ContactIcon name="icon-whatsapp" size={14} />
@@ -346,7 +356,9 @@ export function Footer() {
                 href="https://wa.me/555332734110"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackEvent("click_whatsapp", { local: "footer" })}
+                onClick={() =>
+                  trackEvent("click_whatsapp", { local: "footer" })
+                }
                 className="group mt-4 flex w-full items-center justify-center gap-2 rounded-[8px] bg-[#006EB7] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-white hover:text-[#006EB7]"
               >
                 <Image
@@ -372,7 +384,7 @@ export function Footer() {
                     className="h-4 w-4 shrink-0 brightness-0 invert opacity-70"
                   />
                   <span className="text-xs font-normal text-white/70">
-                    +70 mil entregas/ano
+                    +200 mil entregas/ano
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
