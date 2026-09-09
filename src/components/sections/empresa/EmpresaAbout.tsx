@@ -3,7 +3,7 @@ import Image from "next/image";
 const STATS = [
   {
     icon: "/images/icons/icon-entregas.svg",
-    value: "+70 mil",
+    value: "+200 mil",
     label: "entregas por ano",
   },
   {
