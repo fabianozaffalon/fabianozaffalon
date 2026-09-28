@@ -46,7 +46,7 @@ export function EmpresaAbout() {
               A partir do estabelecimento de uma estrutura consistente,
               conquistamos a capacidade de realizar mais de{" "}
               <strong className="font-semibold text-[#595959]">
-                70 mil entregas por ano
+                200 mil entregas por ano
               </strong>{" "}
               e contamos com cerca de{" "}
               <strong className="font-semibold text-[#595959]">
